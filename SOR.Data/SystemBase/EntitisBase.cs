@@ -22,5 +22,7 @@ namespace SOR.Data.SystemBase
             get { return UpdateDate; }
             set { UpdateDate = DateTime.Now; }
         }
+
+        public string CreateUser { get; set; }
     }
 }
