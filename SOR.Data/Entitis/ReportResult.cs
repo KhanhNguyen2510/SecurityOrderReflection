@@ -8,8 +8,11 @@ namespace SOR.Data.Entitis
     public class ReportResult : EntitisBase
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [StringLength(400)]
         public string Content { get; set; }
+
         public User User { get; set; }
     }
 }

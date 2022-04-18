@@ -23,6 +23,6 @@ namespace SOR.Data.SystemBase
             set { UpdateDate = DateTime.Now; }
         }
 
-        public string CreateUser { get; set; }
+        public int? CreateUser { get; set; }
     }
 }

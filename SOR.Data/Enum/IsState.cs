@@ -1,6 +1,6 @@
 ﻿namespace SOR.Data.Enum
 {
-    public enum IsEvaluate
+    public enum IsState
     {
         Happy = 1,
         Permissive = 2,

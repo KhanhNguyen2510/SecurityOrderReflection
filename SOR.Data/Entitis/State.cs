@@ -5,14 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SOR.Data.Entitis
 {
-    [Table("UserPrivilege")]
-    public class UserPrivilege : EntitisBase
+    [Table("State")]
+    public class State : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Note { get; set; }
+        public int Id { get; set; }
+        public IsState? IsState { get; set; }
 
         public User User { get; set; }
     }

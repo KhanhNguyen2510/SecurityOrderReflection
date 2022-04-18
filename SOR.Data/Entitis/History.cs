@@ -13,14 +13,17 @@ namespace SOR.Data.Entitis
     public class History : EntitisBase
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [StringLength(200)]
         public string HistoryOperation { get; set; }
         [Column(TypeName ="datetime")]
-        public DateTime TimeOperation { get; set; }
+        public DateTime? TimeOperation { get; set; }
         /// <summary>
         /// Trạng thái hoạt động
         /// </summary>
-        public IsOperation Operation { get; set; }
+        public IsOperation? Operation { get; set; }
+
         public User User { get; set; }
     }
 }

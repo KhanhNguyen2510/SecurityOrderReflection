@@ -1,4 +1,5 @@
-﻿using SOR.Data.SystemBase;
+﻿using SOR.Data.Enum;
+using SOR.Data.SystemBase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,42 +10,50 @@ namespace SOR.Data.Entitis
     /// <summary>
     /// Tài khoản đăng nhập
     /// </summary>
-    [Table("Users")]
+    [Table("User")]
     public class User : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int Id { get; set; }
+        [StringLength(50)]
         public string UserName { get; set; }
+        [StringLength(50)]
         public string PassWord { get; set; }
+        public IsGender? Gender { get; set; }
+        [StringLength(200)]
         public string FullName { get; set; }
         /// <summary>
         /// số cmnd
         /// </summary>
+        /// 
+        [StringLength(14)]
         public string Identification { get; set; }
+        [StringLength(200)]
         public string IPCreate { get; set; }
-        public IsAdmin IsAdmin { get; set; }
+        public IsAdmin? IsAdmin { get; set; }
         /// <summary>
         /// Login vào
         /// </summary>
         [Column(TypeName = "datetime")]
-        public DateTime FistLogin { get; set; }
+        public DateTime? FistLogin { get; set; }
         /// <summary>
         /// Logout ra
         /// </summary>
         [Column(TypeName = "datetime")]
-        public DateTime EndLogin { get; set; }
+        public DateTime? EndLogin { get; set; }
         /// <summary>
         /// Cơ quan
         /// </summary>
+        /// 
+        [StringLength(50)]
         public int? AgenciesId { get; set; }
-                                                                                                           
-        public IEnumerable<Evaluate> Evaluates { get; set; }
+
+        public IEnumerable<State> State { get; set; }
         public IEnumerable<History> Histories  { get; set; }
         public IEnumerable<NewsLabel> NewsLabels{ get; set; }
         public IEnumerable<Report> Reports { get; set; }
         public IEnumerable<ReportProof> ReportProofs { get; set; }
         public IEnumerable<ReportResult> ReportResults { get; set; }
-        public IEnumerable<UserPrivilege> UserPrivileges { get; set; }
     }
 }
