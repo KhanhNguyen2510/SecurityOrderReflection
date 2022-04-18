@@ -13,7 +13,7 @@ namespace SOR.Data.Entitis
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(200)]
+        [StringLength(50)]
         public string Name { get; set; }
         /// <summary>
         /// Trụ sở
