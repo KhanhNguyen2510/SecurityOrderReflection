@@ -46,7 +46,7 @@ namespace SOR.Data.Entitis
         /// Cơ quan
         /// </summary>
         /// 
-        [StringLength(50)]
+        [StringLength(200)]
         public int? AgenciesId { get; set; }
 
         public IEnumerable<State> State { get; set; }
