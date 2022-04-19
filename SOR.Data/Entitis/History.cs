@@ -18,7 +18,7 @@ namespace SOR.Data.Entitis
         [StringLength(200)]
         public string HistoryOperation { get; set; }
         [Column(TypeName ="datetime")]
-        public DateTime? TimeOperation { get; set; }
+        public DateTime? TimeOperation { get; set; } = DateTime.Now;
         /// <summary>
         /// Trạng thái hoạt động
         /// </summary>
