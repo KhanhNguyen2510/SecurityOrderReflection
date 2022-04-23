@@ -2,9 +2,9 @@
 
 namespace SOR.ViewModel.Catalogs.Historys
 {
-    public class GetUpdateToHistoryRequest
+    public class GetUpdateToHistoryRequest : CreateUserRequest
     {
-        public IsOperation? Operation { get; set; }
-        public string HistoryOperation { get; set; }
+        public IsOperation? isOperation { get; set; }
+        public string historyOperation { get; set; }
     }
 }

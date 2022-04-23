@@ -13,5 +13,6 @@ namespace SOR.Data.EFs
         public DbSet<ReportProof> ReportProofs { get; set; }
         public DbSet<ReportResult> ReportResults { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Code> Codes { get; set; }
     }
 }

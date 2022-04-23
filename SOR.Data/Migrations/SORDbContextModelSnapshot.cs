@@ -29,8 +29,9 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
@@ -40,25 +41,66 @@ namespace SOR.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NumberPhone")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Office")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Agencies");
+                });
+
+            modelBuilder.Entity("SOR.Data.Entitis.Code", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("TimeDelete")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("UpdateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Code");
                 });
 
             modelBuilder.Entity("SOR.Data.Entitis.History", b =>
@@ -71,36 +113,36 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("HistoryOperation")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("Operation")
+                    b.Property<int?>("IsOperation")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("TimeOperation")
+                    b.Property<DateTime>("TimeOperation")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreateUser");
-
-                    b.ToTable("Historys");
+                    b.ToTable("History");
                 });
 
             modelBuilder.Entity("SOR.Data.Entitis.NewsLabel", b =>
@@ -112,28 +154,28 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreateUser");
 
                     b.ToTable("NewsLabel");
                 });
@@ -141,7 +183,8 @@ namespace SOR.Data.Migrations
             modelBuilder.Entity("SOR.Data.Entitis.Report", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Content")
                         .HasMaxLength(500)
@@ -150,8 +193,9 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("DateSolve")
                         .HasColumnType("datetime");
@@ -163,7 +207,10 @@ namespace SOR.Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("IsStatus")
+                    b.Property<int>("IsReport")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("LocationReport")
@@ -178,27 +225,24 @@ namespace SOR.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UserAngel")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
-                    b.Property<int?>("Views")
+                    b.Property<int>("Views")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreateUser");
-
-                    b.HasIndex("NewsLabelId");
 
                     b.ToTable("Report");
                 });
@@ -213,33 +257,31 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<string>("Proof")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReportId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreateUser");
-
-                    b.HasIndex("ReportId");
 
                     b.ToTable("ReportProof");
                 });
@@ -258,24 +300,28 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<string>("ReportId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreateUser");
 
                     b.ToTable("ReportResult");
                 });
@@ -290,27 +336,31 @@ namespace SOR.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("IsState")
+                    b.Property<int>("IsState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<string>("ReportId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreateUser");
 
                     b.ToTable("State");
                 });
@@ -323,14 +373,19 @@ namespace SOR.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("AgenciesId")
-                        .HasMaxLength(50)
+                        .HasMaxLength(200)
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("CreateUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("EndLogin")
                         .HasColumnType("datetime");
@@ -353,7 +408,7 @@ namespace SOR.Data.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
-                    b.Property<int?>("IsAdmin")
+                    b.Property<int>("IsAdmin")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDelete")
@@ -363,14 +418,15 @@ namespace SOR.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("TimeDelete")
+                    b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(50)
@@ -378,114 +434,7 @@ namespace SOR.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgenciesId")
-                        .IsUnique()
-                        .HasFilter("[AgenciesId] IS NOT NULL");
-
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.History", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.User", "User")
-                        .WithMany("Histories")
-                        .HasForeignKey("CreateUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.NewsLabel", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.User", "User")
-                        .WithMany("NewsLabels")
-                        .HasForeignKey("CreateUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.Report", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.User", "User")
-                        .WithMany("Reports")
-                        .HasForeignKey("CreateUser");
-
-                    b.HasOne("SOR.Data.Entitis.NewsLabel", "NewsLabel")
-                        .WithMany("Reports")
-                        .HasForeignKey("NewsLabelId");
-
-                    b.Navigation("NewsLabel");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.ReportProof", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.User", "User")
-                        .WithMany("ReportProofs")
-                        .HasForeignKey("CreateUser");
-
-                    b.HasOne("SOR.Data.Entitis.Report", "Report")
-                        .WithMany("ReportProofs")
-                        .HasForeignKey("ReportId");
-
-                    b.Navigation("Report");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.ReportResult", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.User", "User")
-                        .WithMany("ReportResults")
-                        .HasForeignKey("CreateUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.State", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.User", "User")
-                        .WithMany("State")
-                        .HasForeignKey("CreateUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.User", b =>
-                {
-                    b.HasOne("SOR.Data.Entitis.Agencies", null)
-                        .WithOne("User")
-                        .HasForeignKey("SOR.Data.Entitis.User", "AgenciesId");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.Agencies", b =>
-                {
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.NewsLabel", b =>
-                {
-                    b.Navigation("Reports");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.Report", b =>
-                {
-                    b.Navigation("ReportProofs");
-                });
-
-            modelBuilder.Entity("SOR.Data.Entitis.User", b =>
-                {
-                    b.Navigation("Histories");
-
-                    b.Navigation("NewsLabels");
-
-                    b.Navigation("ReportProofs");
-
-                    b.Navigation("ReportResults");
-
-                    b.Navigation("Reports");
-
-                    b.Navigation("State");
                 });
 #pragma warning restore 612, 618
         }

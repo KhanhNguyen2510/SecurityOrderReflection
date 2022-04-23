@@ -5,9 +5,9 @@
     /// </summary>
     public enum IsOperation
     {
-        Create = 190,
-        Update = 290,
-        Delete = 390,
-        Orther = 490
+        Create = 1,
+        Update = 2,
+        Delete = 3,
+        Orther = 4
     }
 }

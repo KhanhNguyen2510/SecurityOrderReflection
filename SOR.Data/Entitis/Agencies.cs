@@ -13,7 +13,7 @@ namespace SOR.Data.Entitis
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(100)]
+        [StringLength(200)]
         public string Name { get; set; }
         /// <summary>
         /// Trụ sở
@@ -24,6 +24,6 @@ namespace SOR.Data.Entitis
         [StringLength(15)]
         public string NumberPhone { get; set; }
 
-        public User User { get; set; }
+        //public User User { get; set; }
     }
 }

@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOR.ViewModel.Catalogs.Historys
 {
-    public class GetCreateToHistoryRequest
+    public class GetCreateToHistoryRequest : CreateUserRequest
     {
         [Required(ErrorMessage = "Vui lòng nhập lịch sữ")]
         public string HistoryOperation { get; set; }
         [Required(ErrorMessage = "Vui chọn trang thái hoạt động")]
-        public IsOperation? Operation { get; set; }
+        public IsOperation? IsOperation { get; set; }
     }
 }

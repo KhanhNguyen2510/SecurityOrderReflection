@@ -1,5 +1,4 @@
 ﻿using SOR.Data.SystemBase;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,10 +13,10 @@ namespace SOR.Data.Entitis
         [Key]
         [StringLength(10)]
         public string Id { get; set; }
-        [StringLength(200)]
+        [StringLength(300)]
         public string Name { get; set; }
 
-        public User User { get; set; }
-        public IEnumerable<Report> Reports { get; set; }
+        //public User User { get; set; }
+        //public IEnumerable<Report> Reports { get; set; }
     }
 }

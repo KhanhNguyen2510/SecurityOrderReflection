@@ -9,21 +9,27 @@ namespace SOR.Data.Entitis
     /// <summary>
     /// Lịch sữ thu thập
     /// </summary>
-    [Table("Historys")]
+    [Table("History")]
     public class History : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(200)]
+        /// <summary>
+        /// Lịch sử thu thập nội dung
+        /// </summary>
+        [StringLength(300)]
         public string HistoryOperation { get; set; }
+        /// <summary>
+        /// Thời gian thực hiện
+        /// </summary>
         [Column(TypeName ="datetime")]
-        public DateTime? TimeOperation { get; set; } = DateTime.Now;
+        public DateTime TimeOperation { get; set; } = DateTime.Now;
         /// <summary>
         /// Trạng thái hoạt động
         /// </summary>
-        public IsOperation? Operation { get; set; }
+        public IsOperation? IsOperation { get; set; } = Enum.IsOperation.Orther;
 
-        public User User { get; set; }
+        //public User User { get; set; }
     }
 }

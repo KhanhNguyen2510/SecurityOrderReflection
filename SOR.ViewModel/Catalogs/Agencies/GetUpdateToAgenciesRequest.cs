@@ -2,7 +2,7 @@
 
 namespace SOR.ViewModel.Catalogs.Agencies
 {
-    public class GetUpdateToAgenciesRequest
+    public class GetUpdateToAgenciesRequest : CreateUserRequest
     {
         public string name { get; set; }
         public string office { get; set; }

@@ -18,6 +18,20 @@
         /// Không tìm thấy thông tin
         /// </summary>
         public static string NON_EXISTENCE = "Không tồn tại";
+        /// <summary>
+        /// Chưa nhập thông tin
+        /// </summary>
+        public static string NO_CONTENT = "Chưa nhập thông tin";
+        /// <summary>
+        /// Chưa có User
+        /// </summary>
+        public static string USER_EXISTENCE = "Chưa nhập thông tin người dùng";
+
+        /// <summary>
+        /// Key không tìm thấy
+        /// </summary>
+        public static string KEY_UN_EXISTENCE = "000";
+
 
 
     }

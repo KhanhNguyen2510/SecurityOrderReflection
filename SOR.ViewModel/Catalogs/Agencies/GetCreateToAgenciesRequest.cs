@@ -2,7 +2,7 @@
 
 namespace SOR.ViewModel.Catalogs.Agencies
 {
-    public class GetCreateToAgenciesRequest
+    public class GetCreateToAgenciesRequest : CreateUserRequest
     {
         [Required(ErrorMessage = "Vui lòng nhập nội dung")]
         public string name { get; set; }
