@@ -1,8 +1,11 @@
-﻿using SOR.Data.Enum;
+﻿using SOR.Data.Entitis;
+using SOR.Data.Enum;
 using System;
+using System.Collections.Generic;
 
 namespace SOR.ViewModel.Catalogs.Reports
 {
+
     public class GetReportViewModel
     {
         public string Id { get; set; }
@@ -15,12 +18,9 @@ namespace SOR.ViewModel.Catalogs.Reports
         /// nhãn thông tin bài báo cáo 
         /// </summary>
         /// 
-        public string Proof { get; set; }
-        public int ProofId { get; set; }
+        public List<Results> rResults { get; set; }
 
-        public string Result { get; set; }
-        public int ResultId { get; set; }
-
+        public List<Proofs> rProofs { get; set; }
         public string NewsLabelId { get; set; }
         public string NewsLabelName { get; set; }
         /// <summary>
@@ -58,5 +58,16 @@ namespace SOR.ViewModel.Catalogs.Reports
 
         public string CreateUser { get; set; }
         public string UpdateUser { get; set; }
+    }
+    public class Results
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Proofs
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

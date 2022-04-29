@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using SOR.Data.EFs;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
@@ -7,7 +8,10 @@ using SOR.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+
+
 
 namespace SOR.Application.Catalogs.Agencies
 {
@@ -16,10 +20,46 @@ namespace SOR.Application.Catalogs.Agencies
         private readonly SORDbContext _context;
         private SystemBase<string> checkValue = new SystemBase<string>();
 
-        public AgenciesSevice(SORDbContext context)
+        private IHttpContextAccessor _accessor;
+
+        public AgenciesSevice(SORDbContext context , IHttpContextAccessor accessor)
         {
             _context = context;
+            _accessor = accessor;
         }
+
+        public IEnumerable<string> Get()
+        {
+            var ip = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+            return new string[] { ip, "value2" };
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// Check
@@ -228,5 +268,6 @@ namespace SOR.Application.Catalogs.Agencies
                 PageSize = request.PageSize,
             };
         }
+
     }
 }

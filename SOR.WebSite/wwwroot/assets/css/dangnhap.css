@@ -1,0 +1,32 @@
+.bg-header{
+  background-color: #ED2025;
+}
+.logo-header{
+  position: absolute;
+  margin-left: 163px;
+  margin-top: 148px;
+}
+.banner-header{
+  position: absolute;
+  width: 350px;
+  animation: spin 20s linear infinite;
+  margin-top: 28px;
+  margin-left: 54px;
+}
+@keyframes spin {
+  0%{
+      transform:  rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
+.overlay{
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background-color: rgba(0,0,0,0.6);
+   
+}

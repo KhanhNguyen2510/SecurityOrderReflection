@@ -3,6 +3,7 @@ using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Agencies;
 using SOR.ViewModel.Common;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SOR.Application.Catalogs.Agencies
@@ -40,5 +41,8 @@ namespace SOR.Application.Catalogs.Agencies
         Task<GetAgenciesViewModel> GetAgenciesById(int Id);
         Task<IEnumerable<GetAgenciesViewModel>> GetListToAgencies(GetMangagerToAgenciesRequest request);
         Task<PagedResult<GetAgenciesViewModel>> GetListPagingToAgencies(GetMangagerAgenciesRequest request);
+
+
+        IEnumerable<string> Get();
     }
 }

@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SOR.ViewModel.Catalogs.Reports.Proof
 {
-    public class GetCreateToReportProofRequest : CreateUserRequest
+    public class GetCreateToReportProofRequest  :CreateUserRequest
     {
         [Required(ErrorMessage = "Vui lòng nhập chọn hình ảnh")]
-        public string proof { get; set; }
+        public List<IFormFile> files { get; set; }
         /// <summary>
         /// Mả bài phản ánh
         /// </summary>

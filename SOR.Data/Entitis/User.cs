@@ -24,6 +24,8 @@ namespace SOR.Data.Entitis
         public IsGender? Gender { get; set; }
         [StringLength(200)]
         public string FullName { get; set; }
+        [StringLength(15)]
+        public string NumberPhone { get; set; }
         /// <summary>
         /// số cmnd
         /// </summary>

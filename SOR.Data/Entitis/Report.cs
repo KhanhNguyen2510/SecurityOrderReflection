@@ -1,6 +1,7 @@
 ﻿using SOR.Data.Enum;
 using SOR.Data.SystemBase;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -62,7 +63,8 @@ namespace SOR.Data.Entitis
         public IsStatus IsStatus { get; set; } = IsStatus.Waiting;
 
         //public User User { get; set; }
-        //public NewsLabel NewsLabel { get; set; }
-        //public IEnumerable<ReportProof>  ReportProofs { get; set; }
+        public NewsLabel NewsLabel { get; set; }
+        public IEnumerable<ReportProof>  ReportProofs { get; set; }
+        public IEnumerable<ReportResult> ReportResults { get; set; }
     }
 }

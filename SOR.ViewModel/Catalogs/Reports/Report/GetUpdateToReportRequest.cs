@@ -1,4 +1,6 @@
-﻿namespace SOR.ViewModel.Catalogs.Reports
+﻿using SOR.Data.Enum;
+
+namespace SOR.ViewModel.Catalogs.Reports
 {
     public class GetUpdateToReportRequest : CreateUserRequest
     {

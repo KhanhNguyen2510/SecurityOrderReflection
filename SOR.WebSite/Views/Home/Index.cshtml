@@ -1,0 +1,385 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ -";
+}
+
+    <div class="bg-HUFI">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9" style="background-color: white;padding:15px;box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);border-radius: 4px;">
+                    <div class="header-left">
+                        <div class="bg-left">
+                            <div class="title-left" style="text-transform: uppercase;">Trật tự an toàn xã hội</div>
+                        </div>
+                        <div style="padding-top:10px;"></div>
+                        <div class="carousel carousel-pc" data-flickity='{ "autoPlay": false,"pageDots": false,"draggable": false }'>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+                            </div>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Test1</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Test2</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Test3</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Test4</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Test5</div>
+                            </div>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+                            </div>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+                            </div>
+                        </div>
+                        <!-- Dành cho mobile -->
+                        <div class="carousel carousel-mobile" style="display: none;" data-flickity='{ "autoPlay": false,"pageDots": false,"draggable": true }'>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+                            </div>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Test1</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Test2</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Test3</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Test4</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Test5</div>
+                            </div>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+                            </div>
+                            <div class="carousel-cell">
+                                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
+                                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
+                                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
+                                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
+                                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div id="hinhsu">
+                        <div style="padding-top:5px;"></div>
+                        <ul class="hinhsu-list">
+                            <a href="chitiet_baiviet.html" style="text-decoration: none;color:black;">
+                                <li class="hinhsu-item">
+                                    <div class="baiviet-pc" style="display:flex;">
+                                        <img style="width:50%;height:260px;" src="/assets/image/hinhsu1.png" alt="">
+                                        <div style="padding:10px 15px;">
+                                            <span class="hinhsu-title">PHẢN ÁNH VIỆC NHÀ DÂN BỊ TRỘM VÀO TẠI 241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN</span>
+                                            <div class="hinhsu-desc">Nhà tôi vừa bị trộm vào nhà. Rất mong cơ quan chức năng hỗ trợ truy bắt đối tượng,cảnh báo người dân trong khu vực.</div>
+                                            <span class="hinhsu-time">
+                                                <i class="far fa-clock"></i>
+                                                07/01/2021 15:39
+                                            </span>
+                                            <div class="hinhsu-address">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Dành cho mobile -->
+                                    <div class="baiviet-mobile" style="display: none;">
+                                        <img style="width:100%;" src="/assets/image/hinhsu1.png" alt="">
+                                        <div style="padding:10px 15px;">
+                                            <span class="hinhsu-title">PHẢN ÁNH VIỆC NHÀ DÂN BỊ TRỘM VÀO TẠI 241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN</span>
+                                            <div class="hinhsu-desc">Nhà tôi vừa bị trộm vào nhà. Rất mong cơ quan chức năng hỗ trợ truy bắt đối tượng,cảnh báo người dân trong khu vực.</div>
+                                            <span class="hinhsu-time">
+                                                <i class="far fa-clock"></i>
+                                                07/01/2021 15:39
+                                            </span>
+                                            <div class="hinhsu-address">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                    <div id="tenan">
+                        <div style="padding-top:5px;"></div>
+                        <ul class="hinhsu-list">
+                            <li class="hinhsu-item">
+                                <div style="display:flex;">
+                                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu4.jpg" alt="">
+                                    <div style="padding:10px 15px;">
+                                        <span class="hinhsu-title">PHẢN ÁNH 02 TỤ ĐIỂM ĐÁ GÀ, LẮC TÀI XỈU TẠI XÃ HOÀ BÌNH, HUYỆN CHỢ MỚI, DẪN ĐẾN TÌNH HÌNH ANTT PHỨC TẠP TẠI ĐỊA PHƯƠNG</span>
+                                        <div class="hinhsu-desc">Hiện nay tại xã hoà bình, huyện chợ mới, tỉnh an giang, có 2 chổ đá gà, lắc tài xỉu, có rất nhiều người lạ mặt, xăm mình thường lui tới bằng xe du lịch chơi</div>
+                                        <span class="hinhsu-time">
+                                            <i class="far fa-clock"></i>
+                                            08/11/2020 22:39
+                                        </span>
+                                        <div class="hinhsu-address">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="buonlau">
+                        <div style="padding-top:5px;"></div>
+                        <ul class="hinhsu-list">
+                            <li class="hinhsu-item">
+                                <div style="display:flex;">
+                                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu2.png" alt="">
+                                    <div style="padding:10px 15px;">
+                                        <span class="hinhsu-title">PHẢN ÁNH 02 TỤ ĐIỂM ĐÁ GÀ, LẮC TÀI XỈU TẠI XÃ HOÀ BÌNH, HUYỆN CHỢ MỚI, DẪN ĐẾN TÌNH HÌNH ANTT PHỨC TẠP TẠI ĐỊA PHƯƠNG</span>
+                                        <div class="hinhsu-desc">Hiện nay tại xã hoà bình, huyện chợ mới, tỉnh an giang, có 2 chổ đá gà, lắc tài xỉu, có rất nhiều người lạ mặt, xăm mình thường lui tới bằng xe du lịch chơi</div>
+                                        <span class="hinhsu-time">
+                                            <i class="far fa-clock"></i>
+                                            08/11/2020 22:39
+                                        </span>
+                                        <div class="hinhsu-address">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="khaithac">
+                        <div style="padding-top:5px;"></div>
+                        <ul class="hinhsu-list">
+                            <li class="hinhsu-item">
+                                <div style="display:flex;">
+                                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu5.png" alt="">
+                                    <div style="padding:10px 15px;">
+                                        <span class="hinhsu-title">Vi phạm về khai thác cát trái phép</span>
+                                        <div class="hinhsu-desc">cát tặc lọng hành tàu ghe đậu chuẩn bị tối ra lấy cát gây cảnh sạt lỡ thiệt hại nặg nề</div>
+                                        <span class="hinhsu-time">
+                                            <i class="far fa-clock"></i>
+                                            28/10/2020 22:39
+                                        </span>
+                                        <div class="hinhsu-address">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="khac">
+                        <div style="padding-top:5px;"></div>
+                        <ul class="hinhsu-list">
+                            <li class="hinhsu-item">
+                                <div style="display:flex;">
+                                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu6.png" alt="">
+                                    <div style="padding:10px 15px;">
+                                        <span class="hinhsu-title">Phản ánh cò lập bến bãi gây mất ANTT trước cổng Bệnh viện sản nhi An Giang</span>
+                                        <div class="hinhsu-desc">cổng bệnh viện sản nhi an giang lập bến bãi ...bắt cò gây gổ mất trật tự</div>
+                                        <span class="hinhsu-time">
+                                            <i class="far fa-clock"></i>
+                                            13/10/2020 22:39
+                                        </span>
+                                        <div class="hinhsu-address">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>                 
+                        </ul>
+                    </div>
+                    <div class="pagination" style="justify-content: center;text-align: center;">
+                        <a class="active pagin" href="#">1</a>
+                        <a class="pagin" href="#">2</a>
+                        <a class="pagin" href="#">3</a>
+                        <a class="pagin" href="#">4</a>
+                        <a class="pagin" href="#">5</a>
+                        <a class="pagin" href="#">6</a>
+                        <a class="pagin" href="#"><i class="fas fa-chevron-right"></i></a>
+                        <a class="pagin" href="#"><i class="fas fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row row-mobile" style="background: white;margin-left: 1px;box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);border-radius: 4px;padding:13px;">
+                        <div class="bg-left">
+                            <div class="title-left" style="text-transform: uppercase;">CHỨC NĂNG</div>
+                        </div>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a href="dangbai.html" style="text-decoration: none;color:black;width: 100%;">
+                                    <li class="item-chucnang">
+                                        <i class="fas fa-plus-circle"></i>
+                                        Đăng bài
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a href="xembaidadang.html" style="text-decoration: none;color:black;width: 100%;">
+                                    <li class="item-chucnang">
+                                        <i class="fas fa-check-circle"></i>
+                                        Xem bài đã đăng
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row row-mobile" style="background: white;margin-left: 1px;margin-top:19px;box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);border-radius: 4px;padding:13px;">
+                        <div class="bg-left">
+                            <div class="title-left" style="text-transform: uppercase;">THÔNG BÁO</div>
+                        </div>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a class="thong-bao-HUFI" href="#" style="color:black;text-decoration:none;">
+                                    <li class="item-thongbao">
+                                        <i style="font-size:5px;padding-right:5px;color:red;" class="fas fa-circle"></i>
+                                        KẾ HOẠCH THỰC HIỆN ĐỒ ÁN HỌC PHẦN HỌC KỲ 2 2021 - 2022
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a class="thong-bao-HUFI" href="#" style="color:black;text-decoration:none;">
+                                    <li class="item-thongbao">
+                                        <i style="font-size:5px;padding-right:5px;color:red;" class="fas fa-circle"></i>
+                                        KẾ HOẠCH THỰC HIỆN KHÓA LUẬN TỐT NGHIỆP HỌC KỲ 2 2021 - 2022
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a class="thong-bao-HUFI" href="#" style="color:black;text-decoration:none;">
+                                    <li class="item-thongbao">
+                                        <i style="font-size:5px;padding-right:5px;color:red;" class="fas fa-circle"></i>
+                                        Kết quả xét học bổng KKHT học kỳ 2 2020 - 2021
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a class="thong-bao-HUFI" href="#" style="color:black;text-decoration:none;">
+                                    <li class="item-thongbao">
+                                        <i style="font-size:5px;padding-right:5px;color:red;" class="fas fa-circle"></i>
+                                        THÔNG BÁO v/v Đăng ký đề tài đồ án môn học 2022 (Cập nhật danh sách sinh viên đã đăng ký)
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <a href="#" style="color:black;text-decoration:none;">
+                                    <li class="item-thongbao">
+                                        <i style="font-size:5px;padding-right:5px;color:red;" class="fas fa-circle"></i>
+                                        THÔNG BÁO v/v Đăng ký đề tài Khóa luận tốt nghiệp - 2022 (Cập nhật danh sách đã đăng ký)
+                                    </li>
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row row-mobile" style="background: white;margin-left: 1px;margin-top:19px;box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);border-radius: 4px;padding:13px;">
+                        <div class="bg-left">
+                            <div class="title-left" style="text-transform: uppercase;">SỰ KIỆN SẮP DIỄN RA</div>
+                        </div>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <li class="item-thongbao">
+                                    <div style="display: flex;">
+                                        <div>
+                                            <img style="width:50px;height:50px;border-radius:5px;"w src="/assets/image/thongbao.jpg" alt="">
+                                        </div>
+                                        <div style="margin-left:10px;">
+                                            KẾ HOẠCH THỰC HIỆN ĐỒ ÁN HỌC PHẦN HỌC KỲ 2 2021 - 2022
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <li class="item-thongbao">
+                                    <div style="display: flex;">
+                                        <div>
+                                            <img style="width:50px;height:50px;border-radius:5px;"w src="/assets/image/thongbao.jpg" alt="">
+                                        </div>
+                                        <div style="margin-left:10px;">
+                                            KẾ HOẠCH THỰC HIỆN ĐỒ ÁN HỌC PHẦN HỌC KỲ 2 2021 - 2022
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <li class="item-thongbao">
+                                    <div style="display: flex;">
+                                        <div>
+                                            <img style="width:50px;height:50px;border-radius:5px;"w src="/assets/image/thongbao.jpg" alt="">
+                                        </div>
+                                        <div style="margin-left:10px;">
+                                            KẾ HOẠCH THỰC HIỆN ĐỒ ÁN HỌC PHẦN HỌC KỲ 2 2021 - 2022
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <li class="item-thongbao">
+                                    <div style="display: flex;">
+                                        <div>
+                                            <img style="width:50px;height:50px;border-radius:5px;"w src="/assets/image/thongbao.jpg" alt="">
+                                        </div>
+                                        <div style="margin-left:10px;">
+                                            KẾ HOẠCH THỰC HIỆN ĐỒ ÁN HỌC PHẦN HỌC KỲ 2 2021 - 2022
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="chucnang-HUFI">
+                            <ul class="list-chucnang-HUFI">
+                                <li class="item-thongbao">
+                                    <div style="display: flex;">
+                                        <div>
+                                            <img style="width:50px;height:50px;border-radius:5px;"w src="/assets/image/thongbao.jpg" alt="">
+                                        </div>
+                                        <div style="margin-left:10px;">
+                                            KẾ HOẠCH THỰC HIỆN ĐỒ ÁN HỌC PHẦN HỌC KỲ 2 2021 - 2022
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding-bottom:50px;"></div>
+    </div>

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using SOR.ViewModel.Catalogs.Reports.Proof;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SOR.ViewModel.Catalogs.Reports
 {
@@ -37,5 +40,8 @@ namespace SOR.ViewModel.Catalogs.Reports
         /// </summary>
         /// 
         public string locationUser { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập chọn hình ảnh")]
+        public List<IFormFile> files { get; set; }
     }
 }

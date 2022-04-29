@@ -6,7 +6,11 @@ using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Agencies;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+
+
 
 namespace SOR.WedAPI.Controllers
 {
@@ -148,5 +152,16 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException();
             }
         }
+
+
+        [HttpGet("asdas")]
+        public JsonResult GetAll()
+        {
+           var data = _agenciesSevice.Get();
+            return Json(data);
+        }
+        
+
+
     }
 }

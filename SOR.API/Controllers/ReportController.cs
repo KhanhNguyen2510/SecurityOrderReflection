@@ -4,12 +4,12 @@ using SOR.Application.Catalogs.Reports;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Reports;
-using SOR.ViewModel.Catalogs.Reports.Proof;
 using SOR.ViewModel.Catalogs.Reports.Report;
 using SOR.ViewModel.Catalogs.Reports.Result;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
+
 
 namespace SOR.WedAPI.Controllers
 {
@@ -20,13 +20,16 @@ namespace SOR.WedAPI.Controllers
         private readonly IReportSevice _reportSevice;
         private readonly ILogger<ReportController> _logger;
 
-        public ReportController(ILogger<ReportController> logger, IReportSevice reportSevice)
+        public ReportController(ILogger<ReportController> logger, IReportSevice reportSevice )
         {
             _logger = logger;
             _reportSevice = reportSevice;
         }
 
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = /*268435456*/ 737280000)]
+        [DisableRequestSizeLimit]
+        [RequestSizeLimit(737280000)]
         [SwaggerOperation(Summary = "Thêm thông tin bài báo cáo")]
         public async Task<JsonResult> Create([FromForm] GetCreateToReportRequest request)
         {
@@ -46,26 +49,8 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException();
             }
         }
-        [HttpPost("proofs")]
-        [SwaggerOperation(Summary = "Thêm thông tin bằng chứng báo cáo")]
-        public async Task<JsonResult> CreateProof([FromForm] GetCreateToReportProofRequest request)
-        {
-            try
-            {
-                var data = await _reportSevice.CreateToReportProof(request);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Create To Report Proof: Message:{ex.Message}");
-                throw new ApiException();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Create To Report Proof: Message:{ex.Message}");
-                throw new ApiException();
-            }
-        }
+
+        
         [HttpPost("results")]
         [SwaggerOperation(Summary = "Thêm thông tin bằng chứng báo cáo")]
         public async Task<JsonResult> CreateResult([FromForm] GetCreateToReportResultRequest request)
@@ -87,6 +72,47 @@ namespace SOR.WedAPI.Controllers
             }
         }
 
+        [HttpPatch("{Id}/report-status")]
+        [SwaggerOperation(Summary = "Cập nhật trạng thái thông tin bài báo cáo")]
+        public async Task<JsonResult> UpdateStatus(string Id, [FromForm] GetUpdateStatusInReportRequest request)
+        {
+            try
+            {
+                var data = await _reportSevice.UpdateStatus(Id, request);
+                return Json(data);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError($"Update IsStatus To Report: Message:{ex.Message}");
+                throw new ApiException();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update IsStatus To Report: Message:{ex.Message}");
+                throw new ApiException();
+            }
+        }
+
+        [HttpPatch("{Id}/report-is-report")]
+        [SwaggerOperation(Summary = "Cập nhật  thông tin báo cáo của bài báo cáo")]
+        public async Task<JsonResult> UpdateIsReport(string Id, [FromForm] GetUpdateReportInReportRequest request)
+        {
+            try
+            {
+                var data = await _reportSevice.UpdateIsReport(Id, request);
+                return Json(data);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError($"Update IsReport To Report: Message:{ex.Message}");
+                throw new ApiException();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update IsReport To Report: Message:{ex.Message}");
+                throw new ApiException();
+            }
+        }
 
         [HttpPatch("{Id}")]
         [SwaggerOperation(Summary = "Cập nhật thông tin bài báo cáo")]
@@ -109,7 +135,7 @@ namespace SOR.WedAPI.Controllers
             }
         }
         [HttpPatch("{Id}/results")]
-        [SwaggerOperation(Summary = "Cập nhật thônf tin kết quả báo cáo")]
+        [SwaggerOperation(Summary = "Cập nhật thông tin kết quả báo cáo")]
         public async Task<JsonResult> UpdateProof(int Id,[FromForm] GetUpdateToReportResultRequest request)
         {
             try
@@ -129,8 +155,7 @@ namespace SOR.WedAPI.Controllers
             }
         }
 
-
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         [SwaggerOperation(Summary = "Xóa thông tin bài báo cáo")]
         public async Task<JsonResult> Delete(string Id, CreateUserRequest request)
         {
@@ -151,26 +176,6 @@ namespace SOR.WedAPI.Controllers
             }
         }
 
-        [HttpDelete("{Id}/proofs")]
-        [SwaggerOperation(Summary = "Thêm thông tin bằng chứng báo cáo")]
-        public async Task<JsonResult> DeleteProof(int Id, CreateUserRequest request)
-        {
-            try
-            {
-                var data = await _reportSevice.DeleteToReportProof(Id,request);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Delete To Report Proof: Message:{ex.Message}");
-                throw new ApiException();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Delete To Report Proof: Message:{ex.Message}");
-                throw new ApiException();
-            }
-        }
         [HttpDelete("{Id}/results")]
         [SwaggerOperation(Summary = "Thêm thông tin bằng chứng báo cáo")]
         public async Task<JsonResult> DeleteResult(int Id, CreateUserRequest request)
@@ -213,7 +218,7 @@ namespace SOR.WedAPI.Controllers
             }
         }
 
-        [HttpGet("{Id}/list-reposts")]
+        [HttpGet("list-reposts")]
         [SwaggerOperation(Summary = "Hiển thị tất cả thông tin báo cáo ")]
         public async Task<JsonResult> GetList([FromQuery]GetMangagerToReportRequest request)
         {
@@ -254,5 +259,9 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException();
             }
         }
+
+
+
+
     }
 }

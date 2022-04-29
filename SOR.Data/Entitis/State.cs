@@ -15,7 +15,7 @@ namespace SOR.Data.Entitis
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         /// <summary>
-        /// Vui  không vui 
+        /// Vui/không vui 
         /// </summary>
         public IsState IsState { get; set; } = IsState.UnStae;
         [StringLength(50)]

@@ -1,0 +1,705 @@
+* {
+    text-decoration: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+.header-HUFI{
+    width: 100%;
+    height:70px;
+    background-color: #ffff;
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);
+    position: fixed;
+    z-index: 1;
+}
+.input-HUFI{
+    width: 250px;
+    background-color: #fff;
+    height: 38px;
+    color: #b2b2b2;
+    font-size: 12px;
+    border: 1px solid #e6ecf0;
+    padding: 0 15px;
+    border-radius: 20px !important;
+    margin-top: 6px;
+    margin-left: 10px;
+    outline:none;
+}
+.list-item-HUFI{
+    display: flex;
+    width: 100%; 
+    justify-content: space-between;
+}
+.item-HUFI{
+    padding: 23px 18px;
+    text-align: center;
+    font-size:13px;
+    color:#667580;
+    line-height: 2;
+    cursor: pointer;
+}
+.button-HUFI{
+    position: relative;
+    top: 2px;
+    left: -47px;
+    background-color: transparent;
+    width: 38px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #878787;
+}
+.bg-HUFI{
+    background-color: #E7ECF0;
+    padding-top:80px;
+}
+.chucnang-HUFI{
+    width:100%;
+}
+.list-chucnang-HUFI{
+    display: flex;
+    justify-content: space-around;
+}
+.item-chucnang{
+    /* width: 100%; */
+    height: 100px;
+    padding: 10px 10px;
+    background-color: #FFF2D4;
+    line-height: 4.5;
+    margin: 7px;
+    text-align: center;
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);
+    cursor: pointer;
+}
+.item-thongbao{
+    border-bottom: 1px solid #bbbcbe;
+    font-size:14px;
+    padding:10px;
+}
+
+
+
+.map #contact-map {
+    width: 100%;
+    height: 225px;
+}
+
+.map.map-big #contact-map {
+    width: 100%;
+    height: 415px;
+}
+
+.contact-address .contact-heading {
+    padding-top: 35px;
+}
+
+    .contact-address .contact-heading h5 {
+        padding-bottom: 15px;
+    }
+
+
+
+.block-video .video-container h3 {
+    font-size: 14px;
+    color: #333;
+    line-height: 22px;
+    text-transform: uppercase;
+    padding: 20px 0 10px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    -webkit-transition: all 0.4s linear;
+    transition: all 0.4s linear;
+    text-align: justify;
+}
+
+/***************/
+
+.social-slogan {
+    font-family: 'Dancing Script', cursive;
+    font-size: 25px;
+    color: #fff;
+    height: 46px;
+    line-height: 65px;
+    text-align: left;
+}
+
+.our_location {
+    position: relative;
+    clear: both;
+    overflow: hidden;
+}
+
+    .our_location:before {
+        left: 0;
+        top: 0;
+        content: " ";
+        position: absolute;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+
+    .our_location .container {
+        z-index: 2;
+        position: relative;
+    }
+
+    .our_location h2 {
+        margin-bottom: 50px;
+    }
+
+    .our_location .div-title h2 a {
+        color: #fff;
+    }
+
+    .our_service h2, .our_product h2, .our_location h2 {
+        text-transform: uppercase;
+        font-size: 24px;
+        color: #111;
+        letter-spacing: 0.03em;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+        padding: 0;
+    }
+
+        .our_location h2 span {
+            border-color: #fff;
+        }
+
+        .our_service h2 span, .our_product h2 span, .our_location h2 span {
+            display: inline-block;
+            border: 1px solid #fff;
+            padding: 23px 70px;
+            line-height: 30px;
+            color: #fff;
+        }
+
+div.location_con .map {
+    float: left;
+    width: 45%;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0px 3px 10px;
+}
+
+.location_con dt i {
+    font-size: 20px;
+    width: 25px;
+    margin-left:5px;
+}
+
+.location_con .com_info {
+    width: 55%;
+    float: left;
+    border-color: rgba(255, 255, 255, 0.1);
+    padding-right: 15px;
+}
+
+div.location_con .com_info dl {
+    border-bottom: 1px solid;
+    border-color: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    font-size: 16px;
+    margin: 0;
+}
+
+    div.location_con .com_info dl dt {
+        float: left;
+        color: #fff;
+        font-weight: normal;
+        text-align: left;
+        width: 120px;
+        margin: 10px 20px 0 2px;
+    }
+
+        div.location_con .com_info dl dt::after {
+            content: '';
+            float: right;
+            border-right: 1px solid;
+            border-color: rgba(255, 255, 255, 0.2);
+            width: 5px;
+            height: 14px;
+            margin-top: 5px;
+        }
+
+    div.location_con .com_info dl dd {
+        float: left;
+        color: #fff;
+        margin: 0;
+        margin-top: 10px;
+        width: calc(100% - 150px);
+    }
+
+#footer-part {
+    width: 100%;
+    position: relative;
+    background: rgba(1, 60, 136, 0.66);
+}
+
+.footer-top {
+    background-color: #07294d;
+}
+
+.footer-about {
+    text-align: center;
+}
+
+    .footer-about p {
+        color: #fff;
+        padding-top: 15px;
+    }
+
+    .footer-about ul li {
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+        .footer-about ul li:last-child {
+            margin-right: 0;
+        }
+
+        .footer-about ul li a {
+            width: 45px;
+            height: 45px;
+            display: inline-block;
+            line-height: 50px;
+            font-size: 30px;
+            color: #fff;
+            text-align: center;            
+            -webkit-transition: all 0.4s linear;
+            transition: all 0.4s linear;
+            background-repeat:no-repeat;
+            background-size:contain;
+        }
+            .footer-about ul li a i{
+                font-size:0;
+            }
+
+            .footer-about ul li a.youtube {
+                background-image: url('img/ft_1_youtube.png');
+            }
+
+            .footer-about ul li a.instagram {
+                background-image: url('img/ft_1_instagram.png');
+            }
+
+            .footer-about ul li a.facebook {
+                /*background: #527dc2;*/
+                background-image: url('img/ft_1_facbook.png');
+            }
+
+            .footer-about ul li a.zalo {
+                background-image: url('img/ft_1_zalo.png');
+            }
+            .footer-about ul li a.tiktok {
+                background-image: url('img/ft_1_tiktok.png');
+            }
+
+            .footer-about ul li a.twitter {
+                background: #3cb0fb;
+            }
+
+            .footer-about ul li a.google-plus {
+                background: #575e57;
+            }
+
+            .footer-about ul li a:hover {                
+                opacity:0.8;
+                -webkit-transition: all 0.4s linear;
+                transition: all 0.4s linear;
+            }
+
+
+
+
+
+.footer-title h6 {
+    font-size: 18px;
+    color: #fff;
+}
+
+.footer-link {
+    overflow: hidden;
+}
+
+    .footer-link ul {
+        width: 50%;
+        float: left;
+        overflow: hidden;
+    }
+
+        .footer-link ul li {
+            line-height: 35px;
+        }
+
+            .footer-link ul li a {
+                color: #fff;
+                font-size: 15px;
+                -webkit-transition: all 0.4s linear;
+                transition: all 0.4s linear;
+            }
+
+                .footer-link ul li a i {
+                    margin-right: 8px;
+                    color: #fff;
+                    -webkit-transition: all 0.4s linear;
+                    transition: all 0.4s linear;
+                }
+
+                .footer-link ul li a:hover {
+                    color: #0066b3;
+                }
+
+                    .footer-link ul li a:hover i {
+                        margin-right: 15px;
+                    }
+
+.support ul {
+    float: left;
+    width: 100%;
+}
+
+.footer-address ul li {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+    .footer-address ul li:last-child {
+        margin-bottom: 0;
+    }
+
+    .footer-address ul li .icon i {
+        font-size: 18px;
+        color: #fff;
+        position: absolute;
+        left: 0;
+        top: 5px;
+    }
+
+    .footer-address ul li .cont {
+        padding-left: 35px;
+    }
+
+        .footer-address ul li .cont p {
+            color: #fff;
+        }
+
+.footer-copyright {
+    background-color: rgb(29 59 113 / 50%);
+    height: 42px;
+}
+
+    .footer-copyright .copyright p {
+        color: #fff;
+        margin: 0;
+        font-size: 11px;
+        line-height: 18px;
+    }
+
+        .footer-copyright .copyright p span {
+            font-weight: 600;
+        }
+
+#footer-part .list_count{
+    margin:0;
+}
+#footer-part .list_count li {
+    display: inline-block;
+    margin-right: 10px;
+}
+    #footer-part .list_count li i {
+        margin-right: 3px;
+    }
+
+#category-part .category-bg {
+    background: #1d3b71;
+    min-height: 130px;
+}
+
+.home-album-contain {
+    padding: 10px;
+    background: #eee;
+    margin: 0 -10px -10px;
+}
+#divVideoHomeContent{
+    text-align:justify;
+}
+.logo-header{
+    position: absolute;
+    margin-left: 70px;
+    margin-top: 36px;
+}
+.banner-header{
+    position: absolute;
+    width: 230px;
+    animation: spin 20s linear infinite;
+    margin-top: -22px;
+    margin-left: 20px;
+}
+@keyframes spin {
+    0%{
+        transform:  rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.menu-bg{
+    background-color: #C40001;
+    height:40px;
+    position: relative;
+}
+.menuCA{
+    display: flex;
+    justify-content: space-between;
+}
+.list-menu-CA{
+    display: flex;
+    margin-top:1px;
+}
+.item-menu-CA{
+    padding: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    padding-top:11px;
+}
+.item-menu-CA:hover{
+    background-color: #ff0404;
+    cursor: pointer;
+
+}
+.padding-top{
+    padding-top:40px;
+}
+
+.body-right{
+    padding-top:50px;
+}
+.bg-right{
+    background: url(../image/logo2.jpg);
+    width: 100%;
+    height:40px;
+}
+.bg-left{
+    background: url(/assets/image/logoHUFI.png);
+    width: 100%;
+    height:40px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.title-right{
+    font-size: 13px;
+    color: darkred;
+    text-align: left;
+    padding-top: 10px;
+    font-weight: bold;
+    margin-left: 45px;
+}
+.title-left{
+    font-size: 13px;
+    color: darkred;
+    text-align: left;
+    padding-top: 10px;
+    font-weight: bold;
+    margin-left: 45px;
+    border-bottom: 2px solid #b0b0b0;
+    padding-bottom: 5px;
+}
+.list-viectot{
+    padding-top:5px;
+}
+.desc-viectot{
+    font-size:14px;
+}
+.bg-footer{
+    background: url(../image/footer-background.jpg);
+    width: 100%;
+    height:200px;
+    background-repeat: no-repeat;
+    clear: both;
+}
+.carousel {
+  /* background: whitesmoke; */
+}
+
+.carousel-cell {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  padding:0 60px;
+  border-radius: 5px;
+}
+
+  .tin-noi-bat:hover::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background: white;
+}
+
+.tin-noi-bat:hover::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 100px;
+}
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: white;
+}
+body::-webkit-scrollbar-thumb{
+    background-color: #b2b2b2;
+    border-radius: 50px;
+}
+.thong-bao-HUFI:hover{
+    color:red;
+}
+#active{
+    display: block;
+}
+#tenan{
+    display: none;
+}
+#buonlau{
+    display: none;
+}
+#khaithac{
+    display: none;
+}
+#khac{
+    display: none;
+}
+/* Tạo hình dán cho list bài viết */
+.hinhsu-item{
+    padding:15px 10px;
+    border-radius: 10px;
+    transform: translateX(0px);
+    transition: all 0.4s linear;
+}
+.hinhsu-item:hover{
+    transition: all 0.4s linear;
+    transform: translateX(-20px);
+    cursor: pointer;
+    background-color: #eff491;
+}
+.hinhsu-title{
+    font-weight: 600;
+    font-size:16px;
+}
+.hinhsu-desc{
+    font-size:14px;
+    padding:10px 0;
+}
+.hinhsu-time{
+    font-size:13px;
+}
+.hinhsu-address{
+    padding-top:10px;
+    color:#00b6d3;
+    font-size:13px;
+}
+/* Thêm dấu gạch chân và màu chữ khi click */
+.hinhsu.gachduoihinhsu{
+    color:red;
+    font-weight: bold;
+    border-bottom: 2px solid red;
+}
+.tenan.gachduoitenan{
+    color:red;
+    font-weight: bold;
+    border-bottom: 2px solid red;
+}
+.buonlau.gachduoibuonlau{
+    color:red;
+    font-weight: bold;
+    border-bottom: 2px solid red;
+}
+.khaithac.gachduoikhaithac{
+    color:red;
+    font-weight: bold;
+    border-bottom: 2px solid red;
+}
+.khac.gachduoikhac{
+    color:red;
+    font-weight: bold;
+    border-bottom: 2px solid red;
+}
+.thongtin-taikhoan{
+    width: 200px;
+    position: absolute;
+    background-color: white;
+    top: 57px;
+    margin-left: -26px;
+    border: 1px solid #a29a9a;
+    padding: 10px;
+    z-index: 1;
+    border-radius: 5px;
+    display: none;
+    box-shadow: 3px 2px 4px 1px #a29a9a;
+}
+.item-thongtin{
+    padding:5px;
+    border-radius: 5px;
+
+}
+.item-thongtin:hover{
+    background-color: #007bff;
+    color:white;
+    cursor: pointer;
+}
+.item-binhluan{
+    display: flex;
+}
+.name-binhluan{
+    font-weight: bold;
+    margin-left:20px;
+}
+.list-binhluan{
+    overflow-y: scroll;
+    max-height: 400px;
+}
+.list-binhluan:hover::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background: white;
+}
+
+.list-binhluan:hover::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 100px;
+}
+.nhanxet-binhluan{
+ background-color: #F3F4F6;
+ margin-left:20px;
+ padding:10px 15px;
+ border-radius: 10px;
+}
+.overlay{
+    position: fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color: rgba(0,0,0,0.6);
+     display: none;
+     z-index: 2;
+}
+.topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}

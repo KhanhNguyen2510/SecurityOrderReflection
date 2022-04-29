@@ -23,8 +23,8 @@ namespace SOR.Data.Entitis
         /// 
         [StringLength(50)]
         public string ReportId { get; set; }
-       
+
         //public User User { get; set; }
-        //public Report Report { get; set; }
+        public Report Report { get; set; }
     }
 }
