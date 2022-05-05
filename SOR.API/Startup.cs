@@ -14,6 +14,7 @@ using SOR.Application.Catalogs.Historys;
 using SOR.Application.Catalogs.NewsLabels;
 using SOR.Application.Catalogs.Reports;
 using SOR.Application.Catalogs.Reports.Upload;
+using SOR.Application.Catalogs.Users;
 using SOR.Data.EFs;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,7 @@ namespace SOR.API
             services.AddTransient<IReportSevice, ReportSevice>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IFileSevice, FileSevice>();
+            services.AddTransient<IUserSevice, UserSevice>();
 
             services.AddSwaggerGen(c =>
             {

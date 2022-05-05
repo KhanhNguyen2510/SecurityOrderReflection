@@ -34,12 +34,12 @@ namespace SOR.Data.Entitis
         public string Identification { get; set; }
         [StringLength(200)]
         public string IPCreate { get; set; }
-        public IsAdmin IsAdmin { get; set; }
+        public IsAdmin IsAdmin { get; set; } = IsAdmin.People;
         /// <summary>
         /// Login vào
         /// </summary>
         [Column(TypeName = "datetime")]
-        public DateTime? FistLogin { get; set; }
+        public DateTime? FistLogin { get; set; } = DateTime.Now;
         /// <summary>
         /// Logout ra
         /// </summary>
@@ -50,7 +50,7 @@ namespace SOR.Data.Entitis
         /// </summary>
         /// 
         [StringLength(200)]
-        public int? AgenciesId { get; set; }
+        public string AgenciesId { get; set; }
 
         //public IEnumerable<State> State { get; set; }
         //public IEnumerable<History> Histories  { get; set; }

@@ -23,7 +23,7 @@ namespace SOR.Application.Catalogs.Agencies
         /// <param name="Id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<ApiResponse> UpdateToAgencies(int Id, GetUpdateToAgenciesRequest request);
+        Task<ApiResponse> UpdateToAgencies(string Id, GetUpdateToAgenciesRequest request);
 
         /// <summary>
         /// Delete
@@ -31,18 +31,15 @@ namespace SOR.Application.Catalogs.Agencies
         /// <param name="Id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<ApiResponse> DeleteToAgencies(int Id, CreateUserRequest request);
+        Task<ApiResponse> DeleteToAgencies(string Id, CreateUserRequest request);
 
         /// <summary>
         /// List
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<GetAgenciesViewModel> GetAgenciesById(int Id);
+        Task<GetAgenciesViewModel> GetAgenciesById(string Id);
         Task<IEnumerable<GetAgenciesViewModel>> GetListToAgencies(GetMangagerToAgenciesRequest request);
         Task<PagedResult<GetAgenciesViewModel>> GetListPagingToAgencies(GetMangagerAgenciesRequest request);
-
-
-        IEnumerable<string> Get();
     }
 }

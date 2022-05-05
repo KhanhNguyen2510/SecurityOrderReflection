@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SOR.Application.Catalogs.Historys;
 using SOR.Data.EFs;
+using SOR.Data.Enum;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
+using SOR.ViewModel.Catalogs.Historys;
 using SOR.ViewModel.Catalogs.NewLables;
 using SOR.ViewModel.Common;
 using System;
@@ -16,9 +19,13 @@ namespace SOR.Application.Catalogs.NewsLabels
     {
         private readonly SORDbContext _context;
         private SystemBase<string> checkValue = new SystemBase<string>();
-        public NewsLabelSevice(SORDbContext context)
+        private readonly IHistorySevice _historySevice;
+
+
+        public NewsLabelSevice(SORDbContext context, IHistorySevice historySevice )
         {
             _context = context;
+            _historySevice = historySevice;
         }
 
         public async Task<bool> NameNewsLableExistence(string name)
@@ -64,7 +71,7 @@ namespace SOR.Application.Catalogs.NewsLabels
 
             if (findId != null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
 
-            var data = new Data.Entitis.NewsLabel()
+            var gHistory = new Data.Entitis.NewsLabel()
             {
                 Id = request.id,
                 Name = request.name,
@@ -72,8 +79,19 @@ namespace SOR.Application.Catalogs.NewsLabels
                 UpdateUser = request.userId
             };
 
-            await _context.NewsLabels.AddAsync(data);
+            await _context.NewsLabels.AddAsync(gHistory);
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Thêm thông tin nhản bài báo cáo",
+                IsOperation = IsOperation.Create,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);
         }
@@ -108,6 +126,17 @@ namespace SOR.Application.Catalogs.NewsLabels
                 findId.UpdateDate = DateTime.Now;
 
                 await _context.SaveChangesAsync();
+
+                #region Add History
+                var dhistory = new GetCreateToHistoryRequest()
+                {
+                    HistoryOperation = $"Cập nhật thông tin nhản bài báo cáo với ID là  { Id}",
+                    IsOperation = IsOperation.Update,
+                    userId = request.userId
+                };
+
+                await _historySevice.CreateToHistory(dhistory);
+                #endregion
             }
 
             return new ApiResponse(MessageBase.SUCCCESS);
@@ -136,6 +165,17 @@ namespace SOR.Application.Catalogs.NewsLabels
             finfId.TimeDelete = finfId.UpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Xóa thông tin nhản bài báo cáo với ID là { Id} ",
+                IsOperation = IsOperation.Delete,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);
         }

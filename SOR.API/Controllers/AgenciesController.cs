@@ -6,8 +6,6 @@ using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Agencies;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 
@@ -39,18 +37,18 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Create To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Create To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
         [HttpPatch("{Id}")]
         [SwaggerOperation(Summary = "Cập nhật thông tin nhãn của cơ quan")]
-        public async Task<JsonResult> Update(int Id, [FromForm] GetUpdateToAgenciesRequest request)
+        public async Task<JsonResult> Update(string Id, [FromForm] GetUpdateToAgenciesRequest request)
         {
             try
             {
@@ -60,18 +58,18 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Update To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Update To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
         [HttpDelete("{Id}")]
         [SwaggerOperation(Summary = "Xóa thông tin nhãn của cơ quan")]
-        public async Task<JsonResult> Delete(int Id, [FromForm]CreateUserRequest request)
+        public async Task<JsonResult> Delete(string Id, [FromForm]CreateUserRequest request)
         {
             try
             {
@@ -81,12 +79,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Delete To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Delete To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -102,12 +100,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"List To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"List To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -123,18 +121,18 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"List Paging To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"List Paging To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
         [HttpGet("{Id}/get-id")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của cơ quan theo Id")]
-        public async Task<JsonResult> GetById(int Id)
+        public async Task<JsonResult> GetById(string Id)
         {
             try
             {
@@ -144,24 +142,13 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Get Id To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get Id To Agencies: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
-
-
-        [HttpGet("asdas")]
-        public JsonResult GetAll()
-        {
-           var data = _agenciesSevice.Get();
-            return Json(data);
-        }
-        
-
-
     }
 }

@@ -7,7 +7,7 @@ namespace SOR.Application.Catalogs.Reports.Upload
 {
     public class FileSevice :  IFileSevice
     {
-        private IHostingEnvironment _hostingEnvironment;
+        private readonly  IHostingEnvironment _hostingEnvironment;
 
         public FileSevice(IHostingEnvironment hostingEnvironment)
         {

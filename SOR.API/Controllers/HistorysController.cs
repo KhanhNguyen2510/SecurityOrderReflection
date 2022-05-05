@@ -34,54 +34,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Create To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Create To History: Message:{ex.Message}");
-                throw new ApiException();
-            }
-        }
-
-        [HttpPatch("{Id}")]
-        [SwaggerOperation(Summary = "Cập nhật thông tin nhãn của lịch sử")]
-        public async Task<JsonResult> Update(int Id, [FromForm] GetUpdateToHistoryRequest request)
-        {
-            try
-            {
-                var data = await _historySevice.UpdateToHistory(Id, request);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Update To History: Message:{ex.Message}");
-                throw new ApiException();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Update To History: Message:{ex.Message}");
-                throw new ApiException();
-            }
-        }
-
-        [HttpDelete("{Id}")]
-        [SwaggerOperation(Summary = "Xóa thông tin nhãn của lịch sử")]
-        public async Task<JsonResult> Delete(int Id, [FromForm] CreateUserRequest request)
-        {
-            try
-            {
-                var data = await _historySevice.DeleteToHistory(Id, request);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Delete To History: Message:{ex.Message}");
-                throw new ApiException();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Delete To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -97,12 +55,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"List To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"List To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -118,12 +76,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"List Paging To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"List Paging To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -139,12 +97,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Get Id To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get Id To History: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
     }

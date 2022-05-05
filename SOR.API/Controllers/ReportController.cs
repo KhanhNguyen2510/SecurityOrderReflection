@@ -41,12 +41,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Create To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Create To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -63,16 +63,16 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Create To Report Result: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Create To Report Result: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
-        [HttpPatch("{Id}/report-status")]
+        [HttpPatch("{Id}/report-is-status")]
         [SwaggerOperation(Summary = "Cập nhật trạng thái thông tin bài báo cáo")]
         public async Task<JsonResult> UpdateStatus(string Id, [FromForm] GetUpdateStatusInReportRequest request)
         {
@@ -84,12 +84,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Update IsStatus To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Update IsStatus To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -105,12 +105,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Update IsReport To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Update IsReport To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -126,12 +126,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Update To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Update To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
         [HttpPatch("{Id}/results")]
@@ -146,12 +146,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Update To Report Result: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Update To Report Result: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -167,12 +167,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Delete To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Delete To Report: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -188,12 +188,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Delete To Report Result: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Delete To Report Result: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -209,12 +209,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Get By Id To Report : Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get By Id To Report : Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -230,12 +230,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Get list To Report : Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get list To Report : Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -251,17 +251,13 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Get paging To Report : Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get paging To Report : Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
-
-
-
-
     }
 }

@@ -11,8 +11,7 @@ namespace SOR.Data.Entitis
     public class Agencies : EntitisBase
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [StringLength(200)]
         public string Name { get; set; }
         /// <summary>

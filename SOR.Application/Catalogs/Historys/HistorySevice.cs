@@ -46,7 +46,7 @@ namespace SOR.Application.Catalogs.Historys
             bool cUser = checkValue.CheckNullValue(request.userId);
             if (!cUser) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
 
-            var data = new Data.Entitis.History()
+            var dHistoy = new Data.Entitis.History()
             {
                 HistoryOperation = request.HistoryOperation,
                 IsOperation = request.IsOperation == null ? IsOperation.Orther : request.IsOperation,
@@ -54,59 +54,7 @@ namespace SOR.Application.Catalogs.Historys
                 UpdateUser = request.userId
             };
 
-            await _context.Histories.AddAsync(data);
-            await _context.SaveChangesAsync();
-
-            return new ApiResponse(MessageBase.SUCCCESS);
-        }
-
-        /// <summary>
-        /// Update
-        /// </summary>
-        /// <param name="Cập nhật thông tin"></param>
-        /// <returns></returns>
-        /// 
-
-        public async Task<ApiResponse> UpdateToHistory(int Id, GetUpdateToHistoryRequest request)
-        {
-            bool cUser = checkValue.CheckNullValue(request.userId);
-            if (!cUser) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
-
-            var findId = await FindIdExistence(Id);
-
-            if (findId == null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
-
-            findId.HistoryOperation = !string.IsNullOrEmpty(request.historyOperation) ? request.historyOperation : findId.HistoryOperation;
-            findId.IsOperation = request.isOperation != null ? request.isOperation : findId.IsOperation;
-            findId.UpdateUser = request.userId;
-            findId.UpdateDate = DateTime.Now;
-            await _context.SaveChangesAsync();
-
-            return new ApiResponse(MessageBase.SUCCCESS);
-        }
-
-        /// <summary>
-        /// Delete
-        /// </summary>
-        /// <param name="Xóa thông tin"></param>
-        /// <returns></returns>
-        /// 
-
-        public async Task<ApiResponse> DeleteToHistory(int Id, CreateUserRequest request)
-        {
-
-            bool cUser = checkValue.CheckNullValue(request.userId);
-            if (!cUser) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
-
-            var finfId = await FindIdExistence(Id);
-
-            if (finfId == null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
-
-            finfId.UpdateUser = request.userId;
-            finfId.IsDelete = false;
-
-            finfId.TimeDelete = finfId.UpdateDate = DateTime.Now;
-
+            await _context.Histories.AddAsync(dHistoy);
             await _context.SaveChangesAsync();
 
             return new ApiResponse(MessageBase.SUCCCESS);
@@ -121,21 +69,21 @@ namespace SOR.Application.Catalogs.Historys
 
         public async Task<GetHistoryViewModel> GetHistoryById(int Id)
         {
-            var query = await _context.Histories.Where(x => x.IsDelete == true && x.Id == Id).ToListAsync();
-            if (!query.Any())
-                return null;
+            var gHistory = await _context.Histories.Where(x => x.IsDelete == true && x.Id == Id).FirstOrDefaultAsync();
+            
+            if (gHistory == null) return null;
 
-            return query.Select(x => new GetHistoryViewModel()
+            return new GetHistoryViewModel()
             {
-                Id = x.Id,
-                HistoryOperation = x.HistoryOperation,
-                IsOperation = x.IsOperation,
-                TimeOperation = x.TimeOperation,
-                UpdateDate = x.UpdateDate,
-                UpdateUser = x.UpdateUser,
-                CreateDate = x.CreateDate,
-                CreateUser = x.CreateUser
-            }).FirstOrDefault();
+                Id = gHistory.Id,
+                HistoryOperation = gHistory.HistoryOperation,
+                IsOperation = gHistory.IsOperation,
+                TimeOperation = gHistory.TimeOperation,
+                UpdateDate = gHistory.UpdateDate,
+                UpdateUser = gHistory.UpdateUser,
+                CreateDate = gHistory.CreateDate,
+                CreateUser = gHistory.CreateUser
+            };
         }
 
         public async Task<IEnumerable<GetHistoryViewModel>> GetListToHistory(GetMangagerToHistoryRequest request)

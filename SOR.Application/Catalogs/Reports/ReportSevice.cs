@@ -237,6 +237,17 @@ namespace SOR.Application.Catalogs.Reports
             await _context.SaveChangesAsync();
             #endregion
 
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Thêm thông tin kết quả cho bài báo cáo với ID {request.reportId}",
+                IsOperation = IsOperation.Create,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
+
             return new ApiResponse(MessageBase.SUCCCESS);
         } ///Show
 
@@ -261,6 +272,18 @@ namespace SOR.Application.Catalogs.Reports
             findId.UpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật trang thái giải quyết từ {findId.IsStatus} thành {request.IsStatus} với ID {Id}",
+                IsOperation = IsOperation.Update,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
+
             return new ApiResponse(MessageBase.SUCCCESS);
         } ///Show
 
@@ -278,6 +301,18 @@ namespace SOR.Application.Catalogs.Reports
             findId.UpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật trang thái bài đăng từ {findId.IsDelete} thành {request.IsReport} với ID {Id}",
+                IsOperation = IsOperation.Update,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
+
             return new ApiResponse(MessageBase.SUCCCESS);
         } ///Show
 
@@ -293,11 +328,6 @@ namespace SOR.Application.Catalogs.Reports
 
             bool cContent = checkValue.CheckNullValue(request.content);
 
-            if (cContent)
-            {
-                request.content = request.content.Trim();
-                findId.Content = request.content;
-            }
             if (cContent)
             {
                 request.content = request.content.Trim();
@@ -319,6 +349,17 @@ namespace SOR.Application.Catalogs.Reports
             findId.UpdateUser = request.userId;
             findId.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật thông tin với ID {Id}",
+                IsOperation = IsOperation.Update,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);
         } ///Show
@@ -343,6 +384,17 @@ namespace SOR.Application.Catalogs.Reports
                 findId.UpdateUser = request.userId;
                 findId.UpdateDate = DateTime.Now;
                 await _context.SaveChangesAsync();
+
+                #region Add History
+                var dhistory = new GetCreateToHistoryRequest()
+                {
+                    HistoryOperation = $"Cập nhật kết quả bài báo cáo với ID {Id}",
+                    IsOperation = IsOperation.Update,
+                    userId = request.userId
+                };
+
+                await _historySevice.CreateToHistory(dhistory);
+                #endregion
             }
 
             return new ApiResponse(MessageBase.SUCCCESS);
@@ -374,6 +426,17 @@ namespace SOR.Application.Catalogs.Reports
             await GetDeleteReportProof(Id, request);
 
             await GetDeleteReportResult(Id, request);
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Xóa bài báo cáo với ID {Id}",
+                IsOperation = IsOperation.Delete,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);
         } ///Show

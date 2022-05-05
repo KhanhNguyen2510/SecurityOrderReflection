@@ -4,6 +4,8 @@ namespace SOR.ViewModel.Catalogs.Agencies
 {
     public class GetCreateToAgenciesRequest : CreateUserRequest
     {
+        [Required(ErrorMessage = "Vui lòng nhập ID")]
+        public string id { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập nội dung")]
         public string name { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập địa chỉ trụ sở")]

@@ -1,9 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SOR.Application.Catalogs.Historys;
 using SOR.Data.EFs;
 using SOR.Data.Enum;
 using SOR.Data.SystemBase;
+using SOR.ViewModel;
+using SOR.ViewModel.Catalogs.Historys;
+using SOR.ViewModel.Catalogs.Users;
+using SOR.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,11 +24,14 @@ namespace SOR.Application.Catalogs.Users
     {
         private readonly SORDbContext _context;
         private readonly IConfiguration _config;
+        private readonly IHistorySevice _historySevice;
+        private SystemBase<string> checkValueTypeString = new SystemBase<string>();
 
-        public UserSevice(SORDbContext context , IConfiguration configuration)
+        public UserSevice(SORDbContext context, IConfiguration configuration, IHistorySevice historySevice)
         {
             _context = context;
-            _config = configuration;    
+            _config = configuration;
+            _historySevice = historySevice;
         }
 
         /// <summary>
@@ -33,27 +41,48 @@ namespace SOR.Application.Catalogs.Users
         /// <returns></returns>
         /// 
 
-        public class GetLoginRequest
+        public async Task<bool> UserNameExistence(string userName)
         {
-            [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn cần nhập tên tài khoản")]
-            public string userName { get; set; }
-            [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn cần phải nhập mật khẩu")]
-            public string passWord { get; set; }
-        }
-
-        public async Task<bool> CheckLoginExistence(GetLoginRequest request)
-        {
-            var cUser = await _context.Users.FirstOrDefaultAsync(x => x.IsDelete == true &&  x.UserName == request.userName && x.PassWord == ShareContantsSytem.MD5(request.passWord));
-            if (cUser == null) return false;
+            var cUserName = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.IsDelete == true);
+            if (cUserName == null) return false;
             return true;
         }
 
+        public async Task<Data.Entitis.User> CheckUser(string userName)
+        {
+            var gUser = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.IsDelete == true);
+            if (gUser == null) return null;
+            return gUser;
+        }
+
+        public async Task<bool> AgenciesExistence(string Id)
+        {
+            var cAgencies = await _context.Agencies.FirstOrDefaultAsync(x => x.Id == Id);
+            if (cAgencies == null) return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="Các cách đăng nhập"></param>
+        /// <returns></returns>
+        /// 
+
         public async Task<bool> Login(GetLoginRequest request)
         {
-            bool cUser = await CheckLoginExistence(request);
-            if (cUser)
-                return true;
-            return false;
+            var cUser = await _context.Users.FirstOrDefaultAsync(x => x.IsDelete == true && x.UserName == request.userName && x.PassWord == ShareContantsSytem.MD5(request.passWord));
+            if (cUser == null) return false;
+
+            var dHistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Tài Khoản {request.userName} đăng nhập vào lúc {DateTime.Now}",
+                IsOperation = IsOperation.Login,
+                userId = request.userName
+            };
+            await _historySevice.CreateToHistory(dHistory);
+
+            return true;
         }
 
         public async Task<string> LoginInWed(GetLoginRequest request)
@@ -78,81 +107,349 @@ namespace SOR.Application.Catalogs.Users
             return null;
         }
 
-       
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="Tạo tài khoản"></param>
+        /// <returns></returns>
+        /// 
 
-        public async Task<string> GetKeyByLocationReport(string location)
+        public async Task<ApiResponse> CreateToUser(GetCreateToUserRequest request)
         {
-            var fCode = await _context.Codes.Where(x => x.IsDelete == true).Select(x => new { x.Name, x.Key }).ToListAsync();
+            #region Check Value
+            bool cName = checkValueTypeString.CheckNullValue(request.UserName);
+            if (!cName) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
 
-            if (!fCode.Any()) return MessageBase.KEY_UN_EXISTENCE;
+            bool cAgenciesExisten = false;
 
-            int cnCode = fCode.Count;
-
-            for (int item = 0; item < cnCode; item++)
+            bool cAgencies = checkValueTypeString.CheckNullValue(request.AgenciesId);
+            if (cAgencies)
             {
-                var cLocationReport = location.ToLower().Contains(fCode[item].Name.ToLower());
-                if (cLocationReport)
-                {
-                    return fCode[item].Key;
-                }
+                request.AgenciesId = request.AgenciesId.Trim();
+
+                cAgenciesExisten = await AgenciesExistence(request.AgenciesId);
+                if (!cAgenciesExisten) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
             }
-            return MessageBase.KEY_UN_EXISTENCE;
+
+            request.UserName = request.UserName.Trim();
+            bool cNameExistence = await UserNameExistence(request.UserName);
+            if (cNameExistence)
+                return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
+            #endregion
+
+            var dUser = new Data.Entitis.User()
+            {
+                UserName = request.UserName,
+                Email = request.Email,
+                IsAdmin = cAgenciesExisten == true ? IsAdmin.Police : IsAdmin.People,
+                Gender = request.Gender != null ? request.Gender : IsGender.Orther,
+                FullName = request.FullName,
+                Identification = request.Identification,
+                NumberPhone = request.NumberPhone,
+                PassWord = ShareContantsSytem.MD5(request.Password),
+                IPCreate = request.IPCreate,
+                AgenciesId = cAgenciesExisten == true ? request.AgenciesId: null,
+                CreateUser = request.UserName,
+                UpdateUser = request.UserName 
+            };
+
+            await _context.Users.AddAsync(dUser);
+            await _context.SaveChangesAsync();
+
+            var dHistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Tạo tài khoản {request.UserName} đăng nhập vào lúc {DateTime.Now}",
+                IsOperation = IsOperation.Create,
+                userId = request.UserName
+            };
+            await _historySevice.CreateToHistory(dHistory);
+
+            return new ApiResponse(MessageBase.SUCCCESS);
         }
 
-        public async Task<bool> UserNameExistence(string userName)
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="Cập nhật tài khoản"></param>
+        /// <returns></returns>
+        /// 
+
+        public async Task<ApiResponse> UpdatePassWordToUser(string userName)
         {
-            var cUserName = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
-            if (cUserName == null) return false;
-            return true;
+            bool cName = checkValueTypeString.CheckNullValue(userName);
+            if (!cName) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
+            userName = userName.Trim();
+            var fUserName = await CheckUser(userName);
+            if (fUserName == null)
+                return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+
+            StringBuilder generatePassWord = AutoGenerate.GenerateIdRandom(6);
+
+            fUserName.PassWord = ShareContantsSytem.MD5(generatePassWord.ToString());
+            fUserName.UpdateDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+
+            #region AddHistoy
+            var dHistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật mật khẩu của tài khoản {userName} vào lúc {DateTime.Now}",
+                IsOperation = IsOperation.Update,
+                userId = userName
+            };
+            await _historySevice.CreateToHistory(dHistory);
+            #endregion
+
+            return new ApiResponse(MessageBase.SUCCCESS,generatePassWord.ToString());
         }
-        public class GetCreateToUserRequest
+
+        public async Task<ApiResponse> UpdateToUser(string userName , GetUpdateToUserRequest request)
         {
-            [Required(AllowEmptyStrings = false, ErrorMessage = "Cần nhập tên tài khoản đăng nhập")]
-            public string UserName { get; set; }
-            [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]*", ErrorMessage = "Email không đúng định dạng")]
-            public string Email { get; set; }
-            public IsGender? Gender { get; set; } = IsGender.Orther;
-            public string FullName { get; set; }
-            public string Identification { get; set; }
-            public int? AgenciesId { get; set; }
-            [Display(Name = "Số điện thoại")]
-            [MinLength(9, ErrorMessage = "Số điện thoại không hợp lệ")]
-            [MaxLength(15, ErrorMessage = "Số điện thoại không hợp lệ")]
-            [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn cần nhập số diện thoại liên hệ")]
-            public string NumberPhone { get; set; }
-            [Display(Name = "Mật khẩu")]
-            [Required(AllowEmptyStrings = false, ErrorMessage = "Cần nhập mật khẩu")]
-            public string Password { get; set; }
-            [Display(Name = "Nhập lại mật khẩu")]
-            [Compare(otherProperty: "Password", ErrorMessage = "Mật khẩu không khớp")]
-            public string ConfirmPassword { get; set; }
+
+            #region CheckValue
+            bool cName = checkValueTypeString.CheckNullValue(userName);
+            if (!cName) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
+            userName = userName.Trim();
+            var cNameExistence = await CheckUser(userName);
+            if (cNameExistence == null)
+                return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+
+            bool cAgenciesExisten = false;
+
+            bool cAgencies = checkValueTypeString.CheckNullValue(request.AgenciesId);
+            if (cAgencies)
+            {
+                request.AgenciesId = request.AgenciesId.Trim();
+
+                cAgenciesExisten = await AgenciesExistence(request.AgenciesId);
+                if (!cAgenciesExisten) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+            }
+            #endregion
+
+            cNameExistence.Email = !string.IsNullOrEmpty(request.Email) ? request.Email : cNameExistence.Email;
+            cNameExistence.FullName = !string.IsNullOrEmpty(request.FullName) ? request.FullName : cNameExistence.FullName;
+            cNameExistence.Identification = !string.IsNullOrEmpty(request.Identification) ? request.Identification : cNameExistence.Identification;
+            cNameExistence.AgenciesId = cAgenciesExisten == true ? request.AgenciesId : cNameExistence.AgenciesId;
+            cNameExistence.Gender = request.Gender != null ? request.Gender : cNameExistence.Gender;
+            cNameExistence.NumberPhone = !string.IsNullOrEmpty(request.NumberPhone) ? request.NumberPhone : cNameExistence.NumberPhone;
+            cNameExistence.UpdateDate = DateTime.Now;
+            cNameExistence.UpdateUser = userName;
+
+
+            await _context.SaveChangesAsync();
+
+            #region AddHistoy
+            var dHistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật tài khoản {userName} đăng nhập vào lúc {DateTime.Now}",
+                IsOperation = IsOperation.Update,
+                userId = userName
+            };
+            await _historySevice.CreateToHistory(dHistory);
+            #endregion
+
+            return new ApiResponse(MessageBase.SUCCCESS);
         }
 
-        //public async Task<ApiResponse> CreateToUser(GetCreateToUserRequest request)
-        //{
-        //    bool cUserName = await UserNameExistence(request.UserName);
-        //    if(cUserName)
-        //        return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
-        //    request.UserName = request.UserName.Trim();
+        public async Task<ApiResponse> RoleUser(GetUpdateRoleToUserRequest request )
+        {
+            bool cName = checkValueTypeString.CheckNullValue(request.userUpdate);
+            if (!cName) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
+            request.userUpdate = request.userUpdate.Trim();
 
-        //    var data = new Data.Entitis.User()
-        //    {
-        //        UserName = request.UserName,
-        //        Email = request.Email,
-        //        IsAdmin = IsAdmin.People,
-        //        Gender = request.Gender != null ? request.Gender : IsGender.Orther,
-        //        FullName = request.FullName,
-        //        Identification = request.Identification,
-        //        AgenciesId = request.AgenciesId,
-        //        NumberPhone = request.NumberPhone,
-        //        PassWord = request.Password,
-                
-        //    }
+            var cNameExistence = await CheckUser(request.userUpdate);
+            if (cNameExistence == null)
+                return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+
+            cNameExistence.IsAdmin = request.IsAdmin;
+            cNameExistence.UpdateUser = request.userId;
+            cNameExistence.UpdateDate = DateTime.Now;
+            await _context.SaveChangesAsync();
 
 
-        //}
+            #region AddHistoy
+            var dHistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật quyền của {request.userUpdate} đăng nhập vào lúc {DateTime.Now}",
+                IsOperation = IsOperation.Update,
+                userId = request.userId
+            };
+            await _historySevice.CreateToHistory(dHistory);
+            #endregion
 
+            return new ApiResponse(MessageBase.SUCCCESS);
+        }
 
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="Xóa tài khoản "></param>
+        /// <returns></returns>
+        /// 
 
+        public async Task<ApiResponse> DeleteToUse(string userName, CreateUserRequest request)
+        {
+            bool cUser = checkValueTypeString.CheckNullValue(request.userId);
+            if (!cUser) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
+
+            var cUserExistence = await CheckUser(userName);
+
+            if (cUserExistence == null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+
+            cUserExistence.UpdateUser = request.userId;
+            cUserExistence.IsDelete = false;
+
+            cUserExistence.TimeDelete = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Xóa tài khoản với tên là {userName} vào ngày {DateTime.Now}",
+                IsOperation = IsOperation.Delete,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
+
+            return new ApiResponse(MessageBase.SUCCCESS);
+
+        }
+
+        /// <summary>
+        /// List
+        /// </summary>
+        /// <param name="Hiển thị thông tin"></param>
+        /// <returns></returns>
+        /// 
+
+        public async Task<Data.Entitis.User> GetUserById(string userName)
+        {
+            var gUser = await _context.Users.Where(x => x.IsDelete == true && x.UserName == userName.Trim()).FirstOrDefaultAsync();
+
+            if (gUser == null) return null;
+
+            return new Data.Entitis.User()
+            {
+               UserName = gUser.UserName,
+               AgenciesId = gUser.AgenciesId,
+               Email = gUser.Email,
+               EndLogin = gUser.EndLogin,
+               FistLogin = gUser.FistLogin,
+               FullName = gUser.FullName,
+               Gender = gUser.Gender,
+               Id = gUser.Id,
+               Identification = gUser.Identification,
+               IPCreate = gUser.IPCreate,
+               IsAdmin = gUser.IsAdmin,
+               NumberPhone = gUser.NumberPhone,
+               PassWord = gUser.PassWord
+            };
+        }
+
+        public async Task<IEnumerable<Data.Entitis.User>> GetListToUser(GetMangagerToUserRequest request)
+        {
+            var gUsers = await _context.Users.Where(x => x.IsDelete == true).ToListAsync();
+
+            if (!gUsers.Any()) return null;
+
+            bool cKeyWord = checkValueTypeString.CheckNullValue(request.keyWord);
+
+            if (cKeyWord)
+            {
+                gUsers = gUsers.Where(x => x.Id.ToString().Contains(request.keyWord) 
+                || x.Email.Contains(request.keyWord) || x.FullName.Contains(request.keyWord) ||
+                x.Identification.Contains(request.keyWord)|| x.IPCreate.Contains(request.keyWord) 
+                || x.NumberPhone.Contains(request.keyWord) || x.UserName.Contains(request.keyWord))
+                .ToList();
+            }
+            if (request.isAdmin != null)
+            {
+                gUsers = gUsers.Where(x => x.IsAdmin == request.isAdmin).ToList();
+            }
+            if (request.isGender != null)
+            {
+                gUsers = gUsers.Where(x => x.Gender == request.isGender).ToList();                
+            }
+            if (!string.IsNullOrEmpty(request.agenciesId))
+            {
+                gUsers = gUsers.Where(x => x.AgenciesId == request.agenciesId).ToList();
+            }
+
+            return gUsers.Select(x => new Data.Entitis.User()
+            {
+                UserName = x.UserName,
+                AgenciesId = x.AgenciesId,
+                Email = x.Email,
+                EndLogin = x.EndLogin,
+                FistLogin = x.FistLogin,
+                FullName = x.FullName,
+                Gender = x.Gender,
+                Id = x.Id,
+                Identification = x.Identification,
+                IPCreate = x.IPCreate,
+                IsAdmin = x.IsAdmin,
+                NumberPhone = x.NumberPhone,
+                PassWord = x.PassWord
+            });
+        }
+
+        public async Task<PagedResult<Data.Entitis.User>> GetListPagingToUser(GetMangagerUserRequest request)
+        {
+            var gUsers = await _context.Users.Where(x => x.IsDelete == true).ToListAsync();
+
+            if (!gUsers.Any()) return null;
+
+            bool cKeyWord = checkValueTypeString.CheckNullValue(request.keyWord);
+
+            if (cKeyWord)
+            {
+                gUsers = gUsers.Where(x => x.Id.ToString().Contains(request.keyWord)
+                || x.Email.Contains(request.keyWord) || x.FullName.Contains(request.keyWord) ||
+                x.Identification.Contains(request.keyWord) || x.IPCreate.Contains(request.keyWord)
+                || x.NumberPhone.Contains(request.keyWord) || x.UserName.Contains(request.keyWord))
+                .ToList();
+            }
+            if (request.isAdmin != null)
+            {
+                gUsers = gUsers.Where(x => x.IsAdmin == request.isAdmin).ToList();
+            }
+            if (request.isGender != null)
+            {
+                gUsers = gUsers.Where(x => x.Gender == request.isGender).ToList();
+            }
+            if (!string.IsNullOrEmpty(request.agenciesId))
+            {
+                gUsers = gUsers.Where(x => x.AgenciesId == request.agenciesId).ToList();
+            }
+
+            int totalRow = gUsers.Count();
+
+            var data = gUsers.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize).Select(x => new Data.Entitis.User()
+                {
+                    UserName = x.UserName,
+                    AgenciesId = x.AgenciesId,
+                    Email = x.Email,
+                    EndLogin = x.EndLogin,
+                    FistLogin = x.FistLogin,
+                    FullName = x.FullName,
+                    Gender = x.Gender,
+                    Id = x.Id,
+                    Identification = x.Identification,
+                    IPCreate = x.IPCreate,
+                    IsAdmin = x.IsAdmin,
+                    NumberPhone = x.NumberPhone,
+                    PassWord = x.PassWord
+                }).ToList();
+            return new PagedResult<Data.Entitis.User>()
+            {
+                Items = data,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+        }
     }
 }

@@ -21,10 +21,8 @@ namespace SOR.Data.Migrations
 
             modelBuilder.Entity("SOR.Data.Entitis.Agencies", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
@@ -85,8 +83,8 @@ namespace SOR.Data.Migrations
                         .HasColumnType("nvarchar(4)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime?>("TimeDelete")
                         .HasColumnType("datetime");
@@ -244,6 +242,8 @@ namespace SOR.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NewsLabelId");
+
                     b.ToTable("Report");
                 });
 
@@ -282,6 +282,8 @@ namespace SOR.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
 
                     b.ToTable("ReportProof");
                 });
@@ -322,6 +324,8 @@ namespace SOR.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
 
                     b.ToTable("ReportResult");
                 });
@@ -372,9 +376,9 @@ namespace SOR.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AgenciesId")
+                    b.Property<string>("AgenciesId")
                         .HasMaxLength(200)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
@@ -414,6 +418,10 @@ namespace SOR.Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
+                    b.Property<string>("NumberPhone")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("PassWord")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -435,6 +443,38 @@ namespace SOR.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("SOR.Data.Entitis.Report", b =>
+                {
+                    b.HasOne("SOR.Data.Entitis.NewsLabel", "NewsLabel")
+                        .WithMany()
+                        .HasForeignKey("NewsLabelId");
+
+                    b.Navigation("NewsLabel");
+                });
+
+            modelBuilder.Entity("SOR.Data.Entitis.ReportProof", b =>
+                {
+                    b.HasOne("SOR.Data.Entitis.Report", "Report")
+                        .WithMany("ReportProofs")
+                        .HasForeignKey("ReportId");
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("SOR.Data.Entitis.ReportResult", b =>
+                {
+                    b.HasOne("SOR.Data.Entitis.Report", null)
+                        .WithMany("ReportResults")
+                        .HasForeignKey("ReportId");
+                });
+
+            modelBuilder.Entity("SOR.Data.Entitis.Report", b =>
+                {
+                    b.Navigation("ReportProofs");
+
+                    b.Navigation("ReportResults");
                 });
 #pragma warning restore 612, 618
         }

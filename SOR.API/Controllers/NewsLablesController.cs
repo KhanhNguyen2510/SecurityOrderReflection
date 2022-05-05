@@ -35,12 +35,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Create To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Create To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -56,12 +56,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Update To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Update To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -77,12 +77,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Delete To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Delete To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -98,12 +98,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"List To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"List To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -119,12 +119,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"List Paging To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"List Paging To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 
@@ -140,12 +140,12 @@ namespace SOR.WedAPI.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError($"Get Id To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get Id To NewsLable: Message:{ex.Message}");
-                throw new ApiException();
+               throw new ApiException(ex.Message);
             }
         }
 

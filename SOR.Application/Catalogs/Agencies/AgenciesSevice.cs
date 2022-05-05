@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SOR.Application.Catalogs.Historys;
 using SOR.Data.EFs;
+using SOR.Data.Enum;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Agencies;
+using SOR.ViewModel.Catalogs.Historys;
 using SOR.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 
@@ -20,46 +21,13 @@ namespace SOR.Application.Catalogs.Agencies
         private readonly SORDbContext _context;
         private SystemBase<string> checkValue = new SystemBase<string>();
 
-        private IHttpContextAccessor _accessor;
+        private readonly IHistorySevice _historySevice;
 
-        public AgenciesSevice(SORDbContext context , IHttpContextAccessor accessor)
+        public AgenciesSevice(SORDbContext context , IHistorySevice historySevice)
         {
+            _historySevice = historySevice;
             _context = context;
-            _accessor = accessor;
         }
-
-        public IEnumerable<string> Get()
-        {
-            var ip = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-            return new string[] { ip, "value2" };
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// Check
@@ -74,7 +42,7 @@ namespace SOR.Application.Catalogs.Agencies
             return true;
         }
 
-        public async Task<Data.Entitis.Agencies> FindIdExistence(int Id)
+        public async Task<Data.Entitis.Agencies> FindIdExistence(string Id)
         {
             var findId = await _context.Agencies.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
@@ -89,8 +57,16 @@ namespace SOR.Application.Catalogs.Agencies
 
         public async Task<ApiResponse> CreateToAgencies(GetCreateToAgenciesRequest request)
         {
+            #region CheckValue
             bool cUser = checkValue.CheckNullValue(request.userId);
             if (!cUser) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
+
+            bool cId = checkValue.CheckNullValue(request.id);
+            if (!cId) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+
+            request.id = request.id.Trim();
+            var findId = await FindIdExistence(request.id);
+            if (findId != null) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
 
             bool cName = checkValue.CheckNullValue(request.name);
             if (!cName) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
@@ -100,9 +76,11 @@ namespace SOR.Application.Catalogs.Agencies
             bool checkName = await NameAgenciesExistence(request.name);
 
             if (checkName) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
+            #endregion
 
-            var data = new Data.Entitis.Agencies()
+            var dAgencies = new Data.Entitis.Agencies()
             {
+                Id = request.id,
                 Name = request.name,
                 NumberPhone = request.numberPhone,
                 Office = request.office,
@@ -110,8 +88,19 @@ namespace SOR.Application.Catalogs.Agencies
                 UpdateUser = request.userId
             };
 
-            await _context.Agencies.AddAsync(data);
+            await _context.Agencies.AddAsync(dAgencies);
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Thêm thông tin cơ quan",
+                IsOperation = IsOperation.Create,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);
         }
@@ -123,7 +112,7 @@ namespace SOR.Application.Catalogs.Agencies
         /// <returns></returns>
         /// 
 
-        public async Task<ApiResponse> UpdateToAgencies(int Id, GetUpdateToAgenciesRequest request)
+        public async Task<ApiResponse> UpdateToAgencies(string Id, GetUpdateToAgenciesRequest request)
         {
 
             bool cUser = checkValue.CheckNullValue(request.userId);
@@ -149,6 +138,17 @@ namespace SOR.Application.Catalogs.Agencies
             findId.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
 
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Cập nhật thông tin cơ quan với ID {Id}",
+                IsOperation = IsOperation.Update,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
+
             return new ApiResponse(MessageBase.SUCCCESS);
         }
 
@@ -159,7 +159,7 @@ namespace SOR.Application.Catalogs.Agencies
         /// <returns></returns>
         /// 
 
-        public async Task<ApiResponse> DeleteToAgencies(int Id, CreateUserRequest request)
+        public async Task<ApiResponse> DeleteToAgencies(string Id, CreateUserRequest request)
         {
 
             bool cUser = checkValue.CheckNullValue(request.userId);
@@ -172,9 +172,20 @@ namespace SOR.Application.Catalogs.Agencies
             finfId.UpdateUser = request.userId;
             finfId.IsDelete = false;
 
-            finfId.TimeDelete = finfId.UpdateDate =  DateTime.Now;
+            finfId.TimeDelete = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            #region Add History
+            var dhistory = new GetCreateToHistoryRequest()
+            {
+                HistoryOperation = $"Xóa thông tin cơ quan với ID {Id}",
+                IsOperation = IsOperation.Create,
+                userId = request.userId
+            };
+
+            await _historySevice.CreateToHistory(dhistory);
+            #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);
         }
@@ -186,22 +197,22 @@ namespace SOR.Application.Catalogs.Agencies
         /// <returns></returns>
         /// 
 
-        public async Task<GetAgenciesViewModel> GetAgenciesById(int Id)
+        public async Task<GetAgenciesViewModel> GetAgenciesById(string Id)
         {
-            var query = await _context.Agencies.Where(x => x.IsDelete == true && x.Id == Id).ToListAsync();
-            if (!query.Any())
-                return null;
+            var gAgencies = await _context.Agencies.Where(x => x.IsDelete == true && x.Id == Id).FirstOrDefaultAsync();
 
-            return query.Select(x => new GetAgenciesViewModel()
+            if (gAgencies == null) return null;
+
+            return  new GetAgenciesViewModel()
             {
-                Id = x.Id,
-                Name = x.Name,
-                UpdateUser = x.UpdateUser,
-                CreateDate = x.CreateDate,
-                CreateUser = x.CreateUser,
-                NumberPhone = x.NumberPhone,
-                Office = x.Office,
-            }).FirstOrDefault();
+                Id = gAgencies.Id,
+                Name = gAgencies.Name,
+                UpdateUser = gAgencies.UpdateUser,
+                CreateDate = gAgencies.CreateDate,
+                CreateUser = gAgencies.CreateUser,
+                NumberPhone = gAgencies.NumberPhone,
+                Office = gAgencies.Office,
+            };
         }
 
         public async Task<IEnumerable<GetAgenciesViewModel>> GetListToAgencies(GetMangagerToAgenciesRequest request)
