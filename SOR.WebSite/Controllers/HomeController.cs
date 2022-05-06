@@ -25,7 +25,8 @@ namespace SOR.WebSite.Controllers
         {
             //var user = User.Identity.Name;
             //var ss = User.Claims.Skip(1).FirstOrDefault().Value;
-            return View();
+
+            return  View();
         }
 
         public IActionResult Privacy()
