@@ -69,10 +69,10 @@ namespace SOR.Application.Catalogs.Users
         /// <returns></returns>
         /// 
 
-        public async Task<bool> Login(GetLoginRequest request)
+        public async Task<Data.Entitis.User> Login(GetLoginRequest request)
         {
             var cUser = await _context.Users.FirstOrDefaultAsync(x => x.IsDelete == true && x.UserName == request.userName && x.PassWord == ShareContantsSytem.MD5(request.passWord));
-            if (cUser == null) return false;
+            if (cUser == null) return null;
 
             var dHistory = new GetCreateToHistoryRequest()
             {
@@ -82,16 +82,17 @@ namespace SOR.Application.Catalogs.Users
             };
             await _historySevice.CreateToHistory(dHistory);
 
-            return true;
+            return cUser;
         }
 
         public async Task<string> LoginInWed(GetLoginRequest request)
         {
-            var user = await Login(request);
-            if (user)
+            var fUser = await Login(request);
+            if (fUser != null)
             {
                 var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, request.userName));
+                claims.Add(new Claim(ClaimTypes.Name, fUser.UserName));
+                claims.Add(new Claim(ClaimTypes.Role, fUser.IsAdmin.ToString()));
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -117,40 +118,40 @@ namespace SOR.Application.Catalogs.Users
         public async Task<ApiResponse> CreateToUser(GetCreateToUserRequest request)
         {
             #region Check Value
-            bool cName = checkValueTypeString.CheckNullValue(request.UserName);
+            bool cName = checkValueTypeString.CheckNullValue(request.userName);
             if (!cName) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
 
             bool cAgenciesExisten = false;
 
-            bool cAgencies = checkValueTypeString.CheckNullValue(request.AgenciesId);
+            bool cAgencies = checkValueTypeString.CheckNullValue(request.agenciesId);
             if (cAgencies)
             {
-                request.AgenciesId = request.AgenciesId.Trim();
+                request.agenciesId = request.agenciesId.Trim();
 
-                cAgenciesExisten = await AgenciesExistence(request.AgenciesId);
+                cAgenciesExisten = await AgenciesExistence(request.agenciesId);
                 if (!cAgenciesExisten) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
             }
 
-            request.UserName = request.UserName.Trim();
-            bool cNameExistence = await UserNameExistence(request.UserName);
+            request.userName = request.userName.Trim();
+            bool cNameExistence = await UserNameExistence(request.userName);
             if (cNameExistence)
                 return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
             #endregion
 
             var dUser = new Data.Entitis.User()
             {
-                UserName = request.UserName,
-                Email = request.Email,
+                UserName = request.userName,
+                Email = request.email,
                 IsAdmin = cAgenciesExisten == true ? IsAdmin.Police : IsAdmin.People,
-                Gender = request.Gender != null ? request.Gender : IsGender.Orther,
-                FullName = request.FullName,
-                Identification = request.Identification,
-                NumberPhone = request.NumberPhone,
-                PassWord = ShareContantsSytem.MD5(request.Password),
-                IPCreate = request.IPCreate,
-                AgenciesId = cAgenciesExisten == true ? request.AgenciesId: null,
-                CreateUser = request.UserName,
-                UpdateUser = request.UserName 
+                Gender = request.gender != null ? request.gender : IsGender.Orther,
+                FullName = request.fullName,
+                Identification = request.identification,
+                NumberPhone = request.numberPhone,
+                PassWord = ShareContantsSytem.MD5(request.password),
+                IPCreate = request.iPCreate,
+                AgenciesId = cAgenciesExisten == true ? request.agenciesId: null,
+                CreateUser = request.userName,
+                UpdateUser = request.userName 
             };
 
             await _context.Users.AddAsync(dUser);
@@ -158,9 +159,9 @@ namespace SOR.Application.Catalogs.Users
 
             var dHistory = new GetCreateToHistoryRequest()
             {
-                HistoryOperation = $"Tạo tài khoản {request.UserName} đăng nhập vào lúc {DateTime.Now}",
+                HistoryOperation = $"Tạo tài khoản {request.userName} đăng nhập vào lúc {DateTime.Now}",
                 IsOperation = IsOperation.Create,
-                userId = request.UserName
+                userId = request.userName
             };
             await _historySevice.CreateToHistory(dHistory);
 

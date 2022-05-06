@@ -10,7 +10,7 @@ namespace SOR.Application.Catalogs.Users
     public interface IUserSevice
     {
         Task<ApiResponse> UpdatePassWordToUser(string userName);
-        Task<bool> Login(GetLoginRequest request);
+        Task<Data.Entitis.User> Login(GetLoginRequest request);
         Task<string> LoginInWed(GetLoginRequest request);
         Task<ApiResponse> CreateToUser(GetCreateToUserRequest request);
         Task<ApiResponse> UpdateToUser(string userName, GetUpdateToUserRequest request);

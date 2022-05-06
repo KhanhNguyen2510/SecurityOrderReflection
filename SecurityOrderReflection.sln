@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOR.ViewModel", "SOR.ViewMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOR.WedAPI", "SOR.API\SOR.WedAPI.csproj", "{C194D5CD-1CC3-4F36-A7D5-0D30485A8A26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOR.WebSite", "SOR.WebSite\SOR.WebSite.csproj", "{494B9999-A183-483D-AEBE-0CB73AD25DAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOR.WebSite", "SOR.WebSite\SOR.WebSite.csproj", "{494B9999-A183-483D-AEBE-0CB73AD25DAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOR.IntergrationAPI", "SOR.IntergrationAPI\SOR.IntergrationAPI.csproj", "{07F99DE6-3008-4F72-AB30-63E29AD6F56E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{494B9999-A183-483D-AEBE-0CB73AD25DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494B9999-A183-483D-AEBE-0CB73AD25DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494B9999-A183-483D-AEBE-0CB73AD25DAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F99DE6-3008-4F72-AB30-63E29AD6F56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F99DE6-3008-4F72-AB30-63E29AD6F56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F99DE6-3008-4F72-AB30-63E29AD6F56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F99DE6-3008-4F72-AB30-63E29AD6F56E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SOR.WebSite.Models;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SOR.WebSite.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,9 +19,12 @@ namespace SOR.WebSite.Controllers
         {
             _logger = logger;
         }
-
+        
+        [HttpGet]
         public IActionResult Index()
         {
+            //var user = User.Identity.Name;
+            //var ss = User.Claims.Skip(1).FirstOrDefault().Value;
             return View();
         }
 
