@@ -89,10 +89,10 @@
     font-size: 14px;
     padding: 10px;
 }
-
-.page {
-    padding: 10px 15px;
-    border: 1px solid black;
+.dangxuat:hover {
+    background-color: #007bff;
+    color: white !important;
+    cursor: pointer;
 }
 
 
