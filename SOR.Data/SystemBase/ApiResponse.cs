@@ -1,6 +1,6 @@
 ﻿namespace SOR.Data.SystemBase
 {
-    public  class ApiResponse
+    public class ApiResponse
     {
         public ApiResponse(string message, object result, int statusCode = 200)
         {

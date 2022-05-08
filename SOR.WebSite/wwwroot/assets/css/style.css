@@ -646,6 +646,7 @@ body::-webkit-scrollbar-thumb{
 .item-thongtin{
     padding:5px;
     border-radius: 5px;
+    text-align: center;
 
 }
 .item-thongtin:hover{
@@ -671,6 +672,17 @@ body::-webkit-scrollbar-thumb{
 }
 
 .list-binhluan:hover::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 100px;
+}
+
+.table-coquan:hover::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background: white;
+}
+
+.table-coquan:hover::-webkit-scrollbar-thumb {
     background-color: gray;
     border-radius: 100px;
 }

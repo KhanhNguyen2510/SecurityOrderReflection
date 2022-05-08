@@ -1,86 +1,144 @@
-﻿
-@model SOR.ViewModel.Catalogs.Users.GetCreateToUserRequest
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using SOR.Data.Enum
 @{
-    ViewData["Title"] = "Đăng Ký";
-    Layout = null;
+    ViewData["Title"] = "Đăng ký";
+    Layout = "~/Views/Shared/_LayoutSub.cshtml";
 }
+<style>
+    .margin-row {
+        margin-top: -30px;
+    }
+</style>
+@if (ViewBag.SuccessMsg != null)
+    {
+       <body onload="MessageBox('@ViewBag.SuccessMsg');"></body>
+    }
+<main>
+    <div class="p-5">
+        <div class="text-center">
+            <img src="/assets/image/logoHF.png" alt="">
+            <div style="padding-bottom:50px;"></div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>@ViewData["Title"] - HUFI</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
-    <!-- Custom styles for this template-->
-    <link rel="stylesheet" href="/assets/css/dangnhap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/assets/css/sb-admin-2.min.css" rel="stylesheet">
-</head>
-
-<body style="background-image: url(/assets/image/bg-HUFI.jpg);background-repeat: no-repeat;background-position: center;background-size: cover;">
-    <div class="overlay"></div>
-    <div class="container">
-        <!-- Outer Row -->
-        <div class="row justify-content-center" style="margin-top:60px;">
-            <div class="col-md-5">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <img src="/assets/image/logoHF.png" alt="">
-                                        <div style="padding-bottom:50px;"></div>
-                                    </div>
-                                    <form class="user" method="post" enctype="multipart/form-data" action="/User/Create">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input asp-for="userName" class="form-control form-control-user" id="exampleFirstName"
-                                                       placeholder="Tên" />
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                                       placeholder="Họ">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" asp-for="fullName" class="form-control form-control-user" id="exampleInputEmail"
-                                                   placeholder="Mã số sinh viên">
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input type="password" class="form-control form-control-user"
-                                                       id="exampleInputPassword" placeholder="Mật khẩu">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="password" class="form-control form-control-user"
-                                                       id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
-                                            </div>
-                                        </div>
-                                        <a asp-action="Registration" asp-controller="Authentication" class="btn btn-primary btn-user btn-block">
-                                            Đăng ký
-                                        </a>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="dangnhap.html">Đã có tài khoản rồi? Quay lại đăng nhập!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        </div>
+        <form class="user" asp-controller="Authentication" asp-action="Registration" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" name="fullName" required class="form-control form-control-user"
+                       oninvalid="this.setCustomValidity('Cần nhập họ tên')"
+                       onchange="this.setCustomValidity('')"
+                       placeholder="Họ và tên">
+            </div>
+            <div class="form-group">
+                <input type="text" name="userName" required class="form-control form-control-user"
+                       oninvalid="this.setCustomValidity('Cần nhập mã số sinh viên')"
+                       onchange="this.setCustomValidity('')"
+                       placeholder="Mã số sinh viên">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" class="form-control form-control-user" maxlength="15" name="numberPhone"
+                           pattern="^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"
+                           oninvalid="this.setCustomValidity('Số điện thoại nhập chưa chính xác')"
+                           onchange="this.setCustomValidity('')"
+                           placeholder="Số điện thoại">
+                </div>
+                <div class="col-sm-6">
+                    <select class="form-control" name="gender" style="border-radius:50px;height:50px;font-size: 13px;">
+                        <option>Giới tính</option>
+                        <option value="@IsGender.Male">Nam</option>
+                        <option value="@IsGender.FeMale">Nữ</option>
+                    </select>
                 </div>
             </div>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control form-control-user"
+                       oninvalid="this.setCustomValidity('Email nhập chưa chính xác')"
+                       onchange="this.setCustomValidity('')"
+                       placeholder="Email">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" name="password" onkeyup='check();'
+                           class="form-control form-control-user"
+                           oninvalid="this.setCustomValidity('Cần nhập mật khẩu')"
+                           onchange="this.setCustomValidity('')"
+                           required
+                           id="exampleInputPassword" placeholder="Mật khẩu">
+                </div>
+                <div class="col-sm-6">
+                    <input type="password" name="confirmPassword" onkeyup='check();'
+                           class="form-control form-control-user"
+                           oninvalid="this.setCustomValidity('Cần nhập lại mật khẩu')"
+                           onchange="this.setCustomValidity('')"
+                           required
+                           id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
+                    <span id='message'></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block" id="dangky">
+                Đăng ký
+            </button>
+        </form>
+        <hr>
+        <div class="text-center">
+            <a class="small" href="quenmatkhau.html">Quên mật khẩu?</a>
+        </div>
+        <div class="text-center">
+            <a class="small" asp-action = "Login" asp-controller="Authentication">Đã có tài khoản rồi? Quay lại đăng nhập!</a>
         </div>
     </div>
-</body>
-</html>
+</main>
+<script type="text/javascript">
+    var check = function()
+    {
+         if(document.getElementById('exampleInputPassword').value == ""
+         && document.getElementById('exampleRepeatPassword').value == "")
+         {
+              document.getElementById('message').innerHTML = '';
+              document.getElementById('dangky').disabled = true;
+         }
+         else if (document.getElementById('exampleInputPassword').value ==
+            document.getElementById('exampleRepeatPassword').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            document.getElementById('dangky').disabled = false;
+         }
+         else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = '<i class="fa-solid fa-spinner"></i>';
+            document.getElementById('dangky').disabled = true;
+         }
+    }
+    function MessageBox(item)
+    {
+        if(item != null || item != "")
+        { 
+            //Nếu đúng tài khoản và mật khẩu
+            swal({
+                title: "Thông Báo",
+                text: "Đăng ký thành công !",
+                type: "success",
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = "/Authentication/Login";
+                    }
+                });
+        }
+        else if(item == null)
+        {
+            //Nếu sai tài khoản và mật khẩu
+             swal({
+                 title: "Thông Báo",
+                 text: "Đăng ký không thành công !",
+                 type: "error",
+                 confirmButtonClass: "btn-primary",
+                 confirmButtonText: "OK",
+                 closeOnConfirm: true,
+             })
+        }
+    }
+</script>
+

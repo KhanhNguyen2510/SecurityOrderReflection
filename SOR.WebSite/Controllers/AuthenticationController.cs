@@ -12,11 +12,9 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
-using SOR.WebSite.Models;
 
 namespace SOR.WebSite.Controllers
 {
-
     public class AuthenticationController : Controller
     {
         private readonly IUserApiClient _userApiClient;
@@ -24,7 +22,7 @@ namespace SOR.WebSite.Controllers
         private readonly IHttpContextAccessor _accessor;
 
         public AuthenticationController(IUserApiClient userApiClient,
-            IConfiguration configuration, 
+            IConfiguration configuration,
             IHttpContextAccessor httpContextAccessor)
         {
             _userApiClient = userApiClient;
@@ -33,9 +31,8 @@ namespace SOR.WebSite.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
         [HttpPost]
@@ -45,8 +42,7 @@ namespace SOR.WebSite.Controllers
             {
                 if (!ModelState.IsValid)
                     return View(ModelState);
-                var IP = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                
+
                 var gUser = await _userApiClient.LoginInWed(request);
 
                 var userPrincipal = this.ValidateToken(gUser);
@@ -59,18 +55,18 @@ namespace SOR.WebSite.Controllers
                             CookieAuthenticationDefaults.AuthenticationScheme,
                             userPrincipal,
                             authProperties);
-              
+
                 if (gUser == null)
                 {
-                    ViewBag.SuccessMsg = MessageText.AuthenticateFailed();
+                    ViewBag.SuccessMsg = false;
                     return View();
                 }
-
-                return RedirectToAction("Index", "Home");
+                ViewBag.SuccessMsg = true;
+                return View();
             }
             catch (Exception)
             {
-                ViewBag.SuccessMsg = MessageText.AuthenticateFailed();
+                ViewBag.SuccessMsg = false;
                 return View();
             }
         }
@@ -110,25 +106,18 @@ namespace SOR.WebSite.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Registration(GetCreateToUserRequest request)
         {
-            if (!ModelState.IsValid)
-                return View();
-
             var IP = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
 
             var dUser = new GetCreateToUserRequest()
             {
-                agenciesId = request.agenciesId,
                 iPCreate = IP,
-                confirmPassword = request.confirmPassword,
                 email = request.email,
                 fullName = request.fullName,
                 gender = request.gender,
-                identification = request.identification,
                 numberPhone = request.numberPhone,
                 password = request.password,
-                userName = User.Identity.Name,  
+                userName = request.userName,
             };
-
 
             var gUser = await _userApiClient.Create(dUser);
 

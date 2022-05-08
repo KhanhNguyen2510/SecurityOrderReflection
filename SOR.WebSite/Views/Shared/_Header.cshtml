@@ -1,25 +1,29 @@
-﻿    <div class="header-HUFI">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="trangchu.html">
-                    <img style="width:240px;height:40px;" w src="/assets/image/logoHF.png" alt="">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-              
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <div class="header-pc" style="display:flex;justify-content: space-between;width: 100%;">
-                      <div>
+﻿<div class="header-HUFI">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="trangchu.html">
+                <img style="width:240px;height:40px;" w src="/assets/image/logoHF.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="header-pc" style="display:flex;justify-content: space-between;width: 100%;">
+                    <div>
                         <form action="">
-                            <input class="input-HUFI" type="text" id="k" name="k" placeholder="Tìm kiếm..." required="">
-                            <button class="button-HUFI" style="outline: 0 !important;" type="submit"><i class="fa fa-search"
-                                    aria-hidden="true"></i></button>
+                            <input class="input-HUFI" type="text" id="k" name="k" placeholder="Tìm kiếm..."
+                                   required="">
+                            <button class="button-HUFI" style="outline: 0 !important;" type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </form>
-                      </div>
-                      @await Html.PartialAsync("_Sidebar")
-                  </div>
+                    </div>
+                    @await Html.PartialAsync("_Sidebar")
                 </div>
-              </nav>
-        </div>
+            </div>
+        </nav>
     </div>
+</div>

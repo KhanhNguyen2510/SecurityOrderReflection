@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SOR.IntergrationAPI.Catalogs.NewLables;
 using SOR.IntergrationAPI.Catalogs.User;
 using System;
 
@@ -41,6 +42,7 @@ namespace SOR.WebSite
 
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<INewLableApiClient, NewLableApiClient>();
 
             IMvcBuilder builder = services.AddRazorPages();
 

@@ -17,12 +17,40 @@
                 <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
             </div>
             <div class="carousel-cell">
+            @for (var i = 0; i < ViewBag.GetNewLables.Count; i++)
+           {      
+                    <div class="@ViewBag.GetNewLables[i].Id" onclick="@ViewBag.GetNewLables[i].Id ()" style="cursor: pointer;">@ViewBag.GetNewLables[i].Name</div> 
+                    @*<script>
+                        function @ViewBag.GetNewLables[i].Id() {
+                            @for (var item = 0; item < ViewBag.GetNewLables.Count; item++)
+                        {
+                            if (ViewBag.GetNewLables[i].Id == ViewBag.GetNewLables[item].Id)
+                            {
+                                $('#hinhsu').show();
+
+                            }
+                        }
+                        
+                        $('#tenan').hide();
+                        $('#buonlau').hide();
+                        $('#khaithac').hide();
+                        $('#khac').hide();
+                        $('.hinhsu').addClass('gachduoihinhsu');
+                        $('.tenan').removeClass('gachduoitenan');
+                        $('.buonlau').removeClass('gachduoibuonlau');
+                        $('.khaithac').removeClass('gachduoikhaithac');
+                        $('.khac').removeClass('gachduoikhac');
+                        }
+                    </script>*@
+           }
+            </div>
+            @*<div class="carousel-cell">
                 <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Test1</div>
                 <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Test2</div>
                 <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Test3</div>
                 <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Test4</div>
                 <div class="khac" onclick="Khac()" style="cursor: pointer;">Test5</div>
-            </div>
+            </div>*@
         </div>
         <!-- Dành cho mobile -->
         <div class="carousel carousel-mobile" style="display: none;"
@@ -184,6 +212,7 @@
     </div>
 </main>
 
+
 <script>
     function HinhSu() {
         $('#hinhsu').show();
@@ -250,3 +279,4 @@
         $('.khac').addClass('gachduoikhac');
     }
 </script>
+

@@ -100,7 +100,7 @@ namespace SOR.Application.Catalogs.Users
                 var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                     _config["Tokens:Issuer"],
                     claims,
-                    expires: DateTime.Now.AddMinutes(2000),
+                    expires: DateTime.Now.AddMinutes(200),
                     signingCredentials: creds);
 
                 return new JwtSecurityTokenHandler().WriteToken(token);
@@ -121,16 +121,16 @@ namespace SOR.Application.Catalogs.Users
             bool cName = checkValueTypeString.CheckNullValue(request.userName);
             if (!cName) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
 
-            bool cAgenciesExisten = false;
+            //bool cAgenciesExisten = false;
 
-            bool cAgencies = checkValueTypeString.CheckNullValue(request.agenciesId);
-            if (cAgencies)
-            {
-                request.agenciesId = request.agenciesId.Trim();
+            //bool cAgencies = checkValueTypeString.CheckNullValue(request.agenciesId);
+            //if (cAgencies)
+            //{
+            //    request.agenciesId = request.agenciesId.Trim();
 
-                cAgenciesExisten = await AgenciesExistence(request.agenciesId);
-                if (!cAgenciesExisten) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
-            }
+            //    cAgenciesExisten = await AgenciesExistence(request.agenciesId);
+            //    if (!cAgenciesExisten) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+            //}
 
             request.userName = request.userName.Trim();
             bool cNameExistence = await UserNameExistence(request.userName);
@@ -142,14 +142,14 @@ namespace SOR.Application.Catalogs.Users
             {
                 UserName = request.userName,
                 Email = request.email,
-                IsAdmin = cAgenciesExisten == true ? IsAdmin.Police : IsAdmin.People,
+                IsAdmin =/* cAgenciesExisten == true ?*/ IsAdmin.Police /*: IsAdmin.People*/,
                 Gender = request.gender != null ? request.gender : IsGender.Orther,
                 FullName = request.fullName,
-                Identification = request.identification,
+                Identification = request.userName,
                 NumberPhone = request.numberPhone,
                 PassWord = ShareContantsSytem.MD5(request.password),
                 IPCreate = request.iPCreate,
-                AgenciesId = cAgenciesExisten == true ? request.agenciesId: null,
+                //AgenciesId = cAgenciesExisten == true ? request.agenciesId: null,
                 CreateUser = request.userName,
                 UpdateUser = request.userName 
             };
