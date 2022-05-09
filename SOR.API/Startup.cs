@@ -14,8 +14,10 @@ using SOR.Application.Catalogs.Historys;
 using SOR.Application.Catalogs.NewsLabels;
 using SOR.Application.Catalogs.Reports;
 using SOR.Application.Catalogs.Reports.Upload;
+using SOR.Application.Catalogs.SendEmail;
 using SOR.Application.Catalogs.Users;
 using SOR.Data.EFs;
+using SOR.ViewModel.Catalogs.SendEmail;
 using System.Collections.Generic;
 using System.Text;
 
@@ -54,6 +56,8 @@ namespace SOR.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IFileSevice, FileSevice>();
             services.AddTransient<IUserSevice, UserSevice>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, MailService>();
 
             services.AddSwaggerGen(c =>
             {

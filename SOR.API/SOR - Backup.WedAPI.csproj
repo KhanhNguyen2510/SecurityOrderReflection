@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SOR.Application\SOR.Application.csproj" />
-    <ProjectReference Include="..\SOR.WebSite\SOR.WebSite.csproj" />
   </ItemGroup>
 
   <ItemGroup>

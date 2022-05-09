@@ -28,10 +28,12 @@
                        placeholder="Họ và tên">
             </div>
             <div class="form-group">
-                <input type="text" name="userName" required class="form-control form-control-user"
+                       <input type="text" name="userName" required class="form-control form-control-user" id="username"
+                       onkeyup='checkUserName();'
                        oninvalid="this.setCustomValidity('Cần nhập mã số sinh viên')"
                        onchange="this.setCustomValidity('')"
                        placeholder="Mã số sinh viên">
+                       <span id='messageUserName' style="position: absolute;color: green;right: 32px;top: 231px;"></span>
             </div>
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
@@ -53,7 +55,9 @@
                 <input type="email" name="email" class="form-control form-control-user"
                        oninvalid="this.setCustomValidity('Email nhập chưa chính xác')"
                        onchange="this.setCustomValidity('')"
-                       placeholder="Email">
+                       placeholder="Email"
+                       required
+                >
             </div>
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
@@ -80,14 +84,46 @@
         </form>
         <hr>
         <div class="text-center">
-            <a class="small" href="quenmatkhau.html">Quên mật khẩu?</a>
+             <a class="small" asp-action = "Index" asp-controller = "ForgotPassword">Quên mật khẩu?</a>
         </div>
         <div class="text-center">
             <a class="small" asp-action = "Login" asp-controller="Authentication">Đã có tài khoản rồi? Quay lại đăng nhập!</a>
         </div>
     </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript">
+     var checkUserName = function()
+    {
+        var username = document.getElementById('username').value;
+        if(username == null || username == "")
+        {
+            document.getElementById('messageUserName').innerHTML = '';
+        }
+       else if(username != null || username != "")
+        {
+            $.ajax({
+              url: "https://localhost:5001/V1/admin-panel/users/check-username?userName="+username,
+              method: "GET",
+              success : function(response){
+                if (response == true) {
+                    document.getElementById('messageUserName').style.color = 'red';
+                    document.getElementById('messageUserName').innerHTML = '<i class="fa-solid fa-user-xmark"></i>';
+                    document.getElementById('exampleInputPassword').disabled = true
+                    document.getElementById('exampleRepeatPassword').disabled = true
+                }
+                else if(response == false)
+                {
+                    document.getElementById('messageUserName').style.color = 'green';
+                    document.getElementById('messageUserName').innerHTML = '<i class="fa-solid fa-user-check"></i>';
+                    document.getElementById('exampleInputPassword').disabled = false
+                    document.getElementById('exampleRepeatPassword').disabled = false
+                }
+              }
+            });
+        }
+    }
+
     var check = function()
     {
          if(document.getElementById('exampleInputPassword').value == ""

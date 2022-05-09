@@ -1,0 +1,79 @@
+﻿
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutSub.cshtml";
+}
+<style>
+    .margin-row {
+        margin-top: 50px;
+    }
+</style>
+
+<main>
+    <div class="p-5">
+        <div class="text-center">
+            <img src="/assets/image/logoHF.png" alt="">
+            <div style="padding-bottom:50px;"></div>
+            <h6 style="text-transform:uppercase;"><strong>Bạn quên mật khẩu?</strong></h6>
+            <p style="color:red;">Không sao! Bạn chỉ cần nhập những thông tin bên dưới và gửi. Chúng tôi sẽ cấp lại bạn mật khẩu mới nhất qua gmail. Thân ái</p>
+        </div>
+        <form class="user" >
+            <div class="form-group">
+                <input type="text" class="form-control form-control-user" id = "username"
+                       name= "username"
+                       onkeyup='check();'
+                       placeholder="Nhập mã số sinh viên...">
+            </div>
+            <input type="button" class= "btn btn-primary btn-user btn-block" 
+                   id="btn_submit"
+                   name="btn_submit" 
+                   value="Gửi"
+                   disabled
+            >
+            <hr>
+            <a asp-controller ="Authentication" asp-action= "Login"  class="btn btn-success btn-user btn-block">
+                Quay lại đăng nhập
+            </a>
+            
+        </form>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+<script type="text/javascript">
+	$("#btn_submit").on("click", function(){
+        debugger
+		$.ajax({
+		  url: "https://localhost:5001/V1/admin-panel/send-emails",
+		  method: "POST",
+		  data: { userName : username},
+		  success : function(response){
+		  	 swal({
+                title: "Thông Báo",
+                text: "Hệ thống đã tìm kiếm và gửi mật khẩu mới về email của bạn !",
+                type: "success",
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = "/Authentication/Login";
+                    }
+                });
+		  }
+		});
+	});
+
+     var check = function()
+    {
+        var username = $("#username").val();
+          if(username == null || username == "")
+        {
+            document.getElementById('btn_submit').disabled = true
+        }
+        else
+        {
+            document.getElementById('btn_submit').disabled = false
+        }
+    }
+</script>

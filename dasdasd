@@ -1,0 +1,129 @@
+[33mcommit 8606476fc306ee3b13452446894d4d42ad3b347d[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon May 9 17:25:11 2022 +0700
+
+    dsf
+
+[33mcommit df913e93f01da3a22d7291b8cf710f92bb3a55af[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon May 9 17:19:01 2022 +0700
+
+    remove upload file
+    
+    do bị lỗi k push được
+
+[33mcommit 0a9e9b8befe3d7be9950b64e9e43a24b4aed5a39[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon May 9 17:12:53 2022 +0700
+
+    Send Email in forgot pass and fix UI
+
+[33mcommit dfeff7ef6e73a82ff77d6bf4302930ed2156ff3f[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon May 9 11:17:35 2022 +0700
+
+    Disable buton in Authe
+
+[33mcommit ee53a1bb62f436a44e581a21bd7016678fd0d028[m[33m ([m[1;31morigin/FE/FixUI[m[33m, [m[1;32mFE/FixUI[m[33m)[m
+Author: thanhcong <thanhcong081200@gmail.com>
+Date:   Sun May 8 23:07:49 2022 +0700
+
+    Fix xong nut dang xuat va nut chon trang
+
+[33mcommit f547fbe7f9be41edda0409f8300c86827822a9c6[m
+Author: thanhcong <thanhcong081200@gmail.com>
+Date:   Sun May 8 22:57:00 2022 +0700
+
+    FIX trang dang ky , trang chu nut dang xuat
+
+[33mcommit a9fda381f4273ec9ec2c8fbe13860ca350a94369[m
+Author: thanhcong <thanhcong081200@gmail.com>
+Date:   Sun May 8 22:35:58 2022 +0700
+
+    Fix UI
+
+[33mcommit 6ef41415d6979b5354679ce79046bebba54ce4f5[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Sun May 8 16:32:55 2022 +0700
+
+    login and authen
+
+[33mcommit f11f85ca86541134feadd093350534a424d058d4[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Fri May 6 22:59:18 2022 +0700
+
+    Code new Index custom nav
+
+[33mcommit 548291bd3181b98dff13e4fab853d96faa4ebcae[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Fri May 6 17:01:17 2022 +0700
+
+    Add Authencation and login by token load name and role in user
+
+[33mcommit 6d7cc726991c90651c34a1c3702c8e36f477d5fb[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Thu May 5 22:30:07 2022 +0700
+
+    Update APIException and API user
+
+[33mcommit d11175a7cac1955e237a5644435f97eb7e364b67[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Fri Apr 29 15:06:53 2022 +0700
+
+    Upload FIle and add Website
+
+[33mcommit 1b2324dbc7c97e0eb6341c712b6fbd67e5d40ad2[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Sat Apr 23 13:50:20 2022 +0700
+
+    API 60%
+
+[33mcommit 507f32687218de811d4e4d1765ec12d38ca87ac1[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Tue Apr 19 22:54:02 2022 +0700
+
+    History , Agencies code API
+
+[33mcommit ee96eb6714f293bf2b1de5d867cd220279ed0f55[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon Apr 18 22:17:11 2022 +0700
+
+    Revert "code test"
+    
+    This reverts commit 34b24a18f3ea54867e618723e9467e3d638212c3.
+
+[33mcommit 34b24a18f3ea54867e618723e9467e3d638212c3[m[33m ([m[1;31morigin/CodeFE[m[33m)[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon Apr 18 21:27:06 2022 +0700
+
+    code test
+
+[33mcommit 6096f8c1f0c240263428a2e3b05607c8a5fdd1a0[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon Apr 18 21:25:52 2022 +0700
+
+    Sửa thông tin code
+
+[33mcommit e1684639ff1c4151460b2da918e35578d079747b[m
+Author: Khánh Nguyên <khanhnguyen170466@gmail.com>
+Date:   Mon Apr 18 17:51:55 2022 +0700
+
+    Database new
+
+[33mcommit defad4e46ee45ebdf0d1725a386e04b352d0c28d[m
+Author: nguyen.dqk <nguyen.dqk@tinhhoasolutions.com>
+Date:   Mon Apr 18 11:18:55 2022 +0700
+
+    Database
+
+[33mcommit de815b11aceca4855acbba1287e3b098e892b9a9[m
+Author: Nguyên <khanhnguyen170466@gmail.com>
+Date:   Fri Apr 15 22:39:24 2022 +0700
+
+    Add project files.
+
+[33mcommit a37c665ab21fe4a13585c8c978d371d56d0e4943[m
+Author: Nguyên <khanhnguyen170466@gmail.com>
+Date:   Fri Apr 15 22:39:21 2022 +0700
+
+    Add .gitignore and .gitattributes.

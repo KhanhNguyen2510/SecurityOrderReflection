@@ -23,6 +23,29 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _userSevice = userSevice;
         }
+        [HttpGet("check-username")]
+        [SwaggerOperation(Summary = "Kiểm tra trùng trùng tài khoản user")]
+        public async Task<JsonResult> CheckUserName(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return Json(false);
+                userName = userName.Trim();
+                var data = await _userSevice.UserNameExistence(userName);
+                return Json(data);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError($"Check UserName To User: Message:{ex.Message}");
+                throw new ApiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Check UserName To User: Message:{ex.Message}");
+                throw new ApiException(ex.Message);
+            }
+        }
 
         [HttpPost("reset-password")]
         [SwaggerOperation(Summary = "Tạo lại mật khẩu")]

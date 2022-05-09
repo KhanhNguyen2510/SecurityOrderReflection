@@ -9,6 +9,7 @@ namespace SOR.Application.Catalogs.Users
 {
     public interface IUserSevice
     {
+        Task<bool> UserNameExistence(string userName);
         Task<ApiResponse> UpdatePassWordToUser(string userName);
         Task<Data.Entitis.User> Login(GetLoginRequest request);
         Task<string> LoginInWed(GetLoginRequest request);
