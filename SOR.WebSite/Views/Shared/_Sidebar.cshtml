@@ -16,7 +16,9 @@
         <li class="nav-item" style="font-size:13px;color:#667580;margin-top:16px;padding:0 10px;">
             <div class="taikhoan">
                 <i class="fas fa-user"></i>
-                <a href="#" style="color:#667580;text-decoration: none;">Dương Thanh Công</a>
+                <a href="#" style="color:#667580;text-decoration: none;">
+                    @User.Claims.Skip(2).FirstOrDefault().Value
+                </a>
                 <i class="sortdown-mobile fas fa-sort-down" style="top: 41%;position: absolute;margin-left: 6px;"></i>
             </div>
             <ul class="thongtin-taikhoan">

@@ -93,6 +93,7 @@ namespace SOR.Application.Catalogs.Users
                 var claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Name, fUser.UserName));
                 claims.Add(new Claim(ClaimTypes.Role, fUser.IsAdmin.ToString()));
+                claims.Add(new Claim(ClaimTypes.Actor, fUser.FullName));
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
