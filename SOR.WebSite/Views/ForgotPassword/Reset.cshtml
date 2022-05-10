@@ -12,8 +12,8 @@
     <div class="text-center">
         <img src="/assets/image/logoHF.png" alt="">
         <div style="padding-bottom:50px;"></div>
-        <h6 style="text-transform:uppercase;"><strong>Nhập lại mật khẩu</strong></h6>
-        <p style="color:red;">Bạn hãy thay đổi mật khẩu mới bằng mã mà tôi đã gửi !</p>
+        <h6 style="text-transform:uppercase;"><strong>Cập nhật mật khẩu</strong></h6>
+        <p style="color:red;">Bạn hãy thay đổi mật khẩu mới bằng mã mà đã  được gửi qua Gmail !</p>
     </div>
     <form class="user" asp-controller="ForgotPassword" asp-action="Reset" method="post" >
         <div class="form-group">
@@ -33,7 +33,7 @@
         <div class="form-group">
             <input type="text" 
                    class="form-control form-control-user"
-                   placeholder="Nhập mã để kích hoạt"  
+                   placeholder="Nhập mã được gửi trong gmail"  
                    oninvalid="this.setCustomValidity('Cần nhập mã kích hoạt')"
                    onchange="this.setCustomValidity('')"
                    id="password"
@@ -48,17 +48,17 @@
                        class="form-control form-control-user"
                        id="NewPassWord" 
                        name = "NewPassWord"
-                       placeholder="Mật khẩu"
+                       placeholder="Mật khẩu mới"
                        onkeyup='check();'
-                       oninvalid="this.setCustomValidity('Cần nhập mật khẩu')"
+                       oninvalid="this.setCustomValidity('Cần nhập mật khẩu mới')"
                        onchange="this.setCustomValidity('')"
                        required
                 >
             </div>
             <div class="col-sm-6">
                 <input type="password" class="form-control form-control-user"
-                       id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu"
-                       oninvalid="this.setCustomValidity('Cần nhập lại mật khẩu')"
+                       id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu mới"
+                       oninvalid="this.setCustomValidity('Cần nhập lại mật khẩu mới')"
                        onchange="this.setCustomValidity('')"
                        required
                        onkeyup='check();'
@@ -67,7 +67,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary btn-user btn-block" id="dangky" disabled>
-            Đăng ký
+            Cập nhật mật khẩu mới
         </button>
     </form>
 </div>

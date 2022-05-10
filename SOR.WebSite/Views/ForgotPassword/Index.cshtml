@@ -2,13 +2,17 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutSub.cshtml";
 }
+<link rel="stylesheet" href="/assets/css/spin.css">
 <style>
     .margin-row {
         margin-top: 50px;
     }
+
 </style>
 
 <main>
+<div class="overlay2"></div>
+
     <div class="p-5">
         <div class="text-center">
             <img src="/assets/image/logoHF.png" alt="">
@@ -33,15 +37,36 @@
             <a asp-controller ="Authentication" asp-action= "Login"  class="btn btn-success btn-user btn-block">
                 Quay lại đăng nhập
             </a>
-            
         </form>
     </div>
+    <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border:unset;background-color:transparent;">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <img style="border-radius:50%;height:100px;width:100px;margin-left: 35px;margin-top: 200px;" src="~/assets/image/quaydeu.gif" />
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+  </div>
+</div>
 </main>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+
 <script type="text/javascript">
+    $("#btn_submit").click(function(){
+        $(".modal").fadeIn(500);
+        $(".overlay2").fadeIn(500);
+        setTimeout(function(){
+            $(".modal").fadeOut(500);
+            $(".overlay2").fadeOut(500);
+        }, 26000);
+    })
 	$("#btn_submit").on("click", function(){
         var username = $("#username").val();
-        debugger
 		$.ajax({
 		  url: "https://localhost:5001/V1/admin-panel/send-emails?userName="+ username,
 		  method: "POST",
