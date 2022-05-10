@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Reset";
+    Layout = "~/Views/Shared/_LayoutSub.cshtml";
+}
+@if (ViewBag.SuccessMsg != null)
+{
+    <body onload="MessageBox('@ViewBag.SuccessMsg');">
+    </body>
+}
+<main>
+    <div class="p-5">
+    <div class="text-center">
+        <img src="/assets/image/logoHF.png" alt="">
+        <div style="padding-bottom:50px;"></div>
+        <h6 style="text-transform:uppercase;"><strong>Nhập lại mật khẩu</strong></h6>
+        <p style="color:red;">Bạn hãy thay đổi mật khẩu mới bằng mã mà tôi đã gửi !</p>
+    </div>
+    <form class="user" asp-controller="ForgotPassword" asp-action="Reset" method="post" >
+        <div class="form-group">
+            <input type="text" 
+                   class="form-control form-control-user"
+                   placeholder="Mã số sinh viên"
+                   required
+                   oninvalid="this.setCustomValidity('Cần nhập mã sinh viên')"
+                   onchange="this.setCustomValidity('')"
+                   id="username"
+                   onkeyup='checkUserName();'
+                   name = "userName"
+            >
+            <span id='messageUserName' style="position: absolute;color: green;right: 32px;top: 250px;"></span>
+            
+        </div>
+        <div class="form-group">
+            <input type="text" 
+                   class="form-control form-control-user"
+                   placeholder="Nhập mã để kích hoạt"  
+                   oninvalid="this.setCustomValidity('Cần nhập mã kích hoạt')"
+                   onchange="this.setCustomValidity('')"
+                   id="password"
+                   name="PassWord"  
+                   required
+            >
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <input type="password" 
+                       class="form-control form-control-user"
+                       id="NewPassWord" 
+                       name = "NewPassWord"
+                       placeholder="Mật khẩu"
+                       onkeyup='check();'
+                       oninvalid="this.setCustomValidity('Cần nhập mật khẩu')"
+                       onchange="this.setCustomValidity('')"
+                       required
+                >
+            </div>
+            <div class="col-sm-6">
+                <input type="password" class="form-control form-control-user"
+                       id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu"
+                       oninvalid="this.setCustomValidity('Cần nhập lại mật khẩu')"
+                       onchange="this.setCustomValidity('')"
+                       required
+                       onkeyup='check();'
+                >
+                 <span id='message' style="position: absolute;right: -10px;top: 14px;"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-user btn-block" id="dangky" disabled>
+            Đăng ký
+        </button>
+    </form>
+</div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript">
+
+    var checkUserName = function()
+    {
+        var username = document.getElementById('username').value;
+        if(username == null || username == "")
+        {
+            document.getElementById('messageUserName').innerHTML = '';
+            document.getElementById('dangky').disabled = true;
+        }
+       else if(username != null || username != "")
+        {
+            $.ajax({
+              url: "https://localhost:5001/V1/admin-panel/users/check-username?userName="+username,
+              method: "GET",
+              success : function(response){
+                if (response == true) {
+                    document.getElementById('messageUserName').style.color = 'green';
+                    document.getElementById('messageUserName').innerHTML = '<i class="fa-solid fa-user-check"></i>';
+                    document.getElementById('NewPassWord').disabled = false
+                    document.getElementById('exampleRepeatPassword').disabled = false
+                    document.getElementById('password').disabled = false
+                }
+                else if(response == false)
+                {
+                    document.getElementById('messageUserName').style.color = 'red';
+                    document.getElementById('messageUserName').innerHTML = '<i class="fa-solid fa-user-xmark"></i>';
+                    document.getElementById('NewPassWord').disabled = true
+                    document.getElementById('exampleRepeatPassword').disabled = true    
+                    document.getElementById('password').disabled = true
+                }
+              }
+            });
+        }
+    }
+
+
+    var check = function()
+    {
+         if(document.getElementById('NewPassWord').value == ""
+         && document.getElementById('exampleRepeatPassword').value == "")
+         {
+              document.getElementById('message').innerHTML = '';
+              document.getElementById('dangky').disabled = true;
+         }
+         else if (document.getElementById('NewPassWord').value ==
+            document.getElementById('exampleRepeatPassword').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            document.getElementById('dangky').disabled = false;
+         }
+         else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = '<i class="fa-solid fa-spinner"></i>';
+            document.getElementById('dangky').disabled = true;
+         }
+    }
+
+    function MessageBox(item)
+    {
+        if(item != null || item != "")
+        {
+            //Nếu đúng tài khoản và mật khẩu
+            swal({
+                title: "Thông Báo",
+                text: "Cập nhật thành công !",
+                type: "success",
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = "/Authentication/Login";
+                    }
+                });
+        }
+        else if(item == null)
+        {
+            //Nếu sai tài khoản và mật khẩu
+             swal({
+                 title: "Thông Báo",
+                 text: "Cập nhật không thành công !",
+                 type: "error",
+                 confirmButtonClass: "btn-primary",
+                 confirmButtonText: "OK",
+                 closeOnConfirm: true,
+             })
+        }
+    }
+</script>
+
+

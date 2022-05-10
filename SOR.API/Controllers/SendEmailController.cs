@@ -41,11 +41,15 @@ namespace SOR.WedAPI.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> SendWelcomeMail([FromForm] WelcomeRequest request)
+        public async Task<IActionResult> SendWelcomeMail(string userName)
         {
             try
             {
-                await mailService.SendWelcomeEmailAsync(request);
+                var dSend = new WelcomeRequest()
+                {
+                    userName = userName
+                };
+                await mailService.SendWelcomeEmailAsync(dSend);
                 return Ok();
             }
             catch (ApiException ex)

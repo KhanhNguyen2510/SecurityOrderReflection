@@ -40,8 +40,6 @@ namespace SOR.IntergrationAPI.Catalogs.User
             return JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
         }
 
-
-
         public async Task<ApiStatus> Create(GetCreateToUserRequest request)
         {
             var client = _httpClientFactory.CreateClient();
@@ -56,6 +54,23 @@ namespace SOR.IntergrationAPI.Catalogs.User
             requestContent.Add(new StringContent(request.password.ToString()), "password");
             requestContent.Add(new StringContent(request.iPCreate.ToString() ?? ""), "iPCreate");
             var response = await client.PostAsync($"/V1/admin-panel/users", requestContent);
+            if (response.IsSuccessStatusCode)
+            {
+                var d = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
+            }
+            var ds = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
+        }
+        public async Task<ApiStatus> ResetPassword(string userName, GetUpdateToUserRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemContants.AppSettings.BaseAddress]);
+
+            var requestContent = new MultipartFormDataContent();
+            requestContent.Add(new StringContent(request.PassWord.ToString()), "PassWord");
+            requestContent.Add(new StringContent(request.NewPassWord.ToString()), "NewPassWord");
+            var response = await client.PatchAsync($"/V1/admin-panel/users/{userName}", requestContent);
             if (response.IsSuccessStatusCode)
             {
                 var d = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());

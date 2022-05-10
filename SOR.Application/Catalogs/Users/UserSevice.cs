@@ -224,6 +224,19 @@ namespace SOR.Application.Catalogs.Users
                 cAgenciesExisten = await AgenciesExistence(request.AgenciesId);
                 if (!cAgenciesExisten) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
             }
+            bool cPassword = checkValueTypeString.CheckNullValue(request.PassWord);
+            if (cPassword)
+            {
+                var dLogin = new GetLoginRequest()
+                {
+                    userName = userName,
+                    passWord = request.PassWord
+                };
+                var cLogin = await Login(dLogin);
+                if (cLogin == null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+
+                cNameExistence.PassWord = ShareContantsSytem.MD5(request.NewPassWord);
+            }
             #endregion
 
             cNameExistence.Email = !string.IsNullOrEmpty(request.Email) ? request.Email : cNameExistence.Email;

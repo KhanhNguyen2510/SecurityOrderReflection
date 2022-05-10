@@ -15,5 +15,7 @@ namespace SOR.ViewModel.Catalogs.Users
         [MinLength(9, ErrorMessage = "Số điện thoại không hợp lệ")]
         [MaxLength(15, ErrorMessage = "Số điện thoại không hợp lệ")]
         public string NumberPhone { get; set; }
+        public string PassWord { get; set; }
+        public string NewPassWord { get; set; }
     }
 }

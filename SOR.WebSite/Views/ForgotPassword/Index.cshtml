@@ -1,4 +1,3 @@
-﻿
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutSub.cshtml";
@@ -41,11 +40,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 <script type="text/javascript">
 	$("#btn_submit").on("click", function(){
+        var username = $("#username").val();
         debugger
 		$.ajax({
-		  url: "https://localhost:5001/V1/admin-panel/send-emails",
+		  url: "https://localhost:5001/V1/admin-panel/send-emails?userName="+ username,
 		  method: "POST",
-		  data: { userName : username},
 		  success : function(response){
 		  	 swal({
                 title: "Thông Báo",
@@ -57,7 +56,7 @@
             },
                 function (isConfirm) {
                     if (isConfirm) {
-                        window.location.href = "/Authentication/Login";
+                        window.location.href = "/ForgotPassword/Reset";
                     }
                 });
 		  }
