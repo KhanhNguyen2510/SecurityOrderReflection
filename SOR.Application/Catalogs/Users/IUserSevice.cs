@@ -20,5 +20,6 @@ namespace SOR.Application.Catalogs.Users
         Task<Data.Entitis.User> GetUserById(string userName);
         Task<IEnumerable<Data.Entitis.User>> GetListToUser(GetMangagerToUserRequest request);
         Task<PagedResult<Data.Entitis.User>> GetListPagingToUser(GetMangagerUserRequest request);
+        Task<ApiResponse> CreateTokenInMobil(GetCreateTokenRequest request);
     }
 }

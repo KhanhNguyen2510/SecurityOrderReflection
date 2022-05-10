@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SOR.Data.EFs;
 
 namespace SOR.Data.Migrations
 {
     [DbContext(typeof(SORDbContext))]
-    partial class SORDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220510082711_Add_TokenInUser")]
+    partial class Add_TokenInUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

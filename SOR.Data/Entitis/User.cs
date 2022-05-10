@@ -51,6 +51,7 @@ namespace SOR.Data.Entitis
         /// 
         [StringLength(200)]
         public string AgenciesId { get; set; }
+        public string  Token { get; set; }
 
         //public IEnumerable<State> State { get; set; }
         //public IEnumerable<History> Histories  { get; set; }

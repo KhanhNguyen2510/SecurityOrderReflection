@@ -116,6 +116,17 @@ namespace SOR.Application.Catalogs.Users
         /// <returns></returns>
         /// 
 
+
+        public async Task<ApiResponse> CreateTokenInMobil(GetCreateTokenRequest request)
+        {
+            var fUser = await CheckUser(request.userName);
+            if(fUser == null)  return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
+
+            fUser.Token = request.token;
+           await _context.SaveChangesAsync();
+            return new ApiResponse(MessageBase.SUCCCESS);
+        }
+
         public async Task<ApiResponse> CreateToUser(GetCreateToUserRequest request)
         {
             #region Check Value

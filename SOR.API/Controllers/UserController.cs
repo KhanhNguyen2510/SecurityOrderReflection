@@ -47,6 +47,33 @@ namespace SOR.WedAPI.Controllers
             }
         }
 
+        [HttpPost("token-in-mobil")]
+        [SwaggerOperation(Summary = "Kiểm tra trùng trùng tài khoản user")]
+        public async Task<JsonResult> CreateToken([FromForm] GetCreateTokenRequest request )
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.userName))
+                    return Json(false);
+                if (string.IsNullOrEmpty(request.token))
+                    return Json(false);
+                request.userName = request.userName.Trim();
+                request.token = request.token.Trim();
+                var data = await _userSevice.CreateTokenInMobil(request);
+                return Json(data);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError($"Create Token In Mobil : Message:{ex.Message}");
+                throw new ApiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Create Token In Mobil: Message:{ex.Message}");
+                throw new ApiException(ex.Message);
+            }
+        }
+
         [HttpPost("reset-password")]
         [SwaggerOperation(Summary = "Tạo lại mật khẩu")]
         public async Task<JsonResult> ResetPassWord(string userName)
