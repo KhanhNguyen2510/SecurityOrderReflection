@@ -38,7 +38,7 @@ namespace SOR.Application.Catalogs.SendEmail
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
             email.To.Add(MailboxAddress.Parse(gUser.Email));
-            email.Subject = $"Welcome {gUser.UserName}";
+            email.Subject = $"Xin Chào {gUser.UserName}, chúng tôi từ SOR gửi cho bạn mã để thay đổi mật khẩu";
             var builder = new BodyBuilder();
             builder.HtmlBody = MailText;
             email.Body = builder.ToMessageBody();
