@@ -11,12 +11,14 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SOR.Application.Catalogs.Agencies;
 using SOR.Application.Catalogs.Historys;
+using SOR.Application.Catalogs.Mobiles;
 using SOR.Application.Catalogs.NewsLabels;
 using SOR.Application.Catalogs.Reports;
 using SOR.Application.Catalogs.Reports.Upload;
 using SOR.Application.Catalogs.SendEmail;
 using SOR.Application.Catalogs.Users;
 using SOR.Data.EFs;
+using SOR.IntergrationAPI.Catalogs.User;
 using SOR.ViewModel.Catalogs.SendEmail;
 using System.Collections.Generic;
 using System.Text;
@@ -58,6 +60,9 @@ namespace SOR.API
             services.AddTransient<IUserSevice, UserSevice>();
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IMailService, MailService>();
+            services.AddHttpClient();
+            services.AddTransient<IMobileSevice, MobileSevice>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
 
             services.AddSwaggerGen(c =>
             {

@@ -1,19 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SOR.Application.Catalogs.Historys;
 using SOR.Data.EFs;
 using SOR.Data.Enum;
 using SOR.Data.SystemBase;
+using SOR.IntergrationAPI.Catalogs.User;
 using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Historys;
+using SOR.ViewModel.Catalogs.Mobile;
 using SOR.ViewModel.Catalogs.Users;
 using SOR.ViewModel.Common;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +30,7 @@ namespace SOR.Application.Catalogs.Users
         private readonly IHistorySevice _historySevice;
         private SystemBase<string> checkValueTypeString = new SystemBase<string>();
 
-        public UserSevice(SORDbContext context, IConfiguration configuration, IHistorySevice historySevice)
+        public UserSevice(SORDbContext context, IConfiguration configuration, IHistorySevice historySevice )
         {
             _context = context;
             _config = configuration;
@@ -115,17 +118,6 @@ namespace SOR.Application.Catalogs.Users
         /// <param name="Tạo tài khoản"></param>
         /// <returns></returns>
         /// 
-
-
-        public async Task<ApiResponse> CreateTokenInMobil(GetCreateTokenRequest request)
-        {
-            var fUser = await CheckUser(request.userName);
-            if(fUser == null)  return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
-
-            fUser.Token = request.token;
-           await _context.SaveChangesAsync();
-            return new ApiResponse(MessageBase.SUCCCESS);
-        }
 
         public async Task<ApiResponse> CreateToUser(GetCreateToUserRequest request)
         {

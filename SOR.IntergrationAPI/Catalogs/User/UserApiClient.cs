@@ -2,9 +2,12 @@
 using Newtonsoft.Json;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
+using SOR.ViewModel.Catalogs.Mobile;
 using SOR.ViewModel.Catalogs.Users;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 
@@ -56,10 +59,8 @@ namespace SOR.IntergrationAPI.Catalogs.User
             var response = await client.PostAsync($"/V1/admin-panel/users", requestContent);
             if (response.IsSuccessStatusCode)
             {
-                var d = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
                 return JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
             }
-            var ds = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
         }
         public async Task<ApiStatus> ResetPassword(string userName, GetUpdateToUserRequest request)
@@ -73,11 +74,37 @@ namespace SOR.IntergrationAPI.Catalogs.User
             var response = await client.PatchAsync($"/V1/admin-panel/users/{userName}", requestContent);
             if (response.IsSuccessStatusCode)
             {
-                var d = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
                 return JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
             }
-            var ds = JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ApiStatus>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ShowNotificationViewModel> NotificationInMobile(GetNotificationRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemContants.AppSettings.BaseMobileAddress]);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _configuration[SystemContants.AppSettings.Authorization]);
+
+            var dNotification = new GetNotificationRequest()
+            {
+                notification = new Notification()
+                {
+                    tille = $"{request.notification.tille}",
+                    body = $"{request.notification.body}"
+                },
+                registration_ids = new string[] { $"{request.registration_ids}" }
+            };
+
+            string payload = JsonConvert.SerializeObject(dNotification);
+            var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"/fcm/send", content);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ShowNotificationViewModel>(await response.Content.ReadAsStringAsync());
+            }
+            return JsonConvert.DeserializeObject<ShowNotificationViewModel>(await response.Content.ReadAsStringAsync());
         }
 
     }

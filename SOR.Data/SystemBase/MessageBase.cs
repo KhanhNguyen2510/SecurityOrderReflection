@@ -31,8 +31,9 @@
         /// Key không tìm thấy
         /// </summary>
         public static string KEY_UN_EXISTENCE = "000";
-
-
-
+        /// <summary>
+        /// Không kết nối được với máy chủ
+        /// </summary>
+        public static string NO_CONECTION = "Không kết nối được với thiết bị";
     }
 }

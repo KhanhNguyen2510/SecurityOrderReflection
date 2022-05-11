@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SOR.Application.Catalogs.Historys;
+using SOR.Application.Catalogs.Mobiles;
 using SOR.Application.Catalogs.Reports.Upload;
 using SOR.Data.EFs;
 using SOR.Data.Enum;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Historys;
+using SOR.ViewModel.Catalogs.Mobile;
 using SOR.ViewModel.Catalogs.Reports;
 using SOR.ViewModel.Catalogs.Reports.Proof;
 using SOR.ViewModel.Catalogs.Reports.Report;
@@ -25,13 +27,16 @@ namespace SOR.Application.Catalogs.Reports
         private readonly IFileSevice _fileSevice;
         private readonly IHistorySevice _historySevice;
         private SystemBase<string> checkValue = new SystemBase<string>();
+        private readonly IMobileSevice _mobileSevice;
    
-        public ReportSevice(SORDbContext context, IFileSevice fileSevice , IHistorySevice historySevice)
+        public ReportSevice(SORDbContext context, IFileSevice fileSevice , IHistorySevice historySevice , IMobileSevice mobileSevice)
         {
             _context = context;
             _fileSevice = fileSevice;
             _historySevice = historySevice;
+            _mobileSevice = mobileSevice;
         }
+
 
         /// <summary>
         /// Generreate
@@ -88,14 +93,12 @@ namespace SOR.Application.Catalogs.Reports
             var findId = await _context.ReportResults.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
         }
-
         public async Task<bool> NewsLableExistence(string Id)
         {
             var cNewsLable = await _context.NewsLabels.FirstOrDefaultAsync(x => x.Id == Id);
             if(cNewsLable == null) return false;
             return true;
         }
-
         public async Task<bool> ReportIdExistence(string Id)
         {
             var cNewsLable = await _context.Reports.FirstOrDefaultAsync(x => x.Id == Id);
@@ -174,6 +177,15 @@ namespace SOR.Application.Catalogs.Reports
             };
 
             await _historySevice.CreateToHistory(dhistory);
+            #endregion
+
+            #region Add Notification
+            var dNotification = new Notification()
+            {
+                tille = "Phản ánh trật tự an ninh",
+                body = @$"Có một báo cáo với nội dung : {request.content} . Tại địa chỉ là {request.locationUser}"
+            };
+            await _mobileSevice.ShowNotificationInMobile(request.userId, dNotification);
             #endregion
 
             return new ApiResponse(MessageBase.SUCCCESS);

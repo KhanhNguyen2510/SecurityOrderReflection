@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
@@ -14,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SOR.Data\SOR.Data.csproj" />
+    <ProjectReference Include="..\SOR.IntergrationAPI\SOR.IntergrationAPI.csproj" />
     <ProjectReference Include="..\SOR.ViewModel\SOR.ViewModel.csproj" />
   </ItemGroup>
 

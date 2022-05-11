@@ -2,10 +2,13 @@
 using Microsoft.Extensions.Logging;
 using SOR.Application.Catalogs.Users;
 using SOR.Data.SystemBase;
+using SOR.IntergrationAPI.Catalogs.User;
 using SOR.ViewModel;
+using SOR.ViewModel.Catalogs.Mobile;
 using SOR.ViewModel.Catalogs.Users;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SOR.WedAPI.Controllers
@@ -23,6 +26,7 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _userSevice = userSevice;
         }
+
         [HttpGet("check-username")]
         [SwaggerOperation(Summary = "Kiểm tra trùng trùng tài khoản user")]
         public async Task<JsonResult> CheckUserName(string userName)
@@ -43,33 +47,6 @@ namespace SOR.WedAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Check UserName To User: Message:{ex.Message}");
-                throw new ApiException(ex.Message);
-            }
-        }
-
-        [HttpPost("token-in-mobil")]
-        [SwaggerOperation(Summary = "Kiểm tra trùng trùng tài khoản user")]
-        public async Task<JsonResult> CreateToken([FromForm] GetCreateTokenRequest request )
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(request.userName))
-                    return Json(false);
-                if (string.IsNullOrEmpty(request.token))
-                    return Json(false);
-                request.userName = request.userName.Trim();
-                request.token = request.token.Trim();
-                var data = await _userSevice.CreateTokenInMobil(request);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Create Token In Mobil : Message:{ex.Message}");
-                throw new ApiException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Create Token In Mobil: Message:{ex.Message}");
                 throw new ApiException(ex.Message);
             }
         }
