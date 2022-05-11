@@ -126,8 +126,8 @@ namespace SOR.API
 
             services.Configure<FormOptions>(options =>
             {
-                // Set the limit to 256 MB
-                options.MultipartBodyLengthLimit = /*268435456*/ 737280000;
+                // Set the limit to 730 MB
+                options.MultipartBodyLengthLimit =  737280000;
             });
         }
     

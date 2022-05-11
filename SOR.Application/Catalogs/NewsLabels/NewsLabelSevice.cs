@@ -27,7 +27,12 @@ namespace SOR.Application.Catalogs.NewsLabels
             _context = context;
             _historySevice = historySevice;
         }
-
+        /// <summary>
+        /// Check
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        
         public async Task<bool> NameNewsLableExistence(string name)
         {
             var checkName = await _context.NewsLabels.FirstOrDefaultAsync(x => x.Name == name && x.IsDelete == true);

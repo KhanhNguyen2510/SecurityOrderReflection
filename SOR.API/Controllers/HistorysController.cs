@@ -22,27 +22,12 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _historySevice = historySevice;
         }
-        [HttpPost]
-        [SwaggerOperation(Summary = "Thêm thông tin nhãn của lịch sử")]
-        public async Task<JsonResult> Create([FromForm] GetCreateToHistoryRequest request)
-        {
-            try
-            {
-                var data = await _historySevice.CreateToHistory(request);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Create To History: Message:{ex.Message}");
-               throw new ApiException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Create To History: Message:{ex.Message}");
-               throw new ApiException(ex.Message);
-            }
-        }
-
+        /// <summary>
+        /// List
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpGet("list-historys")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của lịch sử")]
         public async Task<JsonResult> List([FromQuery] GetMangagerToHistoryRequest request)
@@ -63,7 +48,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của lịch sử có phân trang")]
         public async Task<JsonResult> ListPaging([FromQuery] GetMangagerHistoryRequest request)
@@ -84,7 +68,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet("{Id}/get-id")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của lịch sử theo Id")]
         public async Task<JsonResult> GetById(int Id)

@@ -3,7 +3,6 @@ using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Agencies;
 using SOR.ViewModel.Common;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SOR.Application.Catalogs.Agencies
@@ -16,7 +15,6 @@ namespace SOR.Application.Catalogs.Agencies
         /// <param name="request"></param>
         /// <returns></returns>
         Task<ApiResponse> CreateToAgencies(GetCreateToAgenciesRequest request);
-
         /// <summary>
         /// Update
         /// </summary>
@@ -24,7 +22,6 @@ namespace SOR.Application.Catalogs.Agencies
         /// <param name="request"></param>
         /// <returns></returns>
         Task<ApiResponse> UpdateToAgencies(string Id, GetUpdateToAgenciesRequest request);
-
         /// <summary>
         /// Delete
         /// </summary>
@@ -32,7 +29,6 @@ namespace SOR.Application.Catalogs.Agencies
         /// <param name="request"></param>
         /// <returns></returns>
         Task<ApiResponse> DeleteToAgencies(string Id, CreateUserRequest request);
-
         /// <summary>
         /// List
         /// </summary>

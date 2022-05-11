@@ -16,8 +16,8 @@ namespace SOR.API
                 {
                     webBuilder.ConfigureKestrel((context, options) =>
                     {
-                // Handle requests up to 50 MB
-                options.Limits.MaxRequestBodySize = /*52428800*/ 737280000;
+                // Handle requests up to 730 MB
+                options.Limits.MaxRequestBodySize =  737280000;
                     })
                     .UseStartup<Startup>();
                 });

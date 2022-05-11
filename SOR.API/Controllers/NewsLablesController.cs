@@ -22,7 +22,12 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _newsLabelSevice = newsLabelSevice;
         }
-
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPost]
         [SwaggerOperation(Summary = "Thêm thông tin nhãn của nhãn bài đăng")]
         public async Task<JsonResult> Create([FromForm] GetCreateToNewsLableRequest request)
@@ -43,7 +48,13 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPatch("{Id}")]
         [SwaggerOperation(Summary = "Cập nhật thông tin nhãn của nhãn bài đăng")]
         public async Task<JsonResult> Update(string Id, [FromForm] GetUpdateToNewsLableRequest request)
@@ -64,7 +75,13 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpDelete("{Id}")]
         [SwaggerOperation(Summary = "Xóa thông tin nhãn của nhãn bài đăng")]
         public async Task<JsonResult> Delete(string Id, [FromForm] CreateUserRequest request)
@@ -85,7 +102,12 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// List
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpGet("list-news-lables")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của nhãn bài đăng")]
         public async Task<JsonResult> List([FromQuery] GetMangagerToNewsLableRequest request)
@@ -106,7 +128,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của nhãn bài đăng có phân trang")]
         public async Task<JsonResult> ListPaging([FromQuery] GetMangagerNewsLableRequest request)
@@ -127,7 +148,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet("get-id/{Id}")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của nhãn bài đăng theo Id")]
         public async Task<JsonResult> GetById(string Id)

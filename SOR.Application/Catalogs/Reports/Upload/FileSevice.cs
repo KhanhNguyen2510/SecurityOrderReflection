@@ -33,6 +33,7 @@ namespace SOR.Application.Catalogs.Reports.Upload
                     listUrlImages.Add($"/Uploads/{files[item].FileName}");
                 };
             }
+
             return listUrlImages;
         }
     }

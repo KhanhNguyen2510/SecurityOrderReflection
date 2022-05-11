@@ -1,5 +1,4 @@
-﻿using FirebaseAdmin.Auth;
-using SOR.Application.Catalogs.Users;
+﻿using SOR.Application.Catalogs.Users;
 using SOR.Data.EFs;
 using SOR.Data.SystemBase;
 using SOR.IntergrationAPI.Catalogs.User;
@@ -23,7 +22,7 @@ namespace SOR.Application.Catalogs.Mobiles
             _context = context;
         }
 
-        public async Task<ApiResponse> DeleteTokenInMobile(CreateUserRequest request)
+        public async Task<ApiResponse> RemoveTokenInMobile(CreateUserRequest request)
         {
             var fUser = await _userSevice.CheckUser(request.userId);
             if (fUser == null) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);

@@ -10,7 +10,6 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
 
-
 namespace SOR.WedAPI.Controllers
 {
     [ApiController]
@@ -25,9 +24,14 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _reportSevice = reportSevice;
         }
-
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = /*268435456*/ 737280000)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 737280000)]
         [DisableRequestSizeLimit]
         [RequestSizeLimit(737280000)]
         [SwaggerOperation(Summary = "Thêm thông tin bài báo cáo")]
@@ -49,8 +53,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
-        
         [HttpPost("results")]
         [SwaggerOperation(Summary = "Thêm thông tin bằng chứng báo cáo")]
         public async Task<JsonResult> CreateResult([FromForm] GetCreateToReportResultRequest request)
@@ -71,7 +73,13 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPatch("{Id}/report-is-status")]
         [SwaggerOperation(Summary = "Cập nhật trạng thái thông tin bài báo cáo")]
         public async Task<JsonResult> UpdateStatus(string Id, [FromForm] GetUpdateStatusInReportRequest request)
@@ -92,7 +100,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpPatch("{Id}/report-is-report")]
         [SwaggerOperation(Summary = "Cập nhật  thông tin báo cáo của bài báo cáo")]
         public async Task<JsonResult> UpdateIsReport(string Id, [FromForm] GetUpdateReportInReportRequest request)
@@ -113,7 +120,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpPatch("{Id}")]
         [SwaggerOperation(Summary = "Cập nhật thông tin bài báo cáo")]
         public async Task<JsonResult> Update(string Id,[FromForm] GetUpdateToReportRequest request)
@@ -154,7 +160,13 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpDelete("{Id}")]
         [SwaggerOperation(Summary = "Xóa thông tin bài báo cáo")]
         public async Task<JsonResult> Delete(string Id, CreateUserRequest request)
@@ -175,7 +187,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpDelete("{Id}/results")]
         [SwaggerOperation(Summary = "Thêm thông tin bằng chứng báo cáo")]
         public async Task<JsonResult> DeleteResult(int Id, CreateUserRequest request)
@@ -196,7 +207,12 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// List
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpGet("{Id}")]
         [SwaggerOperation(Summary = "Hiển thị thông tin báo cáo theo Id")]
         public async Task<JsonResult> GetById(string Id)
@@ -217,7 +233,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet("list-reposts")]
         [SwaggerOperation(Summary = "Hiển thị tất cả thông tin báo cáo ")]
         public async Task<JsonResult> GetList([FromQuery]GetMangagerToReportRequest request)
@@ -238,7 +253,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet]
         [SwaggerOperation(Summary = "Hiển thị có phân trang thông tin báo cáo")]
         public async Task<JsonResult> GetPaging([FromQuery]GetMangagerReportRequest request)

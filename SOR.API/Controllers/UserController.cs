@@ -17,7 +17,6 @@ namespace SOR.WedAPI.Controllers
     [Route("V1/admin-panel/users")]
     public class UserController : Controller
     {
-
         private readonly IUserSevice _userSevice;
         private readonly ILogger<UserController> _logger;
 
@@ -26,7 +25,12 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _userSevice = userSevice;
         }
-
+        /// <summary>
+        /// Check
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpGet("check-username")]
         [SwaggerOperation(Summary = "Kiểm tra trùng trùng tài khoản user")]
         public async Task<JsonResult> CheckUserName(string userName)
@@ -50,28 +54,12 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
-        [HttpPost("reset-password")]
-        [SwaggerOperation(Summary = "Tạo lại mật khẩu")]
-        public async Task<JsonResult> ResetPassWord(string userName)
-        {
-            try
-            {
-                var data = await _userSevice.UpdatePassWordToUser(userName);
-                return Json(data);
-            }
-            catch (ApiException ex)
-            {
-                _logger.LogError($"Reset PassWord To User: Message:{ex.Message}");
-                throw new ApiException(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Reset PassWord To User: Message:{ex.Message}");
-                throw new ApiException(ex.Message);
-            }
-        }
-
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPost("login")]
         [SwaggerOperation(Summary = "Đăng nhập")]
         public async Task<JsonResult> Login([FromForm] GetLoginRequest request)
@@ -92,7 +80,6 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
         [HttpPost("login-in-web")]
         [SwaggerOperation(Summary = "Đăng nhập trên Website")]
         public async Task<JsonResult> LoginInWeb([FromForm] GetLoginRequest request)
@@ -113,7 +100,13 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
+        /// 
         [HttpPost]
         [SwaggerOperation(Summary = "Thêm tài khoản người dùng")]
         public async Task<JsonResult> Create([FromForm] GetCreateToUserRequest request)
@@ -134,7 +127,33 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
+        [HttpPost("reset-password")]
+        [SwaggerOperation(Summary = "Tạo lại mật khẩu")]
+        public async Task<JsonResult> ResetPassWord(string userName)
+        {
+            try
+            {
+                var data = await _userSevice.UpdatePassWordToUser(userName);
+                return Json(data);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError($"Reset PassWord To User: Message:{ex.Message}");
+                throw new ApiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Reset PassWord To User: Message:{ex.Message}");
+                throw new ApiException(ex.Message);
+            }
+        }
         [HttpPatch("{userName}")]
         [SwaggerOperation(Summary = "Cập nhật thông tin tài khoản người dùng")]
         public async Task<JsonResult> Update(string userName,[FromForm] GetUpdateToUserRequest request)
@@ -155,7 +174,12 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpDelete("{userName}")]
         [SwaggerOperation(Summary = "Xóa thông tin tài khoản người dùng")]
         public async Task<JsonResult> Delete(string userName, [FromForm]CreateUserRequest request)
@@ -176,7 +200,12 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// List
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpGet("{userName}/get-id")]
         [SwaggerOperation(Summary = "Hiển thị thông tin người dùng theo tên UserName")]
         public async Task<JsonResult> GetById(string userName)
@@ -197,7 +226,6 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet("list-users")]
         [SwaggerOperation(Summary = "Hiển thị tất cả thông tin tài khoản")]
         public async Task<JsonResult> List([FromQuery] GetMangagerToUserRequest request)
@@ -218,7 +246,6 @@ namespace SOR.WedAPI.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet]
         [SwaggerOperation(Summary = "Hiển thị thông tin tài khoản có phân trang")]
         public async Task<JsonResult> ListPaging([FromQuery] GetMangagerUserRequest request)

@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SOR.ViewModel.Catalogs.NewLables;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SOR.IntergrationAPI.Catalogs.NewLables

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SOR.Application.Catalogs.Historys;
 using SOR.Application.Catalogs.Mobiles;
+using SOR.Application.Catalogs.NewsLabels;
 using SOR.Application.Catalogs.Reports.Upload;
 using SOR.Data.EFs;
 using SOR.Data.Enum;
@@ -28,15 +29,16 @@ namespace SOR.Application.Catalogs.Reports
         private readonly IHistorySevice _historySevice;
         private SystemBase<string> checkValue = new SystemBase<string>();
         private readonly IMobileSevice _mobileSevice;
+        private readonly INewsLabelSevice _newsLabelSevice;
    
-        public ReportSevice(SORDbContext context, IFileSevice fileSevice , IHistorySevice historySevice , IMobileSevice mobileSevice)
+        public ReportSevice(SORDbContext context, IFileSevice fileSevice , IHistorySevice historySevice , IMobileSevice mobileSevice , INewsLabelSevice newsLabelSevice)
         {
             _context = context;
             _fileSevice = fileSevice;
             _historySevice = historySevice;
             _mobileSevice = mobileSevice;
+            _newsLabelSevice = newsLabelSevice;
         }
-
 
         /// <summary>
         /// Generreate
@@ -93,15 +95,9 @@ namespace SOR.Application.Catalogs.Reports
             var findId = await _context.ReportResults.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
         }
-        public async Task<bool> NewsLableExistence(string Id)
-        {
-            var cNewsLable = await _context.NewsLabels.FirstOrDefaultAsync(x => x.Id == Id);
-            if(cNewsLable == null) return false;
-            return true;
-        }
         public async Task<bool> ReportIdExistence(string Id)
         {
-            var cNewsLable = await _context.Reports.FirstOrDefaultAsync(x => x.Id == Id);
+            var cNewsLable = await _context.Reports.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             if (cNewsLable == null) return false;
             return true;
         }
@@ -129,8 +125,8 @@ namespace SOR.Application.Catalogs.Reports
             if (!cNewsLable) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
 
             request.newsLabelId = request.newsLabelId.Trim();
-            bool cNewsLableById = await NewsLableExistence(request.newsLabelId);
-            if (!cNewsLableById) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
+            var cNewsLableById = await _newsLabelSevice.FindIdExistence(request.newsLabelId);
+            if (cNewsLableById == null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
             #endregion
 
             request.content = request.content.Trim();
@@ -195,21 +191,19 @@ namespace SOR.Application.Catalogs.Reports
         {
             var gFiles = _fileSevice.UploadImage(request.files);
 
-            int cnFiles = gFiles.Count;
-
             var proofs = new List<Data.Entitis.ReportProof>();
 
-            for (int file = 0; file < cnFiles; file++)
+            Parallel.ForEach(gFiles, file =>
             {
                 var data = new Data.Entitis.ReportProof()
                 {
                     ReportId = request.reportId,
-                    Proof = gFiles[file],
+                    Proof = file,
                     CreateUser = request.userId,
                     UpdateUser = request.userId
                 };
                 proofs.Add(data);
-            }
+            });
 
             await _context.ReportProofs.AddRangeAsync(proofs);
             await _context.SaveChangesAsync();
@@ -352,8 +346,8 @@ namespace SOR.Application.Catalogs.Reports
             {
                 request.newsLabelId = request.newsLabelId.Trim();
 
-                bool cNewsLableById = await NewsLableExistence(request.newsLabelId);
-                if (cNewsLableById) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
+                var cNewsLableById = await _newsLabelSevice.FindIdExistence(request.newsLabelId);
+                if (cNewsLableById != null) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
 
                 findId.NewsLabelId = request.newsLabelId;
             }
@@ -548,7 +542,7 @@ namespace SOR.Application.Catalogs.Reports
                 ? null : gReport.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
 
                 rResults = gReport.ReportResults == null
-                ? null : gReport.ReportResults.Select(x => new Results { Name = x.Content, Id = x.Id }).ToList(),
+                ? null : gReport.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Results { Name = x.Content, Id = x.Id }).ToList(),
 
                 UserAngel = gReport.UserAngel,
                 Views = gReport.Views,
@@ -601,7 +595,7 @@ namespace SOR.Application.Catalogs.Reports
             ? null : x.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
 
                 rResults = x.ReportResults == null
-            ? null : x.ReportResults.Select(x => new Results { Name = x.Content, Id = x.Id }).ToList(),
+            ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Results { Name = x.Content, Id = x.Id }).ToList(),
 
                 UserAngel = x.UserAngel,
                 Views = x.Views,
@@ -657,7 +651,7 @@ namespace SOR.Application.Catalogs.Reports
                 ? null : x.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
 
                     rResults = x.ReportResults == null
-                ? null : x.ReportResults.Select(x => new Results { Name = x.Content, Id = x.Id }).ToList(),
+                ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Results { Name = x.Content, Id = x.Id }).ToList(),
 
                     UserAngel = x.UserAngel,
                     Views = x.Views,

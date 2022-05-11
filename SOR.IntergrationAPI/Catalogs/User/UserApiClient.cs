@@ -1,15 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using SOR.Data.SystemBase;
 using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Mobile;
 using SOR.ViewModel.Catalogs.Users;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
 
 namespace SOR.IntergrationAPI.Catalogs.User
 {
@@ -18,9 +15,7 @@ namespace SOR.IntergrationAPI.Catalogs.User
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
 
-        public UserApiClient(IHttpClientFactory httpClientFactory,
-                    IConfiguration configuration)
-            : base(httpClientFactory, configuration)
+        public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration): base(httpClientFactory, configuration)
         {
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
@@ -92,7 +87,7 @@ namespace SOR.IntergrationAPI.Catalogs.User
                     tille = $"{request.notification.tille}",
                     body = $"{request.notification.body}"
                 },
-                registration_ids = new string[] { $"{request.registration_ids}" }
+                registration_ids = request.registration_ids
             };
 
             string payload = JsonConvert.SerializeObject(dNotification);
@@ -106,6 +101,5 @@ namespace SOR.IntergrationAPI.Catalogs.User
             }
             return JsonConvert.DeserializeObject<ShowNotificationViewModel>(await response.Content.ReadAsStringAsync());
         }
-
     }
 }

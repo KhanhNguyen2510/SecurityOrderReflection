@@ -8,8 +8,6 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
 
-
-
 namespace SOR.WedAPI.Controllers
 {
     [ApiController]
@@ -24,7 +22,12 @@ namespace SOR.WedAPI.Controllers
             _logger = logger;
             _agenciesSevice = agenciesSevice;
         }
-
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPost]
         [SwaggerOperation(Summary = "Thêm thông tin nhãn của cơ quan")]
         public async Task<JsonResult> Create([FromForm] GetCreateToAgenciesRequest request)
@@ -45,7 +48,13 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpPatch("{Id}")]
         [SwaggerOperation(Summary = "Cập nhật thông tin nhãn của cơ quan")]
         public async Task<JsonResult> Update(string Id, [FromForm] GetUpdateToAgenciesRequest request)
@@ -66,7 +75,13 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpDelete("{Id}")]
         [SwaggerOperation(Summary = "Xóa thông tin nhãn của cơ quan")]
         public async Task<JsonResult> Delete(string Id, [FromForm]CreateUserRequest request)
@@ -87,7 +102,12 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// List
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         [HttpGet("list-agencies")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của cơ quan")]
         public async Task<JsonResult> List([FromQuery] GetMangagerToAgenciesRequest request)
@@ -108,7 +128,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của cơ quan có phân trang")]
         public async Task<JsonResult> ListPaging([FromQuery] GetMangagerAgenciesRequest request)
@@ -129,7 +148,6 @@ namespace SOR.WedAPI.Controllers
                throw new ApiException(ex.Message);
             }
         }
-
         [HttpGet("{Id}/get-id")]
         [SwaggerOperation(Summary = "Hiển thị thông tin nhãn của cơ quan theo Id")]
         public async Task<JsonResult> GetById(string Id)
