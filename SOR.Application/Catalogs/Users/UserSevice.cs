@@ -346,6 +346,7 @@ namespace SOR.Application.Catalogs.Users
 
             return new Data.Entitis.User()
             {
+               Token = gUser.Token,
                UserName = gUser.UserName,
                AgenciesId = gUser.AgenciesId,
                Email = gUser.Email,
@@ -393,6 +394,7 @@ namespace SOR.Application.Catalogs.Users
 
             return gUsers.Select(x => new Data.Entitis.User()
             {
+                Token = x.Token,
                 UserName = x.UserName,
                 AgenciesId = x.AgenciesId,
                 Email = x.Email,
@@ -443,6 +445,7 @@ namespace SOR.Application.Catalogs.Users
             var data = gUsers.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize).Select(x => new Data.Entitis.User()
                 {
+                    Token = x.Token,
                     UserName = x.UserName,
                     AgenciesId = x.AgenciesId,
                     Email = x.Email,

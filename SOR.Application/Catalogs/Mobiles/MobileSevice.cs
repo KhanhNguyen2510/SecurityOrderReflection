@@ -27,7 +27,7 @@ namespace SOR.Application.Catalogs.Mobiles
             var fUser = await _userSevice.CheckUser(request.userId);
             if (fUser == null) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
 
-            fUser.Token = "";
+            fUser.Token = null;
             fUser.UpdateUser = request.userId;
             fUser.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
