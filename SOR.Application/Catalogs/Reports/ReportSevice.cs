@@ -226,7 +226,7 @@ namespace SOR.Application.Catalogs.Reports
             request.reportId = request.reportId.Trim();
 
             bool cReportById = await ReportIdExistence(request.reportId);
-            if (cReportById) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
+            if (!cReportById) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
             #endregion
 
             #region Add Result
