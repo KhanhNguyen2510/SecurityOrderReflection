@@ -1,5 +1,10 @@
-﻿@{
+﻿@using SOR.ViewModel.Catalogs.Reports;
+@using SOR.ViewModel.Catalogs.Reports.Report
+@using SOR.ViewModel.Common
+@model PagedResult<GetReportViewModel>;
+@{
     ViewData["Title"] = "Trang Chủ -";
+
 }
 <main>
     <div class="header-left">
@@ -46,142 +51,14 @@
     </div>
     <div id="hinhsu">
         <div style="padding-top:5px;"></div>
-        <ul class="hinhsu-list">
-            <a href="chitiet_baiviet.html" style="text-decoration: none;color:black;">
-            <li class="hinhsu-item">
-                <div class="baiviet-pc" style="display:flex;">
-                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu1.png" alt="">
-                    <div style="padding:10px 15px;">
-                        <span class="hinhsu-title">PHẢN ÁNH VIỆC NHÀ DÂN BỊ TRỘM VÀO TẠI 241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN</span>
-                        <div class="hinhsu-desc">Nhà tôi vừa bị trộm vào nhà. Rất mong cơ quan chức năng hỗ trợ truy bắt đối tượng,cảnh báo người dân trong khu vực.</div>
-                        <span class="hinhsu-time">
-                            <i class="far fa-clock"></i>
-                            07/01/2021 15:39
-                        </span>
-                        <div class="hinhsu-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-                        </div>
-                    </div>
-                </div>
-                <!-- Dành cho mobile -->
-                <div class="baiviet-mobile" style="display: none;">
-                    <img style="width:100%;" src="/assets/image/hinhsu1.png" alt="">
-                    <div style="padding:10px 15px;">
-                        <span class="hinhsu-title">PHẢN ÁNH VIỆC NHÀ DÂN BỊ TRỘM VÀO TẠI 241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN</span>
-                        <div class="hinhsu-desc">Nhà tôi vừa bị trộm vào nhà. Rất mong cơ quan chức năng hỗ trợ truy bắt đối tượng,cảnh báo người dân trong khu vực.</div>
-                        <span class="hinhsu-time">
-                            <i class="far fa-clock"></i>
-                            07/01/2021 15:39
-                        </span>
-                        <div class="hinhsu-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-                        </div>
-                    </div>
-                </div>
-            </li>
-            </a>
-        </ul>
+        @foreach (var item in Model.Items)
+        {
+             @await Html.PartialAsync("~/Views/Partial/_pReport.cshtml", item)
+        }
     </div>
-    <div id="tenan">
-        <div style="padding-top:5px;"></div>
-        <ul class="hinhsu-list">
-            <li class="hinhsu-item">
-                <div style="display:flex;">
-                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu4.jpg" alt="">
-                    <div style="padding:10px 15px;">
-                        <span class="hinhsu-title">PHẢN ÁNH 02 TỤ ĐIỂM ĐÁ GÀ, LẮC TÀI XỈU TẠI XÃ HOÀ BÌNH, HUYỆN CHỢ MỚI, DẪN ĐẾN TÌNH HÌNH ANTT PHỨC TẠP TẠI ĐỊA PHƯƠNG</span>
-                        <div class="hinhsu-desc">Hiện nay tại xã hoà bình, huyện chợ mới, tỉnh an giang, có 2 chổ đá gà, lắc tài xỉu, có rất nhiều người lạ mặt, xăm mình thường lui tới bằng xe du lịch chơi</div>
-                        <span class="hinhsu-time">
-                            <i class="far fa-clock"></i>
-                            08/11/2020 22:39
-                        </span>
-                        <div class="hinhsu-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div id="buonlau">
-        <div style="padding-top:5px;"></div>
-        <ul class="hinhsu-list">
-            <li class="hinhsu-item">
-                <div style="display:flex;">
-                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu2.png" alt="">
-                    <div style="padding:10px 15px;">
-                        <span class="hinhsu-title">PHẢN ÁNH 02 TỤ ĐIỂM ĐÁ GÀ, LẮC TÀI XỈU TẠI XÃ HOÀ BÌNH, HUYỆN CHỢ MỚI, DẪN ĐẾN TÌNH HÌNH ANTT PHỨC TẠP TẠI ĐỊA PHƯƠNG</span>
-                        <div class="hinhsu-desc">Hiện nay tại xã hoà bình, huyện chợ mới, tỉnh an giang, có 2 chổ đá gà, lắc tài xỉu, có rất nhiều người lạ mặt, xăm mình thường lui tới bằng xe du lịch chơi</div>
-                        <span class="hinhsu-time">
-                            <i class="far fa-clock"></i>
-                            08/11/2020 22:39
-                        </span>
-                        <div class="hinhsu-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div id="khaithac">
-        <div style="padding-top:5px;"></div>
-        <ul class="hinhsu-list">
-            <li class="hinhsu-item">
-                <div style="display:flex;">
-                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu5.png" alt="">
-                    <div style="padding:10px 15px;">
-                        <span class="hinhsu-title">Vi phạm về khai thác cát trái phép</span>
-                        <div class="hinhsu-desc">cát tặc lọng hành tàu ghe đậu chuẩn bị tối ra lấy cát gây cảnh sạt lỡ thiệt hại nặg nề</div>
-                        <span class="hinhsu-time">
-                            <i class="far fa-clock"></i>
-                            28/10/2020 22:39
-                        </span>
-                        <div class="hinhsu-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div id="khac">
-        <div style="padding-top:5px;"></div>
-        <ul class="hinhsu-list">
-            <li class="hinhsu-item">
-                <div style="display:flex;">
-                    <img style="width:50%;height:260px;" src="/assets/image/hinhsu6.png" alt="">
-                    <div style="padding:10px 15px;">
-                        <span class="hinhsu-title">Phản ánh cò lập bến bãi gây mất ANTT trước cổng Bệnh viện sản nhi An Giang</span>
-                        <div class="hinhsu-desc">cổng bệnh viện sản nhi an giang lập bến bãi ...bắt cò gây gổ mất trật tự</div>
-                        <span class="hinhsu-time">
-                            <i class="far fa-clock"></i>
-                            13/10/2020 22:39
-                        </span>
-                        <div class="hinhsu-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="pagination" style="justify-content: center;text-align: center;">
-        <a class="active pagin" href="#">1</a>
-        <a class="pagin" href="#">2</a>
-        <a class="pagin" href="#">3</a>
-        <a class="pagin" href="#">4</a>
-        <a class="pagin" href="#">5</a>
-        <a class="pagin" href="#">6</a>
-        <a class="pagin" href="#"><i class="fas fa-chevron-right"></i></a>
-        <a class="pagin" href="#"><i class="fas fa-angle-double-right"></i></a>
-    </div>
+    
+
+     @await Component.InvokeAsync("Pager", Model)
 </main>
 
 

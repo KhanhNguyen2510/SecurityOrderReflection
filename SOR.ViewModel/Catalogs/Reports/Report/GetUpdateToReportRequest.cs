@@ -1,6 +1,6 @@
 ﻿using SOR.Data.Enum;
 
-namespace SOR.ViewModel.Catalogs.Reports
+namespace SOR.ViewModel.Catalogs.Reports.Report
 {
     public class GetUpdateToReportRequest : CreateUserRequest
     {

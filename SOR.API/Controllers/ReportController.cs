@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using SOR.Application.Catalogs.Reports;
 using SOR.Data.SystemBase;
 using SOR.ViewModel;
-using SOR.ViewModel.Catalogs.Reports;
 using SOR.ViewModel.Catalogs.Reports.Report;
 using SOR.ViewModel.Catalogs.Reports.Result;
 using Swashbuckle.AspNetCore.Annotations;

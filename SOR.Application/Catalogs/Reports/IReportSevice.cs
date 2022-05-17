@@ -1,6 +1,5 @@
 ﻿using SOR.Data.SystemBase;
 using SOR.ViewModel;
-using SOR.ViewModel.Catalogs.Reports;
 using SOR.ViewModel.Catalogs.Reports.Report;
 using SOR.ViewModel.Catalogs.Reports.Result;
 using SOR.ViewModel.Common;

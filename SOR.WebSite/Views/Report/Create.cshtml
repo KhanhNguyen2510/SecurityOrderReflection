@@ -1,0 +1,182 @@
+﻿@using SOR.ViewModel.Catalogs.NewLables
+@{
+    ViewData["Title"] = "Báo cáo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<GetNewsLableViewModel> getNewsLables = (IEnumerable<GetNewsLableViewModel>)ViewData["newlable"];
+}
+
+<link rel="stylesheet" href="/assets/css/dangnhieuanh.css">
+
+
+
+<main>
+    <p class="text-danger" id="geoLocation"></p>
+
+    <div class="header-left">
+        <div class="bg-left">
+            <div class="title-left" style="text-transform: uppercase;">PHẢN ÁNH THÔNG TIN</div>
+        </div>
+    </div>
+    <hr>
+    <div class="form-HUFI">
+        <form asp-action="Create" asp-controller="Report" method="post" enctype="multipart/form-data">
+
+            <input id="locationUser" name="locationUser" hidden/>
+
+            <h6 style="font-weight: 600;">1. Tiêu đề</h6>
+            <input type="text" name= "title" style="width:100%;outline:none;padding:5px;"
+                   placeholder="Nhập tiêu đề để có thể nhanh chóng đánh giá và giải quyết .....">
+            <!-- <p>Lưu ý:</p> -->
+            <hr>
+            <h6 style="font-weight: 600;">2. Nội dung phản ánh</h6>
+            <textarea name = "content" style="width: 100%;padding:5px;outline:none;"
+                      placeholder="Nhập nội dung cần phản ánh..." cols="30" rows="5"></textarea>
+            <hr>
+            <h6 style="font-weight: 600;color:red;">3. Chọn loại bài đăng liên quan tới *</h6>
+            <div class="form-check">
+
+                <select class="form-control" id="edit-facebook-type-id" name="newsLabelId" style="font-size: 16px; padding: 7px; height:47px">
+                                <option value="" hidden></option>
+                                @for (var i = 0; i < getNewsLables.Count(); i++)
+                                {
+                                    <option value="@getNewsLables.ToList()[i].Id">@getNewsLables.ToList()[i].Name</option>
+                                }
+                </select>
+            </div>
+            <hr>
+            <h6 style="font-weight: 600;">4. Hình ảnh , video phản ánh</h6>
+            <!-- Đăng hình ảnh -->
+            <span style="font-style: italic;font-size:14px;">4.1 Hình ảnh ( tối đa 10 tấm )</span>
+            <div class="form-group">
+                <input type="file" name= "files" id="file-input" accept="image/png, image/jpeg" onchange="preview()"
+                       multiple>
+                <label for="file-input"
+                       style="background-color: #025bee;color: #ffffff;text-align: center;width: 200px;padding: 5px 0;border-radius: 5px;cursor: pointer;">
+                    <i class="fas fa-upload"></i> &nbsp; Chọn hình ảnh
+                </label>
+                <p id="num-of-files" style="text-align: center;"></p>
+                <div id="images"></div>
+            </div>
+            <!-- Đăng video -->
+            <div class="form-group">
+                <input type="file" name="files" accept="video/*" id="input-tag">
+                <hr>
+                <span style="font-style: italic;font-size:14px;">
+                    4.2 Video ( tối đa 1 video dưới 10 phút
+                    )
+                </span><br>
+                <label for="input-tag"
+                       style="background-color: #025bee;color: #ffffff;text-align: center;width: 200px;padding: 5px 0;border-radius: 5px;cursor: pointer;">
+                    <i class="fas fa-upload"></i> &nbsp; Chọn video
+                </label>
+                <video style="width:100%;display: none;" controls id="video-tag">
+                    <source id="video-source" src="splashVideo">
+                </video>
+            </div>
+            <hr>
+            <h6 style="font-weight: 600;">5. Vị trí phản ánh</h6>
+            <input type="text" name="locationReport" style="width:100%;outline:none;padding:5px;"
+                   placeholder="Nhập vị trí cần phản ánh...">
+            <!-- <p>Lưu ý:</p> -->
+            <hr>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4" style="text-align: center;">
+                    <button class="btn btn-primary">
+                        Gửi phản ánh
+                    </button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </form>
+
+        @await Html.PartialAsync("~/Views/Partial/_Note.cshtml")
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    // Chọn nhiều hình ảnh
+    let fileInput = document.getElementById("file-input");
+    let imageContainer = document.getElementById("images");
+    let numOfFiles = document.getElementById("num-of-files");
+
+    function preview() {
+        imageContainer.innerHTML = "";
+        numOfFiles.textContent = `${fileInput.files.length} file được chọn`;
+
+        for (i of fileInput.files) {
+            let reader = new FileReader();
+            let figure = document.createElement("figure");
+            let figCap = document.createElement("figcaption");
+            // figCap.innerText = i.name;
+            figure.appendChild(figCap);
+            reader.onload = () => {
+                let img = document.createElement("img");
+                img.setAttribute("src", reader.result);
+                figure.insertBefore(img, figCap);
+            }
+            imageContainer.appendChild(figure);
+            reader.readAsDataURL(i);
+        }
+    }
+
+
+    //Chọn video
+    let videoSrc = document.querySelector("#video-source");
+    let videoTag = document.querySelector("#video-tag");
+    let inputTag = document.querySelector("#input-tag");
+
+    inputTag.addEventListener('change', readVideo)
+
+    function readVideo(event) {
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                videoSrc.src = e.target.result
+                videoTag.load();
+            }.bind(this)
+            $('#video-tag').fadeIn(500);
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+</script>
+<script>
+    var x = document.getElementById("geoLocation");
+    $(function()
+    {
+        getLocation();
+    })
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        x.innerHTML = "Trình duyệt này không hỗ trợ vị trí địa lý.";
+      }
+    }
+
+    function showPosition(position) {
+
+      document.getElementById("locationUser").value = position.coords.latitude + "," + position.coords.longitude;
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          x.innerHTML = "Bạn đã từ chối việc lấy vị trí của bạn"
+          break;
+        case error.POSITION_UNAVAILABLE:
+          x.innerHTML = "Thông tin vị trí không có sẳn"
+          getLocation();
+          break;
+        case error.TIMEOUT:
+          x.innerHTML = "Yêu cầu lấy vị trí của người dùng đã hết thời gian chờ."
+
+          break;
+        case error.UNKNOWN_ERROR:
+          x.innerHTML = "Đã xảy ra lỗi không xác định."
+          break;
+      }
+    }
+</script>

@@ -1,18 +1,46 @@
-﻿
+﻿@using SOR.ViewModel.Catalogs.Reports
+@model GetReportViewModel
+@using SOR.ViewModel
+@using SOR.ViewModel.Catalogs.Reports.Report
+@{
+    GetReportViewModel report = Model ?? new GetReportViewModel();
+}
 
+<ul class="hinhsu-list">
+    <a href="chitiet_baiviet.html" style="text-decoration: none;color:black;">
+    <li class="hinhsu-item">
+        <div class="baiviet-pc" style="display:flex;">
 
-<div class="baiviet-pc" style="display:flex;">
- <img style="width:50%;height:260px;" src="/assets/image/hinhsu1.png" alt="">
- <div style="padding:10px 15px;">
-     <span class="hinhsu-title">PHẢN ÁNH VIỆC NHÀ DÂN BỊ TRỘM VÀO TẠI 241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN</span>
-     <div class="hinhsu-desc">Nhà tôi vừa bị trộm vào nhà. Rất mong cơ quan chức năng hỗ trợ truy bắt đối tượng,cảnh báo người dân trong khu vực.</div>
-     <span class="hinhsu-time">
-         <i class="far fa-clock"></i>
-         07/01/2021 15:39
-     </span>
-     <div class="hinhsu-address">
-         <i class="fas fa-map-marker-alt"></i>
-         241/13 NGUYỄN THANH SƠN, PHƯỜNG BÌNH KHÁNH, THÀNH PHỐ LONG XUYÊN
-     </div>
- </div>
-</div>
+            <img style="width:50%;height:260px;" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="">
+            <div style="padding:10px 15px;">
+                <span class="hinhsu-title">@Model.Title</span>
+                <div class="hinhsu-desc">@Model.Content</div>
+                <span class="hinhsu-time">
+                    <i class="far fa-clock"></i>
+                    @Model.CreateDate.ToString("dd/MM/yyyy ( HH:mm:ss )")
+                </span>
+                <div class="hinhsu-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                   @Model.LocationReport
+                </div>
+            </div>
+        </div>
+        <!-- Dành cho mobile -->
+        <div class="baiviet-mobile" style="display: none;">
+            <img style="width:100%;" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="">
+            <div style="padding:10px 15px;">
+                <span class="hinhsu-title">@Model.Title</span>
+                <div class="hinhsu-desc">@Model.Content</div>
+                <span class="hinhsu-time">
+                    <i class="far fa-clock"></i>
+                   @Model.CreateDate.ToString("dd/MM/yyyy ( HH:mm:ss )")
+                </span>
+                <div class="hinhsu-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                   @Model.LocationReport
+                </div>
+            </div>
+        </div>
+    </li>
+    </a>
+</ul>

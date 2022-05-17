@@ -3,11 +3,12 @@ using SOR.Data.Enum;
 using System;
 using System.Collections.Generic;
 
-namespace SOR.ViewModel.Catalogs.Reports
+namespace SOR.ViewModel.Catalogs.Reports.Report
 {
 
     public class GetReportViewModel
     {
+        public string Title { get; set; }
         public string Id { get; set; }
         /// <summary>
         /// Nội dung báo cáo

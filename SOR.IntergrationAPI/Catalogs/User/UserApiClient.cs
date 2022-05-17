@@ -42,7 +42,7 @@ namespace SOR.IntergrationAPI.Catalogs.User
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemContants.AppSettings.BaseAddress]);
-
+            
             var requestContent = new MultipartFormDataContent();
             requestContent.Add(new StringContent(request.userName.ToString()), "userName");
             requestContent.Add(new StringContent(!string.IsNullOrEmpty(request.email)? request.email.ToString() : ""), "email");

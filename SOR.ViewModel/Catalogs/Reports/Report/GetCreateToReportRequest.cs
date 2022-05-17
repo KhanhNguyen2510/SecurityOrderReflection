@@ -3,10 +3,11 @@ using SOR.ViewModel.Catalogs.Reports.Proof;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SOR.ViewModel.Catalogs.Reports
+namespace SOR.ViewModel.Catalogs.Reports.Report
 {
     public class GetCreateToReportRequest : CreateUserRequest
     {
+        public string title { get; set; }
         /// <summary>
         /// Nội dung báo cáo
         /// </summary>
@@ -41,7 +42,7 @@ namespace SOR.ViewModel.Catalogs.Reports
         /// 
         public string locationUser { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập chọn hình ảnh")]
+        //[Required(ErrorMessage = "Vui lòng nhập chọn hình ảnh")]
         public List<IFormFile> files { get; set; }
     }
 }

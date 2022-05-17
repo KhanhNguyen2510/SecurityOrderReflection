@@ -11,6 +11,6 @@
             public const string Token = "Token";
             public const string Authorization = "Authorization";
         }
-        public const string MainConectionAPI = "http://117.2.159.103:8012";
+        public const string MainConectionAPI = "https://localhost:5001";
     }
 }

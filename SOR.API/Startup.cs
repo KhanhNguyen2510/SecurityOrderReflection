@@ -23,7 +23,7 @@ using SOR.ViewModel.Catalogs.SendEmail;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SOR.API
+namespace SOR.WedAPI
 {
     public class Startup
     {
@@ -127,10 +127,10 @@ namespace SOR.API
             services.Configure<FormOptions>(options =>
             {
                 // Set the limit to 730 MB
-                options.MultipartBodyLengthLimit =  737280000;
+                options.MultipartBodyLengthLimit = 737280000;
             });
         }
-    
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Chi tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <div class="bg-left">
+        <div class="title-left" style="text-transform: uppercase;padding-bottom:5px;">Thông tin phản ánh</div>
+    </div>
+    <div style="display: flex;justify-content: space-between;padding-top:10px;">
+        <div>
+            <span style="font-style: italic;font-size: 12px;">
+                Ngày gửi <strong>13/02/2021</strong> -
+            </span>
+            <span style="font-style: italic;font-size: 12px;">
+                Thời hạn xử lý: <strong>15/02/2021</strong>
+            </span>
+        </div>
+        <div>
+            <span style="font-style: italic;font-size: 12px;">
+                Tình trạng: <strong>Đã đăng tải</strong> -
+            </span>
+            <span style="font-style: italic;font-size: 12px;">
+                Lượt xem: <strong>12931290</strong>
+            </span>
+        </div>
+    </div>
+    <div style="padding:10px 10px;">
+        <img style="width: 100%;" src="/assets/image/hinhsu6.png" alt="">
+    </div>
+    <div class="bg-left">
+        <div class="title-left" style="text-transform: uppercase;">Kết quả xử lý</div>
+    </div>
+    <div style="padding:10px 15px;">
+        <div style="display:flex;justify-content: space-between;">
+            <div>
+                <span style="font-weight:bold;text-transform: uppercase;font-size: 15px;">Phường Bình Khánh</span>
+                <div style="font-weight:bold;text-transform: uppercase;font-size: 15px;">ĐỘI CẢNH SÁT HÌNH SỰ (LX)</div>
+            </div>
+            <div>
+                <span style="color:grey;font-size: 14px;">
+                    <i class="far fa-clock"></i>
+                    Thời gian:
+                    11/01/2021 17:24
+                </span>
+            </div>
+        </div>
+        <hr>
+        <p>
+            Công an phuong đã tiếp nhận trình báo của anh Nguyễn Trọng Tấn sn 1956, thường trú 241 B/13, Nguyễn Thanh Sơn, khóm Bình Thới, p Bình Khánh. Trình báo bị mất tài trộm tài sản: 01 ĐTDĐ hieu oppo tri giá 3 trieu, 2 ĐTDĐ Sam sung tri gia 4tr và 4,5 tr . CAP đã báo cáo lãnh đao CATP, chuyển hồ sơ và phối hợp đội HS tiep tuc trao đổi thông tin và truy xét. Trong thoi gian tới CAP sẽ tiep tuc duy tri cong tac tuần tra và tuyen truyền cho nhân dân trong địa bàn nêu cao hơn nữa trong việc cảnh giác, tham gia tố giác và phòng, chống tội phạm.
+        </p>
+        <div style="padding-bottom:10px;"></div>
+    </div>
+</main>
+
+<main>
+     @await Html.PartialAsync("Chat")
+</main>
+

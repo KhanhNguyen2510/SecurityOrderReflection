@@ -17,7 +17,17 @@
             <div class="taikhoan">
                 <i class="fas fa-user"></i>
                 <a href="#" style="color:#667580;text-decoration: none;">
-                    @User.Claims.Skip(2).FirstOrDefault().Value
+                    
+                    @if (User.Identity.Name == null || User.Identity.Name == "")
+                    {
+                        
+                    }
+                    else
+                    {
+                        @User.Claims.Skip(2).FirstOrDefault().Value;
+                    }
+
+                    
                 </a>
                 <i class="sortdown-mobile fas fa-sort-down" style="top: 41%;position: absolute;margin-left: 6px;"></i>
             </div>

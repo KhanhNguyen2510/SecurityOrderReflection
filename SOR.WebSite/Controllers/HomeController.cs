@@ -28,36 +28,35 @@ namespace SOR.WebSite.Controllers
             _logger = logger;
             _reportApiClient = reportApiClient;
         }
-        [Authorize]
+        
         [HttpGet]
-        public  async Task<IActionResult> Index(string keyWord , IsStatus? isStatus , string newslableId , int pageIndex = 1 , int PageSize = 100)
+        public  async Task<IActionResult> Index(string keyWord, IsStatus? isStatus, string newslableId, int pageIndex = 1, int PageSize = 1)
         {
             //var user = User.Identity.Name;
             //var ss = User.Claims.Skip(1).FirstOrDefault().Value;
-
             var dReport = new GetMangagerReportRequest()
             {
                 keyWord = keyWord,
-                IsStatus =  isStatus,
+                IsStatus = isStatus,
                 NewslableId = newslableId,
                 PageIndex = pageIndex,
-                PageSize = PageSize 
+                PageSize = PageSize
             };
 
             var gReport = await _reportApiClient.GetListPagingToReport(dReport);
 
-            return  View();
+            return  View(gReport);
         }
 
-        public IActionResult Privacy()
+        //[Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Detail(/*string Id*/)
         {
-            return View();
+            //var gReport = await _reportApiClient.GetReportByID(Id);
+            return View(/*gReport*/);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
+
     }
 }

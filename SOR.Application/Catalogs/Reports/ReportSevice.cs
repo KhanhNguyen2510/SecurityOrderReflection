@@ -9,7 +9,6 @@ using SOR.Data.SystemBase;
 using SOR.ViewModel;
 using SOR.ViewModel.Catalogs.Historys;
 using SOR.ViewModel.Catalogs.Mobile;
-using SOR.ViewModel.Catalogs.Reports;
 using SOR.ViewModel.Catalogs.Reports.Proof;
 using SOR.ViewModel.Catalogs.Reports.Report;
 using SOR.ViewModel.Catalogs.Reports.Result;
@@ -144,6 +143,7 @@ namespace SOR.Application.Catalogs.Reports
                 NewsLabelId = request.newsLabelId,
                 IP = request.iP,
                 UserAngel = request.userAngel,
+                Title = request.title,
 
                 CreateUser = request.userId,
                 UpdateUser = request.userId
@@ -178,8 +178,8 @@ namespace SOR.Application.Catalogs.Reports
             #region Add Notification
             var dNotification = new Notification()
             {
-                tille = "Phản ánh trật tự an ninh",
-                body = @$"Có một báo cáo với nội dung : {request.content} . Tại địa chỉ là {request.locationUser}"
+                tille = "Phản ánh trật tự an ninh vào",
+                body = @$"Một báo cáo với nội dung {request.title}. Với địa chỉ {request.locationReport} "
             };
             await _mobileSevice.ShowNotificationInMobile(request.userId, dNotification);
             #endregion
@@ -529,6 +529,7 @@ namespace SOR.Application.Catalogs.Reports
 
             return new GetReportViewModel()
             {
+                Title = gReport.Title,
                 Content = gReport.Content,
                 DateSolve = gReport.DateSolve,
                 NewsLabelId = gReport.NewsLabelId,
@@ -542,7 +543,7 @@ namespace SOR.Application.Catalogs.Reports
                 ? null : gReport.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
 
                 rResults = gReport.ReportResults == null
-                ? null : gReport.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Results { Name = x.Content, Id = x.Id }).ToList(),
+                ? null : gReport.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results { Name = x.Content, Id = x.Id }).ToList(),
 
                 UserAngel = gReport.UserAngel,
                 Views = gReport.Views,
@@ -582,6 +583,7 @@ namespace SOR.Application.Catalogs.Reports
 
             return gReport.Select(x => new GetReportViewModel()
             {
+                Title = x.Title,
                 Content = x.Content,
                 DateSolve = x.DateSolve,
                 NewsLabelId = x.NewsLabelId,
@@ -595,7 +597,7 @@ namespace SOR.Application.Catalogs.Reports
             ? null : x.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
 
                 rResults = x.ReportResults == null
-            ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Results { Name = x.Content, Id = x.Id }).ToList(),
+            ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results { Name = x.Content, Id = x.Id }).ToList(),
 
                 UserAngel = x.UserAngel,
                 Views = x.Views,
@@ -638,6 +640,7 @@ namespace SOR.Application.Catalogs.Reports
             var data = gReport.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize).Select(x => new GetReportViewModel()
                 {
+                    Title = x.Title,
                     Content = x.Content,
                     DateSolve = x.DateSolve,
                     NewsLabelId = x.NewsLabelId,
@@ -651,7 +654,7 @@ namespace SOR.Application.Catalogs.Reports
                 ? null : x.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
 
                     rResults = x.ReportResults == null
-                ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Results { Name = x.Content, Id = x.Id }).ToList(),
+                ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results { Name = x.Content, Id = x.Id }).ToList(),
 
                     UserAngel = x.UserAngel,
                     Views = x.Views,

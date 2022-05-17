@@ -20,6 +20,11 @@ namespace SOR.Data.Entitis
         [StringLength(500)]
         public string Content { get; set; }
         /// <summary>
+        /// Tên tiêu đề 
+        /// </summary>
+        [StringLength(500)]
+        public string Title { get; set; }
+        /// <summary>
         /// nhãn thông tin bài báo cáo 
         /// </summary>
         /// 
