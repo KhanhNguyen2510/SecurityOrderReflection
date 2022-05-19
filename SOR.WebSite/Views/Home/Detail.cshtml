@@ -4,7 +4,7 @@
 @using SOR.Data.Enum
 @using SOR.ViewModel.Catalogs.Reports.Report
 @{
-    ViewData["Title"] = "Chi tiết";
+    ViewData["Title"] = "Chi tiết bài đăng - ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -87,13 +87,13 @@
                             if (Model.rProofs[i].IsFile == IsFile.Image)
                             {
                                 <div class="carousel-item active">
-                                    <img class="w-100 h-100" src="@SystemContants.MainConectionAPI/@Model.rProofs[i].Name" alt="Image">
+                                    <img style="width:100%;" src="@SystemContants.MainConectionAPI/@Model.rProofs[i].Name" alt="Image">
                                 </div>
                             }
                             else if (Model.rProofs[i].IsFile == IsFile.Video)
                             {
                                 <div class="carousel-item active">
-                                    <video class="w-100 h-100" controls>
+                                    <video style="width:100%;" controls>
                                         <source src="@SystemContants.MainConectionAPI/@Model.rProofs[i].Name" type="video/mp4">
                                     </video>
                                 </div>
@@ -105,13 +105,13 @@
                             if (Model.rProofs[i].IsFile == IsFile.Image)
                             {
                                 <div class="carousel-item">
-                                    <img class="w-100 h-100" src="@SystemContants.MainConectionAPI/@Model.rProofs[i].Name" alt="Image">
+                                    <img style="width:100%;" src="@SystemContants.MainConectionAPI/@Model.rProofs[i].Name" alt="Image">
                                 </div>
                             }
                             else if (Model.rProofs[i].IsFile == IsFile.Video)
                             {
                                 <div class="carousel-item">
-                                    <video class="w-100 h-100" controls>
+                                    <video style="width:100%;" controls>
                                         <source src="@SystemContants.MainConectionAPI/@Model.rProofs[i].Name" type="video/mp4">
                                     </video>
                                 </div>
@@ -120,11 +120,11 @@
                     }
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                <i class="fa fa-2x fa-angle-left text-dark"></i>
+            <a class="carousel-control-prev" href="#product-carousel" style="height:380px !important;z-index:unset !important;" data-slide="prev">
+                <i class="fa fa-2x fa-angle-left" style="color:white !important; font-size:50px !important;"></i>
             </a>
-            <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                <i class="fa fa-2x fa-angle-right text-dark"></i>
+            <a class="carousel-control-next" href="#product-carousel" style="height:380px !important;z-index:unset !important;" data-slide="next">
+                <i class="fa fa-2x fa-angle-right" style="color:white !important; font-size:50px !important;"></i>
             </a>
         </div>
     </div>
@@ -136,7 +136,7 @@
         @if (Model.rResults.Count <= 0 || Model.rResults == null)
         {
             <p>
-                Chưa có thông tin xữ lý
+                Chưa có thông tin xử lý
             </p>
         }
         else

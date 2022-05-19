@@ -1,6 +1,6 @@
 ﻿@using SOR.ViewModel.Catalogs.NewLables
 @{
-    ViewData["Title"] = "Báo cáo";
+    ViewData["Title"] = "Tạo nội dung phản ánh - ";
     Layout = "~/Views/Shared/_Layout.cshtml";
     IEnumerable<GetNewsLableViewModel> getNewsLables = (IEnumerable<GetNewsLableViewModel>)ViewData["newlable"];
 }
@@ -21,7 +21,7 @@
     <div class="form-HUFI">
         <form asp-action="Create" asp-controller="Report" method="post" enctype="multipart/form-data">
 
-            <input id="locationUser" name="locationUser" hidden/>
+            <input id="locationUser" name="locationUser" hidden />
 
             <h6 style="font-weight: 600;">1. Tiêu đề</h6>
             <input type="text" name= "title" style="width:100%;outline:none;padding:5px;"
@@ -36,8 +36,7 @@
             <hr>
             <h6 style="font-weight: 600;color:red;">3. Chọn loại bài đăng liên quan tới *</h6>
             <div class="form-check">
-
-                <select class="form-control" id="edit-facebook-type-id" name="newsLabelId" style="font-size: 16px; padding: 7px; height:47px" required
+                <select id="edit-facebook-type-id" name="newsLabelId" style="font-size: 16px;margin-left:-20px;width:500px;padding: 4px 10px;outline: 0;cursor: pointer;" required
                                 oninvalid="this.setCustomValidity('Cần chọn loại bài báo cáo')"
                                 onchange="this.setCustomValidity('')"
                 >

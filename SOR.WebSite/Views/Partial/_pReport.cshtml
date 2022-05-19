@@ -16,18 +16,18 @@
                 @if (Model.rProofs.Select(x => x.IsFile).FirstOrDefault() == @IsFile.Image)
                 {
 
-                    <img class="w-100 h-100" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="Image">
+                    <img style="width:550px" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="Image">
 
                 }
                 else if (Model.rProofs.Select(x => x.IsFile).FirstOrDefault() == @IsFile.Video)
                 {
-                    <video class="w-100 h-100" controls>
+                    <video style="width:550px" controls>
                         <source src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" type="video/mp4">
                     </video>
                 }
                 else
                 {
-                    <img class="w-100 h-100" src="" alt="Image">
+                    <img style="width:550px" src="" alt="Image">
                 }
 
 
