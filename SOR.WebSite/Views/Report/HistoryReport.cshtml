@@ -1,0 +1,94 @@
+﻿@using SOR.ViewModel.Catalogs.Reports;
+@using SOR.ViewModel.Catalogs.Reports.Report
+@using SOR.ViewModel.Common
+@using SOR.Data.Enum
+@model PagedResult<GetReportViewModel>;
+@{
+    ViewData["Title"] = "HistoryReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <div class="header-left">
+        <div class="bg-left">
+            <div class="title-left" style="text-transform: uppercase;">XEM BÀI ĐÃ ĐĂNG</div>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-hover" style="text-align: center;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Mả báo cáo</th>
+                <th scope="col">Nội dung</th>
+                <th scope="col">Ngày đăng</th>
+                <th scope="col">Tình trạng</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < @Model.Items.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@Model.Items[i].Id</th>
+                    <td style="width:500px;">@Model.Items[i].Content</td>
+                    <td>@Model.Items[i].CreateDate.ToString("dd/MM/yyy (hh:mm:ss)")</td>
+                    <td>
+                        <i style="color:green" class="fas fa-check-circle"></i>
+                        @switch (Model.Items[i].IsStatus)
+                        {
+                            case IsStatus.Complete:
+                                {
+                                    <strong> Hoàn thành</strong>
+                                    break;
+                                }
+                            case IsStatus.Pending:
+                                {
+                                    <strong>Chưa giải quyết</strong>
+                                    break;
+                                }
+                            case IsStatus.UnPending:
+                                {
+                                    <strong>Không giải quyết</strong>
+                                    break;
+                                }
+                            case IsStatus.Waiting:
+                                {
+                                    <strong>Chờ duyệt</strong>
+                                    break;
+                                }
+                        }
+                    </td>
+                    <td>
+                        <i style="color:green" class="fas fa-check-circle"></i>
+                        @switch (@Model.Items[i].IsReport)
+                        {
+                            case IsReport.Urgent:
+                                {
+                                    <strong>Khẩn</strong>
+                                    break;
+                                }
+                            case IsReport.Normal:
+                                {
+                                    <strong>Bình thường</strong>
+                                    break;
+                                }
+                            case IsReport.Wait:
+                                {
+                                    <strong>Chờ xác định</strong>
+                                    break;
+                                }
+                        }
+                    </td>
+                    <td>
+                        <a class="btn" href="~/Home/Detail?Id=@Model.Items[i].Id" >
+                            <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</main>

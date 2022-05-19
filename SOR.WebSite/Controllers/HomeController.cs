@@ -37,7 +37,8 @@ namespace SOR.WebSite.Controllers
                 PageSize = PageSize,
                 end = end,
                 start = start,
-                isDate = isDate
+                isDate = isDate,
+                userId = User.Identity.Name
             };
 
             var gReport = await _reportApiClient.GetListPagingToReport(dReport);

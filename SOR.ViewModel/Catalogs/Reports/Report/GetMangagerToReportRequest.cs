@@ -3,7 +3,7 @@ using System;
 
 namespace SOR.ViewModel.Catalogs.Reports.Report
 {
-    public class GetMangagerToReportRequest
+    public class GetMangagerToReportRequest : CreateUserRequest
     {
         public string keyWord { get; set; }
         public IsStatus? isStatus { get; set; }

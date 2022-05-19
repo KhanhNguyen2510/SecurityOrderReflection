@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SOR.Data.Enum;
 using SOR.IntergrationAPI.Catalogs.NewLables;
 using SOR.IntergrationAPI.Catalogs.Reports;
 using SOR.ViewModel.Catalogs.NewLables;
 using SOR.ViewModel.Catalogs.Reports.Report;
+using System;
 using System.Threading.Tasks;
 
 namespace SOR.WebSite.Controllers
@@ -60,13 +62,33 @@ namespace SOR.WebSite.Controllers
                 locationUser = request.locationUser,
                 newsLabelId =request.newsLabelId,
                 title = request.title,
-                userAngel = userAgent,
-                userId = User.Identity.Name
+                userAngel = userAgent
             };
 
             await _reportApiClient.CreateReport(dReport);
 
             return RedirectToAction("Create");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> HistoryReport(string keyWord, IsStatus? isStatus, string newslableId, DateTime? end, DateTime? start, IsDate? isDate, int pageIndex = 1, int PageSize = 100)
+        {
+            var dReport = new GetMangagerReportRequest()
+            {
+                keyWord = keyWord,
+                isStatus = isStatus,
+                newslableId = newslableId,
+                PageIndex = pageIndex,
+                PageSize = PageSize,
+                end = end,
+                start = start,
+                isDate = isDate,
+                userId = User.Identity.Name
+            };
+
+            var gReport = await _reportApiClient.GetListPagingToReport(dReport);
+            return View(gReport);
         }
     }
 }

@@ -86,6 +86,12 @@ namespace SOR.Application.Catalogs.Reports
 
             bool cKeyWord = checkValue.CheckNullValue(request.keyWord);
 
+            bool cUser = checkValue.CheckNullValue(request.userId);
+            if (cUser)
+            {
+                gReport = gReport.Where(x => x.CreateUser == request.userId).ToList();
+            }
+
             if (cKeyWord)
             {
                 gReport = gReport.Where(x => x.Id.ToString().Contains(request.keyWord) || x.Content.Contains(request.keyWord)).ToList();
@@ -298,8 +304,8 @@ namespace SOR.Application.Catalogs.Reports
             #region Add Notification
             var dNotification = new Notification()
             {
-                tille = "Phản ánh trật tự an ninh vào",
-                body = @$"Một báo cáo với nội dung {request.title}. Với địa chỉ {request.locationReport} "
+                tille = "Phản ánh trật tự an ninh",
+                body = $"Báo cáo với nội dung {request.title} tại địa chỉ {request.locationReport}"
             };
             await _mobileSevice.ShowNotificationInMobile(request.userId, dNotification);
             #endregion
@@ -326,6 +332,7 @@ namespace SOR.Application.Catalogs.Reports
                 proofs.Add(data);
             });
 
+            await _context.ReportProofs.AddRangeAsync(proofs);
             await _context.ReportProofs.AddRangeAsync(proofs);
             await _context.SaveChangesAsync();
 
@@ -364,6 +371,23 @@ namespace SOR.Application.Catalogs.Reports
             await _context.SaveChangesAsync();
             #endregion
 
+            var findEndResult = await _context.ReportResults.Where(x => x.IsDelete == true).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+
+            #region Add Proof
+            if (request.files != null)
+            {
+                var dProof = new GetCreateToReportProofRequest()
+                {
+                    files = request.files,
+                    reportId = request.reportId,
+                    userId = request.userId,
+                    resultId = findEndResult.Id.ToString()
+                };
+
+                await CreateToReportProof(dProof);
+            }
+            #endregion
+
             #region Add History
             var dhistory = new GetCreateToHistoryRequest()
             {
@@ -378,12 +402,19 @@ namespace SOR.Application.Catalogs.Reports
             return new ApiResponse(MessageBase.SUCCCESS);
         } ///Show
 
-        /// <summary>
-        /// Update
-        /// </summary>
-        /// <param name="Cập nhật thông tin"></param>
-        /// <returns></returns>
-        /// 
+          /// <summary>
+          /// Update
+          /// </summary>
+          /// <param name="Cập nhật thông tin"></param>
+          /// <returns></returns>
+          /// 
+
+        public async Task UpNumberViewInReport(Data.Entitis.Report dReport)
+        {
+            dReport.Views = dReport.Views + 1;
+
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<ApiResponse> UpdateStatus(string Id, GetUpdateStatusInReportRequest request)
         {
@@ -647,6 +678,8 @@ namespace SOR.Application.Catalogs.Reports
 
             if (gReport == null) return null;
 
+            await UpNumberViewInReport(gReport);
+
             return new GetReportViewModel()
             {
                 IsReport = gReport.IsReport,
@@ -733,7 +766,8 @@ namespace SOR.Application.Catalogs.Reports
                 isDate = request.isDate,
                 isStatus = request.isStatus,
                 keyWord = request.keyWord,
-                newslableId = request.newslableId
+                newslableId = request.newslableId,
+                userId = request.userId
             };
 
             gReport = ChechValueReport(gReport, dReport);
