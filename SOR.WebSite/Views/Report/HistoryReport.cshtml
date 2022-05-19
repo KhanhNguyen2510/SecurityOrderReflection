@@ -3,27 +3,52 @@
 @using SOR.ViewModel.Common
 @using SOR.Data.Enum
 @model PagedResult<GetReportViewModel>;
-@{
-    ViewData["Title"] = "HistoryReport";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<main>
+@{
+    ViewData["Title"] = "Lịch sử báo cáo - ";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- My CSS -->
+    <link rel="stylesheet" href="/assets/css/style1.css">
+    <link rel="stylesheet" href="/assets/css/reponsive.css">
+    <link rel="stylesheet" href="/assets/css/pagination.css">
+    <link rel="stylesheet" href="/assets/css/spin.css">
+    <link href="/assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Pack CSS -->
+     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body id="page-top">
+    @await Html.PartialAsync("_Header")
+    <div class="bg-HUFI">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="background-color: white;padding:15px;box-shadow: 1px 2px 4px rgb(0 0 0 / 20%);border-radius: 4px;">
     <div class="header-left">
         <div class="bg-left">
-            <div class="title-left" style="text-transform: uppercase;">XEM BÀI ĐÃ ĐĂNG</div>
+            <div class="title-left" style="text-transform: uppercase;">LỊCH SỬ BÁO CÁO</div>
         </div>
     </div>
     <hr>
-    <table class="table table-hover" style="text-align: center;">
+    <table class="table tablehover" style="text-align: center;color:black;">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">STT</th>
-                <th scope="col">Mả báo cáo</th>
+                <th scope="col">Mã báo cáo</th>
                 <th scope="col">Nội dung</th>
                 <th scope="col">Ngày đăng</th>
-                <th scope="col">Tình trạng</th>
                 <th scope="col">Trạng thái</th>
+                <th scope="col">Tình trạng</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -31,59 +56,66 @@
             @for (var i = 0; i < @Model.Items.Count; i++)
             {
                 <tr>
-                    <th scope="row">@Model.Items[i].Id</th>
-                    <td style="width:500px;">@Model.Items[i].Content</td>
+                    <th scope="row" style="color:black;">@Model.Items[i].Id</th>
+                    <td style="width:200px;">@Model.Items[i].Content</td>
                     <td>@Model.Items[i].CreateDate.ToString("dd/MM/yyy (hh:mm:ss)")</td>
                     <td>
-                        <i style="color:green" class="fas fa-check-circle"></i>
                         @switch (Model.Items[i].IsStatus)
                         {
                             case IsStatus.Complete:
                                 {
-                                    <strong> Hoàn thành</strong>
+                                    <i style="color:green;" class="fa-solid fa-circle-check"></i>
+                                    <span> Hoàn thành</span>
                                     break;
                                 }
                             case IsStatus.Pending:
                                 {
-                                    <strong>Chưa giải quyết</strong>
+                                    <i style="color:#fab005;" class="fa-solid fa-circle-exclamation"></i>
+                                    <span>Chưa giải quyết</span>
                                     break;
                                 }
                             case IsStatus.UnPending:
                                 {
-                                    <strong>Không giải quyết</strong>
+                                    <i style="color:red;" class="fa-solid fa-circle-xmark"></i>
+                                    <span>Không giải quyết</span>
                                     break;
                                 }
                             case IsStatus.Waiting:
                                 {
-                                    <strong>Chờ duyệt</strong>
+                                    <i style="color:#fab005;" class="fa-solid fa-circle-exclamation"></i>
+                                    <span>Chờ duyệt</span>
                                     break;
                                 }
                         }
                     </td>
                     <td>
-                        <i style="color:green" class="fas fa-check-circle"></i>
                         @switch (@Model.Items[i].IsReport)
                         {
                             case IsReport.Urgent:
                                 {
-                                    <strong>Khẩn</strong>
+                                    <i style="color:red;" class="fa-solid fa-circle-xmark"></i>
+                                    <span>Khẩn</span>
                                     break;
                                 }
                             case IsReport.Normal:
                                 {
-                                    <strong>Bình thường</strong>
+                                    <i style="color:green;" class="fa-solid fa-circle-check"></i>
+                                    <span>Bình thường</span>
                                     break;
                                 }
                             case IsReport.Wait:
                                 {
-                                    <strong>Chờ xác định</strong>
+                                    <i style="color:#fab005;" class="fa-solid fa-circle-exclamation"></i>
+                                    <span>Chờ xác định</span>
                                     break;
                                 }
                         }
                     </td>
                     <td>
                         <a class="btn" href="~/Home/Detail?Id=@Model.Items[i].Id" >
-                            <i class="fas fa-ellipsis-v"></i>
+                            <button class="btn btn-outline-primary">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
                         </a>
                     </td>
                 </tr>
@@ -91,4 +123,38 @@
 
         </tbody>
     </table>
-</main>
+                </div>
+            </div>
+        </div>
+        <div style="padding-bottom:50px;"></div>
+    </div>
+    @await Html.PartialAsync("_Footer")
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+</body>
+</html>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/javascript/sb-admin-2.min.js"></script>
+<!---CustomJS-->
+<script src="~/custom/cutomJS.js"></script>
+<!---CustomJS-->
+

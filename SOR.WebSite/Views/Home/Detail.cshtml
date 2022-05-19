@@ -14,15 +14,15 @@
     </div>
     <div style="display: flex;justify-content: space-between;padding-top:10px;">
         <div>
-            <span style="font-style: italic;font-size: 12px;">
+            <span style="font-style: italic;font-size: 14px;">
                 Ngày gửi <strong> @Model.CreateDate.ToString("dd/MM/yyyy")</strong> -
             </span>
-            <span style="font-style: italic;font-size: 12px;">
+            <span style="font-style: italic;font-size: 14px;">
                 Thời hạn xử lý: <strong>@Model.DateSolve.ToString("dd/MM/yyyy")</strong>
             </span>
         </div>
         <div>
-            <span style="font-style: italic;font-size: 12px;">
+            <span style="font-style: italic;font-size: 14px;">
                 Tình trạng:
                 @switch (Model.IsStatus)
                 {
@@ -49,7 +49,7 @@
                 }
                 -
             </span>
-            <span style="font-style: italic;font-size: 12px;">
+            <span style="font-style: italic;font-size: 14px;">
                 Tình thái:
                 @switch (Model.IsReport)
                 {
@@ -71,13 +71,14 @@
                 }
                 -
             </span>
-            <span style="font-style: italic;font-size: 12px;">
+            <span style="font-style: italic;font-size: 14px;">
                 Lượt xem: <strong>@Model.Views</strong>
             </span>
         </div>
     </div>
+            <div style="padding-bottom:10px;"></div>
     <div>
-        <p>@Model.Title</p>
+        <p style="font-weight:bold;margin-top:10px;text-align:center;text-transform:uppercase;">@Model.Title</p>
         <p>@Model.Content</p>
     </div>
     <div style="padding:10px 10px;">
@@ -125,13 +126,14 @@
                 </div>
             </div>
             <a class="carousel-control-prev" href="#product-carousel" style="height:380px !important;z-index:unset !important;" data-slide="prev">
-                <i class="fa fa-2x fa-angle-left" style="color:white !important; font-size:50px !important;"></i>
+                <i class="fa-solid fa-circle-arrow-left" style="color:white !important; font-size:50px !important;" ></i>
             </a>
             <a class="carousel-control-next" href="#product-carousel" style="height:380px !important;z-index:unset !important;" data-slide="next">
-                <i class="fa fa-2x fa-angle-right" style="color:white !important; font-size:50px !important;"></i>
+                <i class="fa-solid fa-circle-arrow-right" style="color:white !important; font-size:50px !important;"></i>
             </a>
         </div>
     </div>
+    <div style="padding-top:15px;"></div>
     <div class="bg-left">
         <div class="title-left" style="text-transform: uppercase;">Kết quả xử lý</div>
     </div>
