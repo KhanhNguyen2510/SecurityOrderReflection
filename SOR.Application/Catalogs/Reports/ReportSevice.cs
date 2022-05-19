@@ -333,7 +333,6 @@ namespace SOR.Application.Catalogs.Reports
             });
 
             await _context.ReportProofs.AddRangeAsync(proofs);
-            await _context.ReportProofs.AddRangeAsync(proofs);
             await _context.SaveChangesAsync();
 
             return new ApiResponse(MessageBase.SUCCCESS);
@@ -373,20 +372,20 @@ namespace SOR.Application.Catalogs.Reports
 
             var findEndResult = await _context.ReportResults.Where(x => x.IsDelete == true).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
 
-            #region Add Proof
-            if (request.files != null)
-            {
-                var dProof = new GetCreateToReportProofRequest()
-                {
-                    files = request.files,
-                    reportId = request.reportId,
-                    userId = request.userId,
-                    resultId = findEndResult.Id.ToString()
-                };
+            //#region Add Proof
+            //if (request.files != null)
+            //{
+            //    var dProof = new GetCreateToReportProofRequest()
+            //    {
+            //        files = request.files,
+            //        reportId = request.reportId,
+            //        userId = request.userId,
+            //        resultId = findEndResult.Id.ToString()
+            //    };
 
-                await CreateToReportProof(dProof);
-            }
-            #endregion
+            //    await CreateToReportProof(dProof);
+            //}
+            //#endregion
 
             #region Add History
             var dhistory = new GetCreateToHistoryRequest()

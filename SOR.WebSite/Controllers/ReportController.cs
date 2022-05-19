@@ -62,7 +62,8 @@ namespace SOR.WebSite.Controllers
                 locationUser = request.locationUser,
                 newsLabelId =request.newsLabelId,
                 title = request.title,
-                userAngel = userAgent
+                userAngel = userAgent,
+                userId = User.Identity.Name
             };
 
             await _reportApiClient.CreateReport(dReport);

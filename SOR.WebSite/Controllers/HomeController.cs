@@ -24,7 +24,7 @@ namespace SOR.WebSite.Controllers
         }
         
         [HttpGet]
-        public  async Task<IActionResult> Index(string keyWord, IsStatus? isStatus, string newslableId, DateTime? end, DateTime? start, IsDate? isDate, int pageIndex = 1, int PageSize = 1)
+        public  async Task<IActionResult> Index(string keyWord, IsStatus? isStatus, string newslableId, DateTime? end, DateTime? start, IsDate? isDate, int pageIndex = 1, int PageSize = 10)
         {
             //var user = User.Identity.Name;
             //var ss = User.Claims.Skip(1).FirstOrDefault().Value;
