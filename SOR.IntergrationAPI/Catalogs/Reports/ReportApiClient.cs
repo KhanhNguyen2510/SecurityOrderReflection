@@ -25,8 +25,8 @@ namespace SOR.IntergrationAPI.Catalogs.Reports
 
         public async Task<PagedResult<GetReportViewModel>> GetListPagingToReport(GetMangagerReportRequest request)
         {
-            var gReport = await GetAsync<PagedResult<GetReportViewModel>>($"/V1/user-panel/reports?keyWord={request.keyWord}&IsStatus={request.IsStatus}" +
-                $"&NewslableId={request.NewslableId}" +
+            var gReport = await GetAsync<PagedResult<GetReportViewModel>>($"/V1/user-panel/reports" +
+                $"?keyWord={request.keyWord}&isStatus={request.isStatus}&newslableId={request.newslableId}&isDate={request.isDate}&start={request.start}&end={request.end}" +
                 $"&PageIndex={request.PageIndex}&PageSize={request.PageSize}");
             return gReport;
         }
@@ -48,9 +48,12 @@ namespace SOR.IntergrationAPI.Catalogs.Reports
             requestContent.Add(new StringContent(request.userAngel), "userAngel");
             requestContent.Add(new StringContent(request.locationReport), "locationReport");
             requestContent.Add(new StringContent(request.locationUser), "locationUser");
-            for (int i = 0; i < request.files.Count; i++)
+            if (request.files != null)
             {
-                requestContent.Add(new StreamContent(request.files[i].OpenReadStream()), "files", Path.GetFileName(request.files[i].FileName));
+                for (int i = 0; i < request.files.Count; i++)
+                {
+                    requestContent.Add(new StreamContent(request.files[i].OpenReadStream()), "files", Path.GetFileName(request.files[i].FileName));
+                }
             }
             requestContent.Add(new StringContent(request.userId), "userId");
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SOR.ViewModel.Catalogs.Reports.Proof;
 using System.Collections.Generic;
 
 namespace SOR.Application.Catalogs.Reports.Upload
@@ -10,6 +11,6 @@ namespace SOR.Application.Catalogs.Reports.Upload
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        List<string> UploadImage(List<IFormFile> files);
+        List<FileSystemViewModel> UploadImage(List<IFormFile> files);
     }
 }

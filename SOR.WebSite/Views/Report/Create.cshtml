@@ -29,13 +29,18 @@
             <!-- <p>Lưu ý:</p> -->
             <hr>
             <h6 style="font-weight: 600;">2. Nội dung phản ánh</h6>
-            <textarea name = "content" style="width: 100%;padding:5px;outline:none;"
+            <textarea name = "content" style="width: 100%;padding:5px;outline:none;" required
+                      oninvalid="this.setCustomValidity('Cần nhập nội dung phản ánh')"
+                      onchange="this.setCustomValidity('')"
                       placeholder="Nhập nội dung cần phản ánh..." cols="30" rows="5"></textarea>
             <hr>
             <h6 style="font-weight: 600;color:red;">3. Chọn loại bài đăng liên quan tới *</h6>
             <div class="form-check">
 
-                <select class="form-control" id="edit-facebook-type-id" name="newsLabelId" style="font-size: 16px; padding: 7px; height:47px">
+                <select class="form-control" id="edit-facebook-type-id" name="newsLabelId" style="font-size: 16px; padding: 7px; height:47px" required
+                                oninvalid="this.setCustomValidity('Cần chọn loại bài báo cáo')"
+                                onchange="this.setCustomValidity('')"
+                >
                                 <option value="" hidden></option>
                                 @for (var i = 0; i < getNewsLables.Count(); i++)
                                 {
@@ -75,7 +80,10 @@
             </div>
             <hr>
             <h6 style="font-weight: 600;">5. Vị trí phản ánh</h6>
-            <input type="text" name="locationReport" style="width:100%;outline:none;padding:5px;"
+            <input type="text" name="locationReport" style="width:100%;outline:none;padding:5px;" 
+                   required
+                   oninvalid="this.setCustomValidity('Cần nhập vị trí báo cáo')"
+                   onchange="this.setCustomValidity('')"
                    placeholder="Nhập vị trí cần phản ánh...">
             <!-- <p>Lưu ý:</p> -->
             <hr>

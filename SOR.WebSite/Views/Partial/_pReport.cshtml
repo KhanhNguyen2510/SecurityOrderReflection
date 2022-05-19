@@ -2,45 +2,65 @@
 @model GetReportViewModel
 @using SOR.ViewModel
 @using SOR.ViewModel.Catalogs.Reports.Report
+@using SOR.Data.Enum
 @{
     GetReportViewModel report = Model ?? new GetReportViewModel();
 }
 
 <ul class="hinhsu-list">
-    <a href="chitiet_baiviet.html" style="text-decoration: none;color:black;">
-    <li class="hinhsu-item">
-        <div class="baiviet-pc" style="display:flex;">
 
-            <img style="width:50%;height:260px;" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="">
-            <div style="padding:10px 15px;">
-                <span class="hinhsu-title">@Model.Title</span>
-                <div class="hinhsu-desc">@Model.Content</div>
-                <span class="hinhsu-time">
-                    <i class="far fa-clock"></i>
-                    @Model.CreateDate.ToString("dd/MM/yyyy ( HH:mm:ss )")
-                </span>
-                <div class="hinhsu-address">
-                    <i class="fas fa-map-marker-alt"></i>
-                   @Model.LocationReport
+    <li class="hinhsu-item">
+        <a href="~/Home/Detail?Id=@Model.Id" style="text-decoration: none;color:black;">
+            <div class="baiviet-pc" style="display:flex;">
+
+                @if (Model.rProofs.Select(x => x.IsFile).FirstOrDefault() == @IsFile.Image)
+                {
+
+                    <img class="w-100 h-100" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="Image">
+
+                }
+                else if (Model.rProofs.Select(x => x.IsFile).FirstOrDefault() == @IsFile.Video)
+                {
+                    <video class="w-100 h-100" controls>
+                        <source src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img class="w-100 h-100" src="" alt="Image">
+                }
+
+
+                <div style="padding:10px 15px;">
+                    <span class="hinhsu-title">@Model.Title</span>
+                    <div class="hinhsu-desc">@Model.Content</div>
+                    <span class="hinhsu-time">
+                        <i class="far fa-clock"></i>
+                        @Model.CreateDate.ToString("dd/MM/yyyy ( HH:mm:ss )")
+                    </span>
+                    <div class="hinhsu-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        @Model.LocationReport
+
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Dành cho mobile -->
-        <div class="baiviet-mobile" style="display: none;">
-            <img style="width:100%;" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="">
-            <div style="padding:10px 15px;">
-                <span class="hinhsu-title">@Model.Title</span>
-                <div class="hinhsu-desc">@Model.Content</div>
-                <span class="hinhsu-time">
-                    <i class="far fa-clock"></i>
-                   @Model.CreateDate.ToString("dd/MM/yyyy ( HH:mm:ss )")
-                </span>
-                <div class="hinhsu-address">
-                    <i class="fas fa-map-marker-alt"></i>
-                   @Model.LocationReport
+            <!-- Dành cho mobile -->
+            <div class="baiviet-mobile" style="display: none;">
+                <img style="width:100%;" src="@SystemContants.MainConectionAPI/@Model.rProofs.Select(x=>x.Name).FirstOrDefault()" alt="">
+                <div style="padding:10px 15px;">
+                    <span class="hinhsu-title">@Model.Title</span>
+                    <div class="hinhsu-desc">@Model.Content</div>
+                    <span class="hinhsu-time">
+                        <i class="far fa-clock"></i>
+                        @Model.CreateDate.ToString("dd/MM/yyyy ( HH:mm:ss )")
+                    </span>
+                    <div class="hinhsu-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        @Model.LocationReport
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     </li>
-    </a>
 </ul>

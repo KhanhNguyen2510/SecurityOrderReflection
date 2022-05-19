@@ -10,6 +10,12 @@ namespace SOR.Application.Catalogs.Agencies
     public interface IAgenciesSevice
     {
         /// <summary>
+        /// Check
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<Data.Entitis.Agencies> FindIdExistence(string Id);
+        /// <summary>
         /// Create
         /// </summary>
         /// <param name="request"></param>

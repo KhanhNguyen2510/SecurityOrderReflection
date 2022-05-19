@@ -1,5 +1,4 @@
-﻿using SOR.Data.Entitis;
-using SOR.Data.Enum;
+﻿using SOR.Data.Enum;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +8,7 @@ namespace SOR.ViewModel.Catalogs.Reports.Report
     public class GetReportViewModel
     {
         public string Title { get; set; }
+        public IsReport IsReport { get; set; }
         public string Id { get; set; }
         /// <summary>
         /// Nội dung báo cáo
@@ -64,11 +64,14 @@ namespace SOR.ViewModel.Catalogs.Reports.Report
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public string UserName { get; set; }
     }
 
     public class Proofs
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public IsFile IsFile { get; set; }
     }
 }

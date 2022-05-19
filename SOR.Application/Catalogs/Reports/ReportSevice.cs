@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SOR.Application.Catalogs.Agencies;
 using SOR.Application.Catalogs.Historys;
 using SOR.Application.Catalogs.Mobiles;
 using SOR.Application.Catalogs.NewsLabels;
 using SOR.Application.Catalogs.Reports.Upload;
+using SOR.Application.Catalogs.Users;
 using SOR.Data.EFs;
 using SOR.Data.Enum;
 using SOR.Data.SystemBase;
@@ -29,9 +31,13 @@ namespace SOR.Application.Catalogs.Reports
         private SystemBase<string> checkValue = new SystemBase<string>();
         private readonly IMobileSevice _mobileSevice;
         private readonly INewsLabelSevice _newsLabelSevice;
-   
-        public ReportSevice(SORDbContext context, IFileSevice fileSevice , IHistorySevice historySevice , IMobileSevice mobileSevice , INewsLabelSevice newsLabelSevice)
+        private readonly IUserSevice _userSevice;
+        private readonly IAgenciesSevice _agenciesSevice;
+
+        public ReportSevice(SORDbContext context, IFileSevice fileSevice,IAgenciesSevice agenciesSevice, IHistorySevice historySevice, IMobileSevice mobileSevice, INewsLabelSevice newsLabelSevice, IUserSevice userSevice )
         {
+            _agenciesSevice = agenciesSevice;
+            _userSevice = userSevice;
             _context = context;
             _fileSevice = fileSevice;
             _historySevice = historySevice;
@@ -73,12 +79,97 @@ namespace SOR.Application.Catalogs.Reports
             return $"{key}{generate}-{DateTime.Now.ToString("ddMMyyyyHHmm")}";///Mã gồm key và mả random 3 chữ và ngày tháng năm giờ phút của mã
         }
 
+        public List<Data.Entitis.Report> ChechValueReport(List<Data.Entitis.Report> gReport, GetMangagerToReportRequest request)
+        {
+            int cDate = 0;
+            if (!gReport.Any()) return null;
+
+            bool cKeyWord = checkValue.CheckNullValue(request.keyWord);
+
+            if (cKeyWord)
+            {
+                gReport = gReport.Where(x => x.Id.ToString().Contains(request.keyWord) || x.Content.Contains(request.keyWord)).ToList();
+            }
+            if (request.isStatus != null)
+            {
+                gReport = gReport.Where(x => x.IsStatus == request.isStatus).ToList();
+            }
+            if (request.newslableId != null)
+            {
+                gReport = gReport.Where(x => x.NewsLabelId == request.newslableId).ToList();
+            }
+
+            if (request.start != null && request.end != null)
+            {
+                cDate = (int)ToFromDate.HaveToFrom;
+            }
+            else if (request.start != null && request.end == null)
+            {
+                cDate = (int)ToFromDate.HaveTo;
+            }
+
+            if (cDate != 0)
+            {
+                switch (cDate)
+                {
+                    case (int)ToFromDate.HaveToFrom:
+                        {
+                            if (request.isDate == IsDate.Create)
+                            {
+                                gReport = gReport.Where(x => x.CreateDate.Date >= request.start.Value.Date && x.CreateDate.Date <= request.end.Value.Date).ToList();
+                            }
+                            else
+                            {
+                                gReport = gReport.Where(x => x.DateSolve.Date >= request.start.Value.Date && x.DateSolve.Date <= request.end.Value.Date).ToList();
+                            }
+                        }
+                        break;
+                    case (int)ToFromDate.HaveTo:
+                        {
+                            if (request.isDate == IsDate.Create)
+                            {
+                                gReport = gReport.Where(x => x.CreateDate.Date == request.start.Value.Date).ToList();
+                            }
+                            else
+                            {
+                                gReport = gReport.Where(x => x.DateSolve.Date == request.start.Value.Date).ToList();
+                            }
+                        }
+                        break;
+                }
+            }
+            return gReport;
+        }
+
         /// <summary>
         /// Check
         /// </summary>
         /// <param name="Kiểm tra thông tin"></param>
         /// <returns></returns>
+        /// 
+        public Data.Entitis.User FindUserById(string userName)
+        {
+            var gUser = _context.Users.FirstOrDefault(x => x.UserName == userName && x.IsDelete == true);
+            if (gUser == null) return null;
+            return gUser;
+        }
+        public Data.Entitis.Agencies FindAgenciesById(string Id)
+        {
+            var findId = _context.Agencies.FirstOrDefault(x => x.Id == Id && x.IsDelete == true);
+            return findId;
+        }
+        public string GetAgenciesNameByUserName(string userName)
+        {
+            var gUser = FindUserById(userName);
 
+            var gAgenciesId = gUser != null ? gUser.AgenciesId : null;
+
+            var gAgencies = FindAgenciesById(gAgenciesId);
+
+            var gAgenciesName = gAgencies != null ? gAgencies.Name : null;
+
+            return gAgenciesName;
+        }
         public async Task<Data.Entitis.Report> FindIdExistence(string Id)
         {
             var findId = await _context.Reports.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
@@ -99,6 +190,31 @@ namespace SOR.Application.Catalogs.Reports
             var cNewsLable = await _context.Reports.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             if (cNewsLable == null) return false;
             return true;
+        }
+        public List<Proofs> GetReportProofs(Data.Entitis.Report gReport)
+        {
+            var gProof = gReport.ReportProofs.Select(x => new Proofs
+            {
+                Id = x.Id,
+                Name = x.Proof,
+                IsFile = x.IsFile
+            }).ToList();
+
+            return gProof;
+        }
+        public List<ViewModel.Catalogs.Reports.Report.Results> GetReportResults(Data.Entitis.Report gReport)
+        {
+            var gResult = gReport.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results
+            {
+                Name = x.Content,
+                Id = x.Id,
+                Date = x.CreateDate,
+                UserName = GetAgenciesNameByUserName(gReport.CreateUser)
+            }).ToList();
+
+            var orderByDescendingByCreateDate = gResult.OrderByDescending(x => x.Date).ToList();
+
+            return orderByDescendingByCreateDate;
         }
 
         /// <summary>
@@ -133,6 +249,7 @@ namespace SOR.Application.Catalogs.Reports
 
             var IdRandom = await RandomID(request.locationReport);
 
+
             #region Add Report
             var dReport = new Data.Entitis.Report()
             {
@@ -143,7 +260,7 @@ namespace SOR.Application.Catalogs.Reports
                 NewsLabelId = request.newsLabelId,
                 IP = request.iP,
                 UserAngel = request.userAngel,
-                Title = request.title,
+                Title = !string.IsNullOrEmpty(request.title) ? request.title : $"Loại bài đăng {cNewsLableById.Name} và đăng vào ngày {DateTime.Now}",
 
                 CreateUser = request.userId,
                 UpdateUser = request.userId
@@ -154,14 +271,17 @@ namespace SOR.Application.Catalogs.Reports
             #endregion
 
             #region Add Proof
-            var dProof = new GetCreateToReportProofRequest()
+            if (request.files != null)
             {
-                files = request.files,
-                reportId = IdRandom,
-                userId = request.userId
-            };
+                var dProof = new GetCreateToReportProofRequest()
+                {
+                    files = request.files,
+                    reportId = IdRandom,
+                    userId = request.userId
+                };
 
-            await CreateToReportProof(dProof);
+                await CreateToReportProof(dProof);
+            }
             #endregion
 
             #region Add History
@@ -198,9 +318,10 @@ namespace SOR.Application.Catalogs.Reports
                 var data = new Data.Entitis.ReportProof()
                 {
                     ReportId = request.reportId,
-                    Proof = file,
+                    Proof = file.url,
                     CreateUser = request.userId,
-                    UpdateUser = request.userId
+                    UpdateUser = request.userId,
+                    IsFile = file.type
                 };
                 proofs.Add(data);
             });
@@ -273,7 +394,7 @@ namespace SOR.Application.Catalogs.Reports
 
             if (findId == null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
 
-            findId.IsStatus = (IsStatus)(request.IsStatus != null? request.IsStatus : findId.IsStatus);
+            findId.IsStatus = (IsStatus)(request.IsStatus != null ? request.IsStatus : findId.IsStatus);
             findId.UpdateUser = request.userId;
             findId.UpdateDate = DateTime.Now;
 
@@ -458,7 +579,7 @@ namespace SOR.Application.Catalogs.Reports
                 await DeleteToReportProof(gReportProof[item], request);
             }
         }
-        
+
         public async Task GetDeleteReportResult(string Id, CreateUserRequest request)
         {
             var gReportResult = await _context.ReportResults.Where(x => x.ReportId == Id && x.IsDelete == true).Select(x => x.Id).ToListAsync();
@@ -521,14 +642,14 @@ namespace SOR.Application.Catalogs.Reports
             var gReport = await _context.Reports.Where(x => x.IsDelete == true && x.Id == Id)
                 .Include(x => x.NewsLabel)
                 .Include(x => x.ReportProofs)
-                .Include(x=>x.ReportResults)
+                .Include(x => x.ReportResults)
                 .FirstOrDefaultAsync();
 
-            if (gReport == null)
-                return null;
+            if (gReport == null) return null;
 
             return new GetReportViewModel()
             {
+                IsReport = gReport.IsReport,
                 Title = gReport.Title,
                 Content = gReport.Content,
                 DateSolve = gReport.DateSolve,
@@ -540,10 +661,10 @@ namespace SOR.Application.Catalogs.Reports
                 NewsLabelName = gReport.Content,
 
                 rProofs = gReport.ReportProofs == null
-                ? null : gReport.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
+                ? null : GetReportProofs(gReport),
 
                 rResults = gReport.ReportResults == null
-                ? null : gReport.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results { Name = x.Content, Id = x.Id }).ToList(),
+                ? null : GetReportResults(gReport),
 
                 UserAngel = gReport.UserAngel,
                 Views = gReport.Views,
@@ -561,28 +682,15 @@ namespace SOR.Application.Catalogs.Reports
                 .Include(x => x.NewsLabel)
                 .Include(x => x.ReportProofs)
                 .Include(x => x.ReportResults)
+                .OrderByDescending(x => x.CreateDate)
                 .ToListAsync();
 
-            if (!gReport.Any()) return null;
-
-            bool cKeyWord = checkValue.CheckNullValue(request.keyWord);
-
-            if (cKeyWord)
-            {
-                gReport = gReport.Where(x => x.Id.ToString().Contains(request.keyWord) || x.Content.Contains(request.keyWord)).ToList();
-            }
-            if (request.IsStatus != null)
-            {
-                gReport = gReport.Where(x => x.IsStatus == request.IsStatus).ToList();
-            }
-            if (request.NewslableId != null)
-            {
-                gReport = gReport.Where(x => x.NewsLabelId == request.NewslableId).ToList();
-            }
-
+            gReport = ChechValueReport(gReport, request);
 
             return gReport.Select(x => new GetReportViewModel()
             {
+
+                IsReport = x.IsReport,
                 Title = x.Title,
                 Content = x.Content,
                 DateSolve = x.DateSolve,
@@ -594,10 +702,10 @@ namespace SOR.Application.Catalogs.Reports
                 NewsLabelName = x.Content,
 
                 rProofs = x.ReportProofs == null
-            ? null : x.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
+            ? null : GetReportProofs(x),
 
                 rResults = x.ReportResults == null
-            ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results { Name = x.Content, Id = x.Id }).ToList(),
+            ? null : GetReportResults(x),
 
                 UserAngel = x.UserAngel,
                 Views = x.Views,
@@ -615,31 +723,27 @@ namespace SOR.Application.Catalogs.Reports
                         .Include(x => x.NewsLabel)
                         .Include(x => x.ReportProofs)
                         .Include(x => x.ReportResults)
+                        .OrderByDescending(x => x.CreateDate)
                         .ToListAsync();
 
-
-            if (!gReport.Any()) return null;
-
-            bool cKeyWord = checkValue.CheckNullValue(request.keyWord);
-
-            if (cKeyWord)
+            var dReport = new GetMangagerToReportRequest()
             {
-                gReport = gReport.Where(x => x.Id.ToString().Contains(request.keyWord) || x.Content.Contains(request.keyWord)).ToList();
-            }
-            if (request.IsStatus != null)
-            {
-                gReport = gReport.Where(x => x.IsStatus == request.IsStatus).ToList();
-            }
-            if (request.NewslableId != null)
-            {
-                gReport = gReport.Where(x => x.NewsLabelId == request.NewslableId).ToList();
-            }
+                end = request.end,
+                start = request.start,
+                isDate = request.isDate,
+                isStatus = request.isStatus,
+                keyWord = request.keyWord,
+                newslableId = request.newslableId
+            };
+
+            gReport = ChechValueReport(gReport, dReport);
 
             int totalRow = gReport.Count();
 
             var data = gReport.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize).Select(x => new GetReportViewModel()
                 {
+                    IsReport = x.IsReport,
                     Title = x.Title,
                     Content = x.Content,
                     DateSolve = x.DateSolve,
@@ -651,11 +755,10 @@ namespace SOR.Application.Catalogs.Reports
                     NewsLabelName = x.Content,
 
                     rProofs = x.ReportProofs == null
-                ? null : x.ReportProofs.Select(x => new Proofs { Id = x.Id, Name = x.Proof }).ToList(),
+                ? null : GetReportProofs(x),
 
                     rResults = x.ReportResults == null
-                ? null : x.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results { Name = x.Content, Id = x.Id }).ToList(),
-
+                ? null : GetReportResults(x),
                     UserAngel = x.UserAngel,
                     Views = x.Views,
                     CreateDate = x.CreateDate,

@@ -6,7 +6,6 @@ using SOR.IntergrationAPI.Catalogs.NewLables;
 using SOR.IntergrationAPI.Catalogs.Reports;
 using SOR.ViewModel.Catalogs.NewLables;
 using SOR.ViewModel.Catalogs.Reports.Report;
-using SOR.ViewModel.Catalogs.Users;
 using System.Threading.Tasks;
 
 namespace SOR.WebSite.Controllers
@@ -25,6 +24,8 @@ namespace SOR.WebSite.Controllers
             _httpContextAccessor = httpContextAccessor;
             _newLableApiClient = newLableApiClient;
         }
+
+
 
         [HttpGet]
         [Authorize]
@@ -48,24 +49,24 @@ namespace SOR.WebSite.Controllers
         public async Task<IActionResult> Create([FromForm] GetCreateToReportRequest request )
         {
             var userAgent = Request.Headers["User-Agent"];
-            var ipAdress = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+            var ipAdress = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "";
 
-            var h = new GetCreateToReportRequest()
+            var dReport = new GetCreateToReportRequest()
             {
                 content = request.content,
                 files = request.files,
                 iP = ipAdress,
                 locationReport = request.locationReport,
                 locationUser = request.locationUser,
-                newsLabelId = "hinhsu",
+                newsLabelId =request.newsLabelId,
                 title = request.title,
                 userAngel = userAgent,
                 userId = User.Identity.Name
             };
 
-            var gReport = await _reportApiClient.CreateReport(h);
-            return View();
-        }
+            await _reportApiClient.CreateReport(dReport);
 
+            return RedirectToAction("Create");
+        }
     }
 }

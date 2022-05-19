@@ -1,4 +1,5 @@
-﻿using SOR.Data.SystemBase;
+﻿using SOR.Data.Enum;
+using SOR.Data.SystemBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,6 +24,10 @@ namespace SOR.Data.Entitis
         /// 
         [StringLength(50)]
         public string ReportId { get; set; }
+        /// <summary>
+        /// Loại file truyền vào
+        /// </summary>
+        public IsFile IsFile  { get; set; }
 
         //public User User { get; set; }
         public Report Report { get; set; }
