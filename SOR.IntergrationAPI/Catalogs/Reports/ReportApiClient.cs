@@ -26,7 +26,7 @@ namespace SOR.IntergrationAPI.Catalogs.Reports
         public async Task<PagedResult<GetReportViewModel>> GetListPagingToReport(GetMangagerReportRequest request)
         {
             var gReport = await GetAsync<PagedResult<GetReportViewModel>>($"/V1/user-panel/reports" +
-                $"?keyWord={request.keyWord}&isStatus={request.isStatus}&newslableId={request.newslableId}&isDate={request.isDate}&start={request.start}&end={request.end}" +
+                $"?userId={request.userId}&keyWord={request.keyWord}&isStatus={request.isStatus}&newslableId={request.newslableId}&isDate={request.isDate}&start={request.start}&end={request.end}" +
                 $"&PageIndex={request.PageIndex}&PageSize={request.PageSize}");
             return gReport;
         }

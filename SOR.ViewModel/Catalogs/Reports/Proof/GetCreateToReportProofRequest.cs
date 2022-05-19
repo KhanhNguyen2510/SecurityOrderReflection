@@ -14,5 +14,8 @@ namespace SOR.ViewModel.Catalogs.Reports.Proof
         /// 
         [Required(ErrorMessage = "Vui lòng nhập Id báo cáo")]
         public string reportId { get; set; }
+
+
+        public string resultId { get; set; }
     }
 }

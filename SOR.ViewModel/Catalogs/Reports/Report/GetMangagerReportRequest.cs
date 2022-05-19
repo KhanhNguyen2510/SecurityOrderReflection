@@ -6,6 +6,7 @@ namespace SOR.ViewModel.Catalogs.Reports.Report
 {
     public class GetMangagerReportRequest : PagingRequestBase
     {
+        public string userId { get; set; }
         public string keyWord { get; set; }
         public IsStatus? isStatus { get; set; }
         public string newslableId { get; set; }
