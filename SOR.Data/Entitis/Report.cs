@@ -17,7 +17,6 @@ namespace SOR.Data.Entitis
         /// Nội dung báo cáo
         /// </summary>
         /// 
-        [StringLength(500)]
         public string Content { get; set; }
         /// <summary>
         /// Tên tiêu đề 
@@ -48,13 +47,13 @@ namespace SOR.Data.Entitis
         /// địa chỉ báo cáo
         /// </summary>
         /// 
-        [StringLength(300)]
+        [StringLength(500)]
         public string LocationReport { get; set; }
         /// <summary>
         /// địa chỉ báo cáo
         /// </summary>
         /// 
-        [StringLength(300)]
+        [StringLength(500)]
         public string LocationUser { get; set; }
         /// <summary>
         /// số lượng người xem tin này

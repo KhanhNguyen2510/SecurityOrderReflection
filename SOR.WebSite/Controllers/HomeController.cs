@@ -3,8 +3,12 @@ using Microsoft.Extensions.Logging;
 using SOR.Data.Enum;
 using SOR.IntergrationAPI.Catalogs.NewLables;
 using SOR.IntergrationAPI.Catalogs.Reports;
+using SOR.ViewModel.Catalogs.NewLables;
 using SOR.ViewModel.Catalogs.Reports.Report;
+using SOR.WebSite.Models;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SOR.WebSite.Controllers
@@ -22,12 +26,24 @@ namespace SOR.WebSite.Controllers
             _logger = logger;
             _reportApiClient = reportApiClient;
         }
+
+
         
         [HttpGet]
-        public  async Task<IActionResult> Index(string keyWord, IsStatus? isStatus, string newslableId, DateTime? end, DateTime? start, IsDate? isDate, int pageIndex = 1, int PageSize = 10)
+        public  async Task<IActionResult> Index(string keyWord, IsStatus? isStatus, string newslableId, DateTime? end, DateTime? start, IsDate? isDate, int pageIndex = 1, int PageSize = 1)
         {
             //var user = User.Identity.Name;
             //var ss = User.Claims.Skip(1).FirstOrDefault().Value;
+
+            var dNewLable = new GetMangagerToNewsLableRequest()
+            {
+
+            };
+
+            var gNewLable = await _newLableApiClient.GetListToNewsLable(dNewLable);
+
+            ViewData["newLable"] = gNewLable;
+
             var dReport = new GetMangagerReportRequest()
             {
                 keyWord = keyWord,

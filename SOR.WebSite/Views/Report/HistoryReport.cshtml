@@ -44,6 +44,7 @@
     <table class="table tablehover" style="text-align: center;color:black;">
         <thead class="thead-dark">
             <tr>
+                 <th scope="col">STT</th>
                 <th scope="col">Mã báo cáo</th>
                 <th scope="col">Nội dung</th>
                 <th scope="col">Ngày đăng</th>
@@ -55,7 +56,9 @@
         <tbody>
             @for (var i = 0; i < @Model.Items.Count; i++)
             {
+                int cout = @i + 1;
                 <tr>
+                    <th>@cout</th>
                     <th scope="row" style="color:black;">@Model.Items[i].Id</th>
                     <td style="width:200px;">@Model.Items[i].Content</td>
                     <td>@Model.Items[i].CreateDate.ToString("dd/MM/yyy (hh:mm:ss)")</td>

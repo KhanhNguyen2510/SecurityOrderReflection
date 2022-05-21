@@ -1,10 +1,11 @@
-﻿@using SOR.ViewModel.Catalogs.Reports;
+﻿@using SOR.ViewModel.Catalogs.NewLables
+@using SOR.ViewModel.Catalogs.Reports;
 @using SOR.ViewModel.Catalogs.Reports.Report
 @using SOR.ViewModel.Common
 @model PagedResult<GetReportViewModel>;
 @{
     ViewData["Title"] = "Trang Chủ -";
-
+    IEnumerable<GetNewsLableViewModel> newlable = (IEnumerable<GetNewsLableViewModel>)ViewData["newLable"];
 }
 <main>
     <div class="header-left">
@@ -15,19 +16,12 @@
         <div class="carousel carousel-pc"
              data-flickity='{ "autoPlay": false,"pageDots": false,"draggable": false }'>
             <div class="carousel-cell">
-                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Hình sự</div>
-                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Tệ nạn xã hội</div>
-                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Buôn lậu , vận chuyển, mua bán hàng cấm</div>
-                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Khai thác trái phép</div>
-                <div class="khac" onclick="Khac()" style="cursor: pointer;">Khác</div>
+               @for (var i = 0; i < @newlable.ToList().Count; i++)
+              {
+                  <div class="@newlable.ToList()[i].Id" style="cursor: pointer;"><a href="~/Home/Index?newslableId=@newlable.ToList()[i].Id">@newlable.ToList()[i].Name</a></div>
+              }
             </div>
-            <div class="carousel-cell">
-                <div class="hinhsu" onclick="HinhSu()" style="cursor: pointer;">Test1</div>
-                <div class="tenan" onclick="TeNan()" style="cursor: pointer;">Test2</div>
-                <div class="buonlau" onclick="BuonLau()" style="cursor: pointer;">Test3</div>
-                <div class="khaithac" onclick="KhaiThac()" style="cursor: pointer;">Test4</div>
-                <div class="khac" onclick="Khac()" style="cursor: pointer;">Test5</div>
-            </div>
+            
         </div>
         <!-- Dành cho mobile -->
         <div class="carousel carousel-mobile" style="display: none;"
@@ -62,70 +56,4 @@
 </main>
 
 
-<script>
-    function HinhSu() {
-        $('#hinhsu').show();
-        $('#tenan').hide();
-        $('#buonlau').hide();
-        $('#khaithac').hide();
-        $('#khac').hide();
-        $('.hinhsu').addClass('gachduoihinhsu');
-        $('.tenan').removeClass('gachduoitenan');
-        $('.buonlau').removeClass('gachduoibuonlau');
-        $('.khaithac').removeClass('gachduoikhaithac');
-        $('.khac').removeClass('gachduoikhac');
-    }
-
-    function TeNan() {
-        $('#hinhsu').hide();
-        $('#tenan').show();
-        $('#buonlau').hide();
-        $('#khaithac').hide();
-        $('#khac').hide();
-        $('.hinhsu').removeClass('gachduoihinhsu');
-        $('.tenan').addClass('gachduoitenan');
-        $('.buonlau').removeClass('gachduoibuonlau');
-        $('.khaithac').removeClass('gachduoikhaithac');
-        $('.khac').removeClass('gachduoikhac');
-    }
-
-    function BuonLau() {
-        $('#hinhsu').hide();
-        $('#tenan').hide();
-        $('#buonlau').show();
-        $('#khaithac').hide();
-        $('#khac').hide();
-        $('.hinhsu').removeClass('gachduoihinhsu');
-        $('.tenan').removeClass('gachduoitenan');
-        $('.buonlau').addClass('gachduoibuonlau');
-        $('.khaithac').removeClass('gachduoikhaithac');
-        $('.khac').removeClass('gachduoikhac');
-    }
-
-    function KhaiThac() {
-        $('#hinhsu').hide();
-        $('#tenan').hide();
-        $('#buonlau').hide();
-        $('#khaithac').show();
-        $('#khac').hide();
-        $('.hinhsu').removeClass('gachduoihinhsu');
-        $('.tenan').removeClass('gachduoitenan');
-        $('.buonlau').removeClass('gachduoibuonlau');
-        $('.khaithac').addClass('gachduoikhaithac');
-        $('.khac').removeClass('gachduoikhac');
-    }
-
-    function Khac() {
-        $('#hinhsu').hide();
-        $('#tenan').hide();
-        $('#buonlau').hide();
-        $('#khaithac').hide();
-        $('#khac').show();
-        $('.hinhsu').removeClass('gachduoihinhsu');
-        $('.tenan').removeClass('gachduoitenan');
-        $('.buonlau').removeClass('gachduoibuonlau');
-        $('.khaithac').removeClass('gachduoikhaithac');
-        $('.khac').addClass('gachduoikhac');
-    }
-</script>
 
