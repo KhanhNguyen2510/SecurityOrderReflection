@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SOR.Data.EFs;
 
 namespace SOR.Data.Migrations
 {
     [DbContext(typeof(SORDbContext))]
-    partial class SORDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220523113437_AddPrivilege")]
+    partial class AddPrivilege
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -373,7 +375,7 @@ namespace SOR.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IC_User");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("SOR.Data.Entitis.IC_UserPrivilege", b =>

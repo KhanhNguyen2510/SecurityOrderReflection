@@ -25,15 +25,29 @@ namespace SOR.IntergrationAPI.Catalogs.Reports
 
         public async Task<PagedResult<GetReportViewModel>> GetListPagingToReport(GetMangagerReportRequest request)
         {
-            var gReport = await GetAsync<PagedResult<GetReportViewModel>>($"/V1/user-panel/reports" +
-                $"?userId={request.userId}&keyWord={request.keyWord}&isStatus={request.isStatus}&newslableId={request.newslableId}&isDate={request.isDate}&start={request.start}&end={request.end}" +
-                $"&PageIndex={request.PageIndex}&PageSize={request.PageSize}");
-            return gReport;
+            try
+            {
+                var gReport = await GetAsync<PagedResult<GetReportViewModel>>($"/V1/user-panel/reports" +
+    $"?userId={request.userId}&keyWord={request.keyWord}&isStatus={request.isStatus}&newslableId={request.newslableId}&isDate={request.isDate}&start={request.start}&end={request.end}" +
+    $"&PageIndex={request.PageIndex}&PageSize={request.PageSize}");
+                return gReport;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public async Task<GetReportViewModel> GetReportByID(string Id)
         {
-            var gReport = await GetAsync<GetReportViewModel>($"/V1/user-panel/reports/{Id}");
-            return gReport;
+            try
+            {
+                var gReport = await GetAsync<GetReportViewModel>($"/V1/user-panel/reports/{Id}");
+                return gReport;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public async Task<ApiStatus> CreateReport(GetCreateToReportRequest request)
         {

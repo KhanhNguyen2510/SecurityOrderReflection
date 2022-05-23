@@ -14,14 +14,14 @@ namespace SOR.Application.Catalogs.Users
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Data.Entitis.User> Login(GetLoginRequest request);
+        Task<Data.Entitis.IC_User> Login(GetLoginRequest request);
         Task<string> LoginInWed(GetLoginRequest request);
         /// <summary>
         /// Check
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Data.Entitis.User> CheckUser(string userName);
+        Task<Data.Entitis.IC_User> CheckUser(string userName);
         Task<bool> UserNameExistence(string userName);
         /// <summary>
         /// Create
@@ -48,8 +48,8 @@ namespace SOR.Application.Catalogs.Users
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Data.Entitis.User> GetUserById(string userName);
-        Task<IEnumerable<Data.Entitis.User>> GetListToUser(GetMangagerToUserRequest request);
-        Task<PagedResult<Data.Entitis.User>> GetListPagingToUser(GetMangagerUserRequest request);
+        Task<Data.Entitis.IC_User> GetUserById(string userName);
+        Task<IEnumerable<Data.Entitis.IC_User>> GetListToUser(GetMangagerToUserRequest request);
+        Task<PagedResult<Data.Entitis.IC_User>> GetListPagingToUser(GetMangagerUserRequest request);
     }
 }

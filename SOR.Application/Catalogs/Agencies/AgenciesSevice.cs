@@ -42,7 +42,7 @@ namespace SOR.Application.Catalogs.Agencies
             return true;
         }
 
-        public async Task<Data.Entitis.Agencies> FindIdExistence(string Id)
+        public async Task<Data.Entitis.TA_Agencies> FindIdExistence(string Id)
         {
             var findId = await _context.Agencies.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
@@ -78,7 +78,7 @@ namespace SOR.Application.Catalogs.Agencies
             if (checkName) return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
             #endregion
 
-            var dAgencies = new Data.Entitis.Agencies()
+            var dAgencies = new Data.Entitis.TA_Agencies()
             {
                 Id = request.id,
                 Name = request.name,

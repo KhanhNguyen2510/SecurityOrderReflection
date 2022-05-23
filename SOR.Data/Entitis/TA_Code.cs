@@ -5,20 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SOR.Data.Entitis
 {
     /// <summary>
-    /// kết quả trà lời 
+    /// Key của từng khu vực
     /// </summary>
-    [Table("ReportResult")]
-    public class ReportResult : EntitisBase
+    [Table("TA_Code")]
+    public class TA_Code : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(400)]
-        public string Content { get; set; }
-        [StringLength(50)]
-        public string ReportId { get; set; }
-
-
-        //public User User { get; set; }
+        [StringLength(1000)]
+        public string Name { get; set; }
+        [StringLength(10)]
+        public string Key { get; set; }
     }
 }

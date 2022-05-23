@@ -6,30 +6,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SOR.Data.Entitis
 {
     /// <summary>
-    /// Báo cáo kết quả bằng chứng
+    /// Trạng thái kết quả
     /// </summary>
-    [Table("ReportProof")]
-    public class ReportProof : EntitisBase
+    [Table("TA_State")]
+    public class TA_State : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         /// <summary>
-        /// Bằng chứng
+        /// Vui/không vui 
         /// </summary>
-        public string Proof { get; set; }
-        /// <summary>
-        /// Mả bài phản ánh
-        /// </summary>
-        /// 
+        public IsState IsState { get; set; } = IsState.UnStae;
         [StringLength(50)]
         public string ReportId { get; set; }
-        /// <summary>
-        /// Loại file truyền vào
-        /// </summary>
-        public IsFile IsFile  { get; set; }
 
         //public User User { get; set; }
-        public Report Report { get; set; }
     }
 }

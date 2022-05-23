@@ -9,20 +9,20 @@ namespace SOR.Data.Entitis
     /// <summary>
     /// Tài khoản đăng nhập
     /// </summary>
-    [Table("User")]
-    public class User : EntitisBase
+    [Table("IC_User")]
+    public class IC_User : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(50)]
+        [StringLength(500)]
         public string UserName { get; set; }
-        [StringLength(100)]
+        [StringLength(500)]
         public string Email { get; set; }
         [StringLength(50)]
         public string PassWord { get; set; }
         public IsGender? Gender { get; set; }
-        [StringLength(200)]
+        [StringLength(500)]
         public string FullName { get; set; }
         [StringLength(15)]
         public string NumberPhone { get; set; }
@@ -30,7 +30,7 @@ namespace SOR.Data.Entitis
         /// số cmnd
         /// </summary>
         /// 
-        [StringLength(14)]
+        [StringLength(100)]
         public string Identification { get; set; }
         [StringLength(200)]
         public string IPCreate { get; set; }
@@ -49,9 +49,16 @@ namespace SOR.Data.Entitis
         /// Cơ quan
         /// </summary>
         /// 
-        [StringLength(200)]
         public string AgenciesId { get; set; }
-        public string  Token { get; set; }
+        public string Token { get; set; }
+
+        /// <summary>
+        /// Đặc quyền tài khoản
+        /// </summary>
+        public short AccountPrivilege { get; set; }
+
+
+
 
         //public IEnumerable<State> State { get; set; }
         //public IEnumerable<History> Histories  { get; set; }

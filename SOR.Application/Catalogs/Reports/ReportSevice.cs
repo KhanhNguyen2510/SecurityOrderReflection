@@ -79,7 +79,7 @@ namespace SOR.Application.Catalogs.Reports
             return $"{key}{generate}-{DateTime.Now.ToString("ddMMyyyyHHmm")}";///Mã gồm key và mả random 3 chữ và ngày tháng năm giờ phút của mã
         }
 
-        public List<Data.Entitis.Report> ChechValueReport(List<Data.Entitis.Report> gReport, GetMangagerToReportRequest request)
+        public List<Data.Entitis.CM_Report> ChechValueReport(List<Data.Entitis.CM_Report> gReport, GetMangagerToReportRequest request)
         {
             int cDate = 0;
             if (!gReport.Any()) return null;
@@ -153,13 +153,13 @@ namespace SOR.Application.Catalogs.Reports
         /// <param name="Kiểm tra thông tin"></param>
         /// <returns></returns>
         /// 
-        public Data.Entitis.User FindUserById(string userName)
+        public Data.Entitis.IC_User FindUserById(string userName)
         {
             var gUser = _context.Users.FirstOrDefault(x => x.UserName == userName && x.IsDelete == true);
             if (gUser == null) return null;
             return gUser;
         }
-        public Data.Entitis.Agencies FindAgenciesById(string Id)
+        public Data.Entitis.TA_Agencies FindAgenciesById(string Id)
         {
             var findId = _context.Agencies.FirstOrDefault(x => x.Id == Id && x.IsDelete == true);
             return findId;
@@ -176,17 +176,17 @@ namespace SOR.Application.Catalogs.Reports
 
             return gAgenciesName;
         }
-        public async Task<Data.Entitis.Report> FindIdExistence(string Id)
+        public async Task<Data.Entitis.CM_Report> FindIdExistence(string Id)
         {
             var findId = await _context.Reports.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
         }
-        public async Task<Data.Entitis.ReportProof> FindIdProofExistence(int Id)
+        public async Task<Data.Entitis.CM_ReportProof> FindIdProofExistence(int Id)
         {
             var findId = await _context.ReportProofs.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
         }
-        public async Task<Data.Entitis.ReportResult> FindIdResultExistence(int Id)
+        public async Task<Data.Entitis.CM_ReportResult> FindIdResultExistence(int Id)
         {
             var findId = await _context.ReportResults.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
@@ -197,7 +197,7 @@ namespace SOR.Application.Catalogs.Reports
             if (cNewsLable == null) return false;
             return true;
         }
-        public List<Proofs> GetReportProofs(Data.Entitis.Report gReport)
+        public List<Proofs> GetReportProofs(Data.Entitis.CM_Report gReport)
         {
             var gProof = gReport.ReportProofs.Select(x => new Proofs
             {
@@ -208,7 +208,7 @@ namespace SOR.Application.Catalogs.Reports
 
             return gProof;
         }
-        public List<ViewModel.Catalogs.Reports.Report.Results> GetReportResults(Data.Entitis.Report gReport)
+        public List<ViewModel.Catalogs.Reports.Report.Results> GetReportResults(Data.Entitis.CM_Report gReport)
         {
             var gResult = gReport.ReportResults.Select(x => new ViewModel.Catalogs.Reports.Report.Results
             {
@@ -257,7 +257,7 @@ namespace SOR.Application.Catalogs.Reports
 
 
             #region Add Report
-            var dReport = new Data.Entitis.Report()
+            var dReport = new Data.Entitis.CM_Report()
             {
                 Id = IdRandom,
                 Content = request.content,
@@ -317,11 +317,11 @@ namespace SOR.Application.Catalogs.Reports
         {
             var gFiles = _fileSevice.UploadImage(request.files);
 
-            var proofs = new List<Data.Entitis.ReportProof>();
+            var proofs = new List<Data.Entitis.CM_ReportProof>();
 
             Parallel.ForEach(gFiles, file =>
             {
-                var data = new Data.Entitis.ReportProof()
+                var data = new Data.Entitis.CM_ReportProof()
                 {
                     ReportId = request.reportId,
                     Proof = file.url,
@@ -357,7 +357,7 @@ namespace SOR.Application.Catalogs.Reports
             #endregion
 
             #region Add Result
-            var dResult = new Data.Entitis.ReportResult()
+            var dResult = new Data.Entitis.CM_ReportResult()
             {
                 Content = request.content,
                 ReportId = request.reportId,
@@ -408,7 +408,7 @@ namespace SOR.Application.Catalogs.Reports
           /// <returns></returns>
           /// 
 
-        public async Task UpNumberViewInReport(Data.Entitis.Report dReport)
+        public async Task UpNumberViewInReport(Data.Entitis.CM_Report dReport)
         {
             dReport.Views = dReport.Views + 1;
 

@@ -14,7 +14,7 @@ namespace SOR.Application.Catalogs.Agencies
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<Data.Entitis.Agencies> FindIdExistence(string Id);
+        Task<Data.Entitis.TA_Agencies> FindIdExistence(string Id);
         /// <summary>
         /// Create
         /// </summary>

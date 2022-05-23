@@ -27,7 +27,7 @@ namespace SOR.Application.Catalogs.Historys
         /// <param name="Kiểm tra thông tin"></param>
         /// <returns></returns>
 
-        public async Task<Data.Entitis.History> FindIdExistence(int Id)
+        public async Task<Data.Entitis.CM_History> FindIdExistence(int Id)
         {
             var findId = await _context.Histories.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
@@ -45,7 +45,7 @@ namespace SOR.Application.Catalogs.Historys
             bool cUser = checkValue.CheckNullValue(request.userId);
             if (!cUser) return new ApiResponse(MessageBase.USER_EXISTENCE, 400);
 
-            var dHistoy = new Data.Entitis.History()
+            var dHistoy = new Data.Entitis.CM_History()
             {
                 HistoryOperation = request.HistoryOperation,
                 IsOperation = request.IsOperation == null ? IsOperation.Orther : request.IsOperation,

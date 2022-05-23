@@ -9,8 +9,8 @@ namespace SOR.Data.Entitis
     /// <summary>
     /// Lịch sữ thu thập
     /// </summary>
-    [Table("History")]
-    public class History : EntitisBase
+    [Table("CM_History")]
+    public class CM_History : EntitisBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,7 +18,6 @@ namespace SOR.Data.Entitis
         /// <summary>
         /// Lịch sử thu thập nội dung
         /// </summary>
-        [StringLength(300)]
         public string HistoryOperation { get; set; }
         /// <summary>
         /// Thời gian thực hiện

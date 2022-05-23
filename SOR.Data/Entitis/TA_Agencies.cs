@@ -5,18 +5,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SOR.Data.Entitis
 {
     /// <summary>
-    /// Nhản của bài đăng
+    /// Cơ quan
     /// </summary>
-    [Table("NewsLabel")]
-    public  class NewsLabel : EntitisBase
+    [Table("TA_Agencies")]
+    public class TA_Agencies : EntitisBase
     {
         [Key]
-        [StringLength(10)]
         public string Id { get; set; }
-        [StringLength(300)]
         public string Name { get; set; }
+        /// <summary>
+        /// Trụ sở
+        /// </summary>
+        /// 
+        public string Office { get; set; }
+        [StringLength(15)]
+        public string NumberPhone { get; set; }
 
         //public User User { get; set; }
-        //public IEnumerable<Report> Reports { get; set; }
     }
 }

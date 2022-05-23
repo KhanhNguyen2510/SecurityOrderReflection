@@ -7,8 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SOR.Data.Entitis
 {
-    [Table("Report")]
-    public class Report : EntitisBase
+    [Table("CM_Report")]
+    public class CM_Report : EntitisBase
     {
         [Key]
         [StringLength(50)]
@@ -21,13 +21,12 @@ namespace SOR.Data.Entitis
         /// <summary>
         /// Tên tiêu đề 
         /// </summary>
-        [StringLength(500)]
         public string Title { get; set; }
         /// <summary>
         /// nhãn thông tin bài báo cáo 
         /// </summary>
         /// 
-        [StringLength(10)]
+        [StringLength(50)]
         public string NewsLabelId { get; set; }
 
         public IsReport IsReport { get; set; } = IsReport.Wait;
@@ -35,19 +34,18 @@ namespace SOR.Data.Entitis
         /// Ip mạng của user đó
         /// </summary>
         /// 
-        [StringLength(50)]
+        [StringLength(100)]
         public string IP { get; set; }
         /// <summary>
         /// Máy sử dụng để report 
         /// </summary>
         /// 
-        [StringLength(300)]
+        [StringLength(500)]
         public string UserAngel { get; set; }
         /// <summary>
         /// địa chỉ báo cáo
         /// </summary>
         /// 
-        [StringLength(500)]
         public string LocationReport { get; set; }
         /// <summary>
         /// địa chỉ báo cáo
@@ -67,8 +65,8 @@ namespace SOR.Data.Entitis
         public IsStatus IsStatus { get; set; } = IsStatus.Waiting;
 
         //public User User { get; set; }
-        public NewsLabel NewsLabel { get; set; }
-        public IEnumerable<ReportProof>  ReportProofs { get; set; }
-        public IEnumerable<ReportResult> ReportResults { get; set; }
+        public CM_NewsLabel NewsLabel { get; set; }
+        public IEnumerable<CM_ReportProof>  ReportProofs { get; set; }
+        public IEnumerable<CM_ReportResult> ReportResults { get; set; }
     }
 }

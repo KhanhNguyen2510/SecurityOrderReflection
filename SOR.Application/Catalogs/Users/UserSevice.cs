@@ -47,7 +47,7 @@ namespace SOR.Application.Catalogs.Users
             return true;
         }
 
-        public async Task<Data.Entitis.User> CheckUser(string userName)
+        public async Task<Data.Entitis.IC_User> CheckUser(string userName)
         {
             var gUser = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.IsDelete == true);
             if (gUser == null) return null;
@@ -68,7 +68,7 @@ namespace SOR.Application.Catalogs.Users
         /// <returns></returns>
         /// 
 
-        public async Task<Data.Entitis.User> Login(GetLoginRequest request)
+        public async Task<Data.Entitis.IC_User> Login(GetLoginRequest request)
         {
             var cUser = await _context.Users.FirstOrDefaultAsync(x => x.IsDelete == true && x.UserName == request.userName && x.PassWord == ShareContantsSytem.MD5(request.passWord));
             if (cUser == null) return null;
@@ -138,7 +138,7 @@ namespace SOR.Application.Catalogs.Users
                 return new ApiResponse(MessageBase.NAME_EXISTENCE, 400);
             #endregion
 
-            var dUser = new Data.Entitis.User()
+            var dUser = new Data.Entitis.IC_User()
             {
                 UserName = request.userName,
                 Email = request.email,
@@ -338,13 +338,13 @@ namespace SOR.Application.Catalogs.Users
         /// <returns></returns>
         /// 
 
-        public async Task<Data.Entitis.User> GetUserById(string userName)
+        public async Task<Data.Entitis.IC_User> GetUserById(string userName)
         {
             var gUser = await _context.Users.Where(x => x.IsDelete == true && x.UserName == userName.Trim()).FirstOrDefaultAsync();
 
             if (gUser == null) return null;
 
-            return new Data.Entitis.User()
+            return new Data.Entitis.IC_User()
             {
                Token = gUser.Token,
                UserName = gUser.UserName,
@@ -363,7 +363,7 @@ namespace SOR.Application.Catalogs.Users
             };
         }
 
-        public async Task<IEnumerable<Data.Entitis.User>> GetListToUser(GetMangagerToUserRequest request)
+        public async Task<IEnumerable<Data.Entitis.IC_User>> GetListToUser(GetMangagerToUserRequest request)
         {
             var gUsers = await _context.Users.Where(x => x.IsDelete == true).ToListAsync();
 
@@ -392,7 +392,7 @@ namespace SOR.Application.Catalogs.Users
                 gUsers = gUsers.Where(x => x.AgenciesId == request.agenciesId).ToList();
             }
 
-            return gUsers.Select(x => new Data.Entitis.User()
+            return gUsers.Select(x => new Data.Entitis.IC_User()
             {
                 Token = x.Token,
                 UserName = x.UserName,
@@ -411,7 +411,7 @@ namespace SOR.Application.Catalogs.Users
             });
         }
 
-        public async Task<PagedResult<Data.Entitis.User>> GetListPagingToUser(GetMangagerUserRequest request)
+        public async Task<PagedResult<Data.Entitis.IC_User>> GetListPagingToUser(GetMangagerUserRequest request)
         {
             var gUsers = await _context.Users.Where(x => x.IsDelete == true).ToListAsync();
 
@@ -443,7 +443,7 @@ namespace SOR.Application.Catalogs.Users
             int totalRow = gUsers.Count();
 
             var data = gUsers.Skip((request.PageIndex - 1) * request.PageSize)
-                .Take(request.PageSize).Select(x => new Data.Entitis.User()
+                .Take(request.PageSize).Select(x => new Data.Entitis.IC_User()
                 {
                     Token = x.Token,
                     UserName = x.UserName,
@@ -460,7 +460,7 @@ namespace SOR.Application.Catalogs.Users
                     NumberPhone = x.NumberPhone,
                     PassWord = x.PassWord
                 }).ToList();
-            return new PagedResult<Data.Entitis.User>()
+            return new PagedResult<Data.Entitis.IC_User>()
             {
                 Items = data,
                 TotalRecords = totalRow,

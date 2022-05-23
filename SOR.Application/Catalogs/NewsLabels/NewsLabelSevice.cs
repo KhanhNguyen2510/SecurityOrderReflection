@@ -40,7 +40,7 @@ namespace SOR.Application.Catalogs.NewsLabels
             return true;
         }
 
-        public async Task<Data.Entitis.NewsLabel> FindIdExistence(string Id)
+        public async Task<Data.Entitis.CM_NewsLabel> FindIdExistence(string Id)
         {
             var findId = await _context.NewsLabels.FirstOrDefaultAsync(x => x.Id == Id && x.IsDelete == true);
             return findId;
@@ -76,7 +76,7 @@ namespace SOR.Application.Catalogs.NewsLabels
 
             if (findId != null) return new ApiResponse(MessageBase.NON_EXISTENCE, 400);
 
-            var gHistory = new Data.Entitis.NewsLabel()
+            var gHistory = new Data.Entitis.CM_NewsLabel()
             {
                 Id = request.id,
                 Name = request.name,

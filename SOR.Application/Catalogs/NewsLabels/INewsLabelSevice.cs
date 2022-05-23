@@ -42,6 +42,6 @@ namespace SOR.Application.Catalogs.NewsLabels
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Data.Entitis.NewsLabel> FindIdExistence(string Id);
+        Task<Data.Entitis.CM_NewsLabel> FindIdExistence(string Id);
     }
 }
